@@ -1,0 +1,56 @@
+---
+- name: Install dovecot packages.
+  apt:
+    pkg:
+    - dovecot-core 
+    - dovecot-imapd 
+    - dovecot-lmtpd 
+    - dovecot-mysql
+
+- name: Ensure group vmail exists with correct gid.
+  group:
+    name: vmail
+    state: present
+    gid: 5000
+
+- name: Add the user vmail.
+  user:
+    name: vmail
+    shell: /sbin/nologin
+    comment: vmail
+    uid: 5000
+    group: vmail
+    home: /vat/vmail
+    create_home: False
+
+- name: Create folder to store mail in.
+  file:
+    path: /var/mail
+    state: directory
+    owner: root
+    group: vmail
+    mode: "u=rwx,g=rwxs,o=rx"
+
+- name: Create/edit dovecot configuration file dovecot.conf.
+  template: src=dovecot.conf.j2 dest=/etc/dovecot.conf
+
+- name: Create/edit dovecot configuration file conf.d/10-mail.conf.
+  template: src=10-mail.conf.j2 dest=/etc/dovecot/conf.d/10-mail.conf
+
+- name: Create/edit dovecot configuration file conf.d/10-auth.conf.
+  template: src=10-auth.conf.j2 dest=/etc/dovecot/conf.d/10-auth.conf
+
+- name: Create/edit dovecot configuration file conf.d/auth-sql.ext.
+  template: src=auth-sql.conf.ext.j2 dest=/etc/dovecot/conf.d/auth-sql.conf.ext
+
+- name: Create/edit dovecot configuration file dovecot-sql.ext.
+  template: src=dovecot-sql.conf.ext.j2 dest=/etc/dovecot/dovecot-sql.conf.ext
+
+- name: Create/edit dovecot configuration file conf.d/10-master.conf.
+  template: src=10-master.conf.j2 dest=/etc/dovecot/conf.d/10-master.conf
+
+- name: Create/edit dovecot configuration file conf.d/10-ssl.conf.
+  template: src=10-ssl.conf.j2 dest=/etc/dovecot/conf.d/10-ssl.conf
+
+- name: Restar dovecot Service
+  service: name=dovecot state=restarted enabled=yes

@@ -1,0 +1,9 @@
+---
+- name: Install general package.
+  apt:
+    pkg:
+    - vim
+    - telnet
+    - net-tools
+    - dnsutils
+    - mlocate

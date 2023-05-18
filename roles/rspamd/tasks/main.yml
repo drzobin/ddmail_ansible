@@ -1,0 +1,30 @@
+---
+- name: Add rspamd apt signing key.
+  apt_key:
+    url: https://rspamd.com/apt-stable/gpg.key
+    state: present
+
+- name: Add rspamd apt repository.
+  apt_repository:
+    repo: "deb [arch=amd64] https://rspamd.com/apt-stable/ buster main"
+    state: present
+    filename: rspamd
+    update_cache: yes
+
+- name: Add rspamdi src apt repository.
+  apt_repository:
+    repo: "deb-src [arch=amd64] https://rspamd.com/apt-stable/ buster main"
+    state: present
+    filename: rspamd
+    update_cache: yes
+
+- name: Run "apt-get update".
+  apt:
+    update_cache: yes
+
+- name: Install latest version of rspamd ignoring "install-recommends".
+  apt:
+    name: rspamd
+    state: latest
+    install_recommends: no
+    update_cache: yes

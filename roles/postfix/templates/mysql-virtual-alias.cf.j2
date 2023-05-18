@@ -1,0 +1,7 @@
+user = {{ mail_db_user_r}}
+password = {{ mail_db_user_r_password }}
+hosts = 127.0.0.1
+dbname = {{ mail_db_name }}
+#query = SELECT destination FROM aliases WHERE src_email='%s'
+#query = select emails.email from aliases left join emails on aliases.dst_email_id = emails.id where src_email='%s'
+query = select src_email,emails.email from aliases left join emails on aliases.dst_email_id = emails.id left join accounts on aliases.account_id = accounts.id where accounts.is_enabled = 1 and aliases.src_email = '%s';

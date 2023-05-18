@@ -1,0 +1,6 @@
+---
+- name: Install latest version of redis-server.
+  apt:
+    name: redis-server
+    state: latest
+    update_cache: yes
