@@ -1,16 +1,11 @@
 ---
 # global vars
-srv1_ip: 172.16.23.128
-srv2_ip: 172.16.23.129
-srv3_ip: 172.16.23.130
+srv1_ip: 155.4.244.189
 
 # mariadb
-mysqlservice: mysqld
-mysql_port: 3306
-mysql_ip: 127.0.0.1
-
-# galera cluster for mariadb
-wsrep_cluster_name: galera_cluster
+mariadb_mysqlservice: mysqld
+mariadb_mysql_port: 3306
+mariadb_mysql_ip: 127.0.0.1
 
 # mail database settings
 mail_db_name: mail
@@ -20,30 +15,33 @@ mail_db_user_rw: mail_rw
 mail_db_user_rw_password: password
 
 # postfix main.cf
-myhostname: mail.ddmail.se
-mydomain: ddmail.se
-myorigin: ddmail.se
-mydestination: localhost, localhost.localdomain
-mynetworks: 127.0.0.0/8
-inet_interfaces: all
-inet_protocols: ipv4
-relay_domains: $mydestination
-message_size_limit: 30720000
-unknown_local_recipient_reject_code: 550
+postfix_myhostname: mail.ddmail.se
+postfix_mydomain: ddmail.se
+postfix_myorigin: ddmail.se
+postfix_mydestination: localhost, localhost.localdomain
+postfix_mynetworks: 127.0.0.0/8
+postfix_inet_interfaces: all
+postfix_inet_protocols: ipv4
+postfix_relay_domains: $mydestination
+postfix_message_size_limit: 30720000
+postfix_unknown_local_recipient_reject_code: 550
 
 # dovecot
 
+# rspamd
+
+# redis
+
 # sshd
-# Put you public keyfile in ~/ddmail.se.key.pub
-Port: 22
-AddressFamily: inet
-ListenAddress: 0.0.0.0
-Protocol: 2
-PermitRootLogin: !!str no
-RSAAuthentication: !!str yes
-ChallengeResponseAuthentication: !!str no
-PubkeyAuthentication:  !!str yes
-PasswordAuthentication: !!str no
-UsePAM: !!str no
-X11Forwarding: !!str no
-AllowUsers: user01
+sshd_port: 22
+sshd_address_family: inet
+sshd_listen_address: 0.0.0.0
+sshd_permit_root_login: !!str no
+sshd_pubkey_authentication: !!str yes
+sshd_password_authentication: !!str no
+sshd_use_PAM: !!str no
+sshd_allow_agent_forwarding: !!str no
+sshd_allow_tcp_forwarding: !!str no
+sshd_x11_forwarding: !!str no
+sshd_allow_users: user053
+
