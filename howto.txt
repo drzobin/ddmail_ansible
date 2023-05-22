@@ -1,8 +1,5 @@
 #
 #
-# Installation on debian 10
-apt install ansible sshpass
-
-# ansible with ssh password and su password
-ansible-playbook -i hosts dev_playbook.yml --user user01 --ask-pass -K
+# ansible with ssh key and su password
+ansible-playbook -i hosts dev_playbook.yml --key-file [key file] --user [user] --ask-become-pass
 
