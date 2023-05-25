@@ -2,7 +2,8 @@
 - name: Install sshd packages.
   apt:
     pkg:
-    - openssh-server
+      - openssh-server
+    state: latest
 
 - name: Create/edit sshd configuration file /etc/ssh/sshd_config
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
