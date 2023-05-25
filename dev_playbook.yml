@@ -6,14 +6,14 @@
   become_method: su
 
   roles:
-          #    - general_packages
-          #    - disable_ipv6
-          #    - sshd
-          #    - unbound
-          #    - mariadb
-          #    - mailsystem_db
+              - nftables
+              - general_packages
+              - disable_ipv6
+              - sshd
+              - mariadb
+              - mailsystem_db
               - redis
               - rspamd
-          #    - postfix
-          #    - dovecot
-          #    - www_ddmail_se
+              - postfix
+              - dovecot
+              - www_ddmail_se
