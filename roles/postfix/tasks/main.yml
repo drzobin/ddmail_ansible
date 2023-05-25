@@ -2,8 +2,9 @@
 - name: Install postfix packages.
   apt:
     pkg:
-    - postfix
-    - postfix-mysql
+      - postfix
+      - postfix-mysql
+    state: latest
 
 - name: Create/edit postfix configuration file main.cf.
   template: src=main.cf.j2 dest=/etc/postfix/main.cf
