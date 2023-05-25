@@ -2,10 +2,11 @@
 - name: Install dovecot packages.
   apt:
     pkg:
-    - dovecot-core 
-    - dovecot-imapd 
-    - dovecot-lmtpd 
-    - dovecot-mysql
+      - dovecot-core 
+      - dovecot-imapd 
+      - dovecot-lmtpd 
+      - dovecot-mysql
+    state: latest
 
 - name: Ensure group vmail exists with correct gid.
   group:
