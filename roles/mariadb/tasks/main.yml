@@ -3,3 +3,4 @@
   apt:
     pkg:
       - mariadb-server
+    state: latest
