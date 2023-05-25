@@ -7,4 +7,5 @@
       - net-tools
       - dnsutils
       - mlocate
+      - git
     state: latest
