@@ -12,14 +12,17 @@
       - apache2
     state: latest
 
+- name: Enable apache2 mod proxy
+  ansible.builtin.command: /usr/sbin/a2enmod proxy
+
+- name: Enable apache2 mod proxy_http
+  ansible.builtin.command: /usr/sbin/a2enmod proxy_http
+
+- name: Create/edit apache2 config file /etc/apache2/sites-enabled/000-default.conf 
+  template: src=000-default.conf.j2 dest=/etc/apache2/sites-enabled/000-default.conf
+
 - name: Restar apache2 service
   service: name=apache2 state=restarted enabled=yes
-
-#- name: Create folder to store ddmail python env
-#  file:
-#    path: /opt/ddmail_env/
-#    state: directory
-#    mode: "u=rwx,g=rwx,o=r"
 
 - name: Create dmail python env.
   command: python3 -m venv /opt/www_ddmail_se_env
@@ -87,3 +90,8 @@
     virtualenv_python: python3
     virtualenv: /opt/www_ddmail_se_env
 
+- name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service 
+  template: src=ddmail_gunicorn.service.j2 dest=/etc/systemd/system/ddmail_gunicorn.service
+
+- name: Restar ddmail_gunicorn Service
+  service: name=ddmail_gunicorn state=restarted enabled=yes
