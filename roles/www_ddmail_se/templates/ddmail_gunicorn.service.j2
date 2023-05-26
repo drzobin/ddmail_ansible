@@ -3,11 +3,11 @@ Description=Gunicorn instance to serve ddmail
 After=network.target
 
 [Service]
-User=user053
-Group=user053
-WorkingDirectory=/opt/www_ddmail_se_env/
-Environment="PATH=/opt/www_ddmail_se_env/bin/"
-ExecStart=/opt/www_ddmail_se_env/bin/gunicorn --workers 2 "ddmail:create_app()"
+User=www-ddmail
+Group=www-ddmail
+WorkingDirectory=/opt/ddmail_venv/
+Environment="PATH=/opt/ddmail_venv/bin/"
+ExecStart=/opt/ddmail_venv/bin/gunicorn --workers 2 "ddmail:create_app()"
 
 [Install]
 WantedBy=multi-user.target
