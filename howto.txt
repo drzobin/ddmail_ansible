@@ -3,3 +3,9 @@
 # ansible with ssh key and su password
 ansible-playbook -i hosts dev_playbook.yml --key-file [key file] --user [user] --ask-become-pass
 
+#
+#
+# ansible vault
+ansible-vault create vault.yml
+ansible-vault view vault.yml
+ansible-vault edit vault.yml
