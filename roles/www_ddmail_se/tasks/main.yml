@@ -25,70 +25,78 @@
   service: name=apache2 state=restarted enabled=yes
 
 - name: Create dmail python env.
-  command: python3 -m venv /opt/www_ddmail_se_env
+  command: python3 -m venv /opt/ddmail_venv
 
 - name: Install Flask with pip.
   pip:
     name: flask
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install Flask-SQLAlchemy with pip.
   pip:
     name: Flask-SQLAlchemy
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install argon2_cffi with pip.
   pip:
     name: argon2_cffi
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install Flask-Session with pip.
   pip:
     name: Flask-Session
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install Flask-WTF with pip.
   pip:
     name: Flask-WTF
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install mysqlclient with pip.
   pip:
     name: mysqlclient
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install pytest with pip.
   pip:
     name: pytest
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install coverage with pip.
   pip:
     name: coverage
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
 
 - name: Install gunicorn with pip.
   pip:
     name: gunicorn
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/www_ddmail_se_env
+    virtualenv: /opt/ddmail_venv
+
+- name: Add the user www-ddmail
+  ansible.builtin.user:
+    name: www-ddmail
+    shell: /usr/sbin/nologin
+    group: www-ddmail
+    create_home: false
+
 
 - name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service 
   template: src=ddmail_gunicorn.service.j2 dest=/etc/systemd/system/ddmail_gunicorn.service
