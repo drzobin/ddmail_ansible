@@ -10,9 +10,9 @@ mariadb_mysql_ip: 127.0.0.1
 # mail database settings
 mail_db_name: mail
 mail_db_user_r: mail_r
-mail_db_user_r_password: password
+mail_db_user_r_password: "{{ vault_mail_db_user_r_password  }}"
 mail_db_user_rw: mail_rw
-mail_db_user_rw_password: password
+mail_db_user_rw_password: "{{ vault_mail_db_user_rw_password }}"
 
 # postfix main.cf
 postfix_myhostname: mail.ddmail.se
@@ -33,7 +33,7 @@ postfix_unknown_local_recipient_reject_code: 550
 # redis
 
 # sshd
-sshd_port: 22
+sshd_port: "{{ vault_sshd_port }}"
 sshd_address_family: inet
 sshd_listen_address: 0.0.0.0
 sshd_permit_root_login: !!str no
@@ -43,5 +43,9 @@ sshd_use_PAM: !!str no
 sshd_allow_agent_forwarding: !!str no
 sshd_allow_tcp_forwarding: !!str no
 sshd_x11_forwarding: !!str no
-sshd_allow_users: user053
+sshd_allow_users: "{{ vault_sshd_allow_users }}"
 
+# ddmail webapp
+ddmail_webapp_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_wtf_csrf_secret_key }}"
+ddmail_webapp_secret_key: "{{ vault_ddmail_webapp_secret_key }}"
+ddmail_webapp_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_db_user_rw_password }}@localhost/mail'
