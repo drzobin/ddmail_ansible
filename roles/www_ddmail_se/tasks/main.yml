@@ -24,6 +24,14 @@
 - name: Restar apache2 service
   service: name=apache2 state=restarted enabled=yes
 
+- name: stat /opt/ddmail_venv folder
+  stat: path=/opt/ddmail_venv
+  register: ddmail_venv
+
+- name: Remove /opt/ddmail_venv folder
+  command: mv /opt/ddmail_venv /opt/ddmail_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: ddmail_venv.stat.exists
+
 - name: Create dmail python env.
   command: python3 -m venv /opt/ddmail_venv
 
