@@ -1,6 +1,4 @@
 <VirtualHost *:80>
-    ProxyPreserveHost On
-
-    ProxyPass / http://127.0.0.1:8000/
-    ProxyPassReverse / http://127.0.0.1:8000/
+    ServerName www.ddmail.se 
+    Redirect permanent / https://www.ddmail.se/
 </VirtualHost>
