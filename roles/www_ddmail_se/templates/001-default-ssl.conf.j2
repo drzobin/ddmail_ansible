@@ -1,0 +1,13 @@
+<VirtualHost *:443>
+    SSLEngine on
+    ProxyPreserveHost On
+
+    SSLCertificateFile "/etc/letsencrypt/live/www.ddmail.se/fullchain.pem"
+    SSLCertificateKeyFile "/etc/letsencrypt/live/www.ddmail.se/privkey.pem"
+
+    ProxyPass / http://127.0.0.1:8000/
+    ProxyPassReverse / http://127.0.0.1:8000/
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
