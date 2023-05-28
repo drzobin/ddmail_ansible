@@ -2,8 +2,16 @@
     SSLEngine on
     ProxyPreserveHost On
 
+    SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1 -TLSv1.2
+    SSLHonorCipherOrder On
+    SSLCipherSuite HIGH:!aNULL:!MD5
+
     SSLCertificateFile "/etc/letsencrypt/live/www.ddmail.se/fullchain.pem"
     SSLCertificateKeyFile "/etc/letsencrypt/live/www.ddmail.se/privkey.pem"
+
+    SSLCompression off
+
+    Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains;"
 
     ProxyPass / http://127.0.0.1:8000/
     ProxyPassReverse / http://127.0.0.1:8000/
