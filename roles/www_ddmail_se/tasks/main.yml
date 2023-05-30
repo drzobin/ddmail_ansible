@@ -63,6 +63,9 @@
 - name: Create/edit apache2 config file /etc/apache2/sites-available/001-default-ssl.conf
   template: src=001-default-ssl.conf.j2 dest=/etc/apache2/sites-available/001-default-ssl.conf
 
+- name: Create/edit apache2 config file /etc/apache2/mods-available/ssl.conf
+  template: src=ssl.conf.j2 dest=/etc/apache2/mods-available/ssl.conf
+
 - name: Enable apache2 site 001-default-ssl.conf
   ansible.builtin.command: /usr/sbin/a2ensite 001-default-ssl.conf
 
