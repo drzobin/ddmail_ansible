@@ -10,8 +10,6 @@
       - python3-venv
       - default-libmysqlclient-dev
       - apache2
-      - certbot
-      - python3-certbot-apache
     state: latest
 
 - name: Enable apache2 mod proxy
@@ -28,37 +26,6 @@
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf 
   template: src=000-default.conf.j2 dest=/etc/apache2/sites-available/000-default.conf
-
-- name: stat cerbot registration lockfile
-  stat: path=/etc/letsencrypt/.registered
-  register: certbot_reg_lockfile
-
-- name: Stop apache2 service
-  service: name=apache2 state=stopped enabled=yes
-  when: not certbot_reg_lockfile.stat.exists
-
-- name: Register certbot
-  command: certbot -n register --agree-tos --email {{ vault_certbot_reg_email }}
-  when: not certbot_reg_lockfile.stat.exists
-
-- name: Create certbot registration lockfile
-  command: touch /etc/letsencrypt/.registered
-  when: not certbot_reg_lockfile.stat.exists
-
-- name: Stat cerbot apache ssl cert
-  stat: path=/etc/letsencrypt/live/www.ddmail.se/fullchain.pem
-  register: certbot_apache_ssl
-
-- name: Get apache ssl certificate for www.ddmail.se
-  command: /usr/bin/certbot certonly --standalone -d www.ddmail.se
-  when: not certbot_apache_ssl.stat.exists
-
-- name: Certbot renew as cronjob
-  cron:
-    name: certbot-renewal
-    job: '/usr/bin/certbot renew --pre-hook "systemctl stop apache2" --post-hook "systemctl start apache2"'
-    minute: "0"
-    hour: "04"
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/001-default-ssl.conf
   template: src=001-default-ssl.conf.j2 dest=/etc/apache2/sites-available/001-default-ssl.conf
