@@ -1,0 +1,33 @@
+---
+- name: Install packages needed for web application ddmail
+  apt:
+    pkg:
+      - apache2
+    state: latest
+
+- name: Enable apache2 mod proxy
+  ansible.builtin.command: /usr/sbin/a2enmod proxy
+
+- name: Enable apache2 mod proxy_http
+  ansible.builtin.command: /usr/sbin/a2enmod proxy_http
+
+- name: Enable apache2 mod ssl
+  ansible.builtin.command: /usr/sbin/a2enmod ssl
+
+- name: Enable apache2 mod headers
+  ansible.builtin.command: /usr/sbin/a2enmod headers
+
+- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf 
+  template: src=000-default.conf.j2 dest=/etc/apache2/sites-available/000-default.conf
+
+- name: Create/edit apache2 config file /etc/apache2/sites-available/001-default-ssl.conf
+  template: src=001-default-ssl.conf.j2 dest=/etc/apache2/sites-available/001-default-ssl.conf
+
+- name: Create/edit apache2 config file /etc/apache2/mods-available/ssl.conf
+  template: src=ssl.conf.j2 dest=/etc/apache2/mods-available/ssl.conf
+
+- name: Enable apache2 site 001-default-ssl.conf
+  ansible.builtin.command: /usr/sbin/a2ensite 001-default-ssl.conf
+
+- name: Restar apache2 service
+  service: name=apache2 state=restarted enabled=yes
