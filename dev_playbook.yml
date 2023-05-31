@@ -6,14 +6,16 @@
   become_method: su
 
   roles:
-              - nftables
               - general_packages
               - disable_ipv6
+              - nftables
               - sshd
+              - certbot
               - mariadb
               - mailsystem_db
               - redis
               - rspamd
               - postfix
               - dovecot
+              - apache2
               - www_ddmail_se
