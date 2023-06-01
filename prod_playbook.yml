@@ -1,0 +1,21 @@
+---
+- name: Setting up mail server
+  hosts: mail_server
+  become: true
+  become_user: root
+  become_method: su
+
+  roles:
+              - general_packages
+              - disable_ipv6
+              - nftables
+              - sshd
+              - certbot
+              - mariadb
+              - mailsystem_db
+              - redis
+              - rspamd
+              - postfix
+              - dovecot
+              - apache2
+              - www_ddmail_se
