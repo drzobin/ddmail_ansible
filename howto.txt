@@ -3,10 +3,10 @@
 # ansible with ssh key and su password
 
 # prod
-ansible-playbook --ask-vault-pass -i hosts prod_playbook.yml --key-file [key file] --user [user] --ask-become-pass
+ansible-playbook --ask-vault-pass -i prod_hosts prod_playbook.yml --key-file [key file] --user [user] --ask-become-pass
 
 # dev
-ansible-playbook --ask-vault-pass -i hosts dev_playbook.yml --key-file [key file] --user [user] --ask-become-pass
+ansible-playbook --ask-vault-pass -i dev_hosts dev_playbook.yml --key-file [key file] --user [user] --ask-become-pass
 
 #
 #
