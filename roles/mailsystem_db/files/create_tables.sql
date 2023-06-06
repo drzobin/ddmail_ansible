@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS accounts (
 	account varchar(100) NOT NULL UNIQUE,
 	payment_token varchar(12) NOT NULL UNIQUE,
 	assets_in_sek int NOT NULL DEFAULT 0,
-	is_enabled boolean NULL DEFAULT  0,
-	is_gratis boolean NULL DEFAULT  0,
+	is_enabled boolean NOT NULL DEFAULT  0,
+	is_gratis boolean NOT NULL DEFAULT  0,
 	PRIMARY KEY (id) );
 
 CREATE TABLE IF NOT EXISTS users (
