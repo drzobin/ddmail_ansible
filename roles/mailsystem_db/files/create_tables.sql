@@ -14,18 +14,6 @@ CREATE TABLE IF NOT EXISTS accounts (
 	is_gratis boolean NULL DEFAULT  0,
 	PRIMARY KEY (id) );
 
-CREATE TABLE IF NOT EXISTS bills (
-	id int NOT NULL UNIQUE AUTO_INCREMENT,
-	account_id int NOT NULL,
-	month_ datetime NOT NULL,
-	cost int NOT NULL,
-	has_been_paid boolean NULL DEFAULT  0,
-	FOREIGN KEY (account_id)
-	REFERENCES accounts(id)
-    ON DELETE RESTRICT
-	ON UPDATE CASCADE,
-	PRIMARY KEY (id) );
-
 CREATE TABLE IF NOT EXISTS users (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
