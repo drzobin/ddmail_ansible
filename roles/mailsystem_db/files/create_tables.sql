@@ -42,12 +42,16 @@ CREATE TABLE IF NOT EXISTS domains (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
 	domain varchar(191) NOT NULL UNIQUE,
-	is_global boolean DEFAULT false NOT NULL,
 	FOREIGN KEY (account_id)
     REFERENCES accounts(id)
     ON DELETE RESTRICT
 	ON UPDATE CASCADE,
 	PRIMARY KEY (id) );
+
+CREATE TABLE IF NOT EXISTS global_domains (
+	id int NOT NULL UNIQUE AUTO_INCREMENT,
+	domain varchar(191) NOT NULL UNIQUE,
+	is_enabled boolean NOT NULL DEFAULT 1,
 
 CREATE TABLE IF NOT EXISTS emails (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
