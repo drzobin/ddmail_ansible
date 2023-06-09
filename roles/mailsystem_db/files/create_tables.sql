@@ -57,37 +57,40 @@ CREATE TABLE IF NOT EXISTS global_domains (
 CREATE TABLE IF NOT EXISTS emails (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
-	domain_id int NOT NULL,
+	domain_id int NULL,
+	global_domain_id int NULL,
 	email varchar(191) NOT NULL UNIQUE,
 	password_hash varchar(2096) NOT NULL,
-	FOREIGN KEY (account_id)
-    REFERENCES accounts(id)
-    ON DELETE RESTRICT
-	ON UPDATE CASCADE,
-	FOREIGN KEY (domain_id)
-    REFERENCES domains(id)
-    ON DELETE RESTRICT
-	ON UPDATE CASCADE,
+	FOREIGN KEY (account_id) REFERENCES accounts(id)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	FOREIGN KEY (domain_id) REFERENCES domains(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	FOREIGN KEY (global_domain_id) REFERENCES global_domains(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
 	PRIMARY KEY (id) );
 
 CREATE TABLE IF NOT EXISTS aliases (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
-	src_domain_id int NOT NULL,
+	src_domain_id int NULL,
+	src_global_domain_id int NULL,
 	src_email varchar(191) NOT NULL UNIQUE,
 	dst_email_id int NOT NULL,
-	FOREIGN KEY (account_id)
-    REFERENCES accounts(id)
-    ON DELETE RESTRICT
-	ON UPDATE CASCADE,
-	FOREIGN KEY (src_domain_id)
-    REFERENCES domains(id)
-    ON DELETE RESTRICT
-	ON UPDATE CASCADE,
-	FOREIGN KEY (dst_email_id)
-    REFERENCES emails(id)
-    ON DELETE RESTRICT
-	ON UPDATE CASCADE,
+	FOREIGN KEY (account_id) REFERENCES accounts(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	FOREIGN KEY (src_domain_id) REFERENCES domains(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	FOREIGN KEY (src_global_domain_id) REFERENCES global_domains(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	FOREIGN KEY (dst_email_id) REFERENCES emails(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
 	PRIMARY KEY (id) );
 
 CREATE TABLE IF NOT EXISTS transports (
@@ -95,3 +98,4 @@ CREATE TABLE IF NOT EXISTS transports (
 	domain varchar(200) NOT NULL,
 	transport varchar(200) NOT NULL,
 	PRIMARY KEY (id) );
+
