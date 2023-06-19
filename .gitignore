@@ -1,2 +1,3 @@
 **/vault
-group_vars/all/vault
+environments/dev/group_vars/all/vault
+environments/prod/group_vars/all/vault
