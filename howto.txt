@@ -1,12 +1,19 @@
 #
 #
+# install ansible in venv
+python -m venv [ansible venv path]
+source [ansible venv path]/bin/activate
+pip install ansible
+
+#
+#
 # ansible with ssh key and su password
 
 # prod
-ansible-playbook --ask-vault-pass -i prod_hosts prod_playbook.yml --key-file [key file] --user [user] --ask-become-pass
+ansible-playbook prod_playbook.yml -i environments/prod/ --ask-vault-pass --key-file [key file] --user [user] --ask-become-pass
 
 # dev
-ansible-playbook --ask-vault-pass -i dev_hosts dev_playbook.yml --key-file [key file] --user [user] --ask-become-pass
+ansible-playbook dev_playbook.yml -i environments/dev/ --ask-vault-pass --key-file [key file] --user [user] --ask-become-pass
 
 #
 #
