@@ -6,10 +6,10 @@
   become_method: su
 
   roles:
-              - general_packages
-              - disable_ipv6
-              - nftables
-              - sshd
-              - mariadb
-              - mailsystem_db
-              - www_ddmail_se
+    - general_packages
+    - disable_ipv6
+    - nftables
+    - sshd
+    - mariadb
+    - mailsystem_db
+    - www_ddmail_se
