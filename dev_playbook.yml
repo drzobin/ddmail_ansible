@@ -12,4 +12,5 @@
     - sshd
     - mariadb
     - mailsystem_db
+    - apache2
     - www_ddmail_se
