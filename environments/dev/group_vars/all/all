@@ -47,6 +47,7 @@ sshd_x11_forwarding: !!str no
 sshd_allow_users: "{{ vault_sshd_allow_users }}"
 
 # ddmail webapp
+ddmail_webapp_server_name: ddmaildev
 ddmail_webapp_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_wtf_csrf_secret_key }}"
 ddmail_webapp_secret_key: "{{ vault_ddmail_webapp_secret_key }}"
 ddmail_webapp_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_db_user_rw_password }}@localhost/mail'
