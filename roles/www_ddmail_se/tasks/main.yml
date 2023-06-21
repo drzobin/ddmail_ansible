@@ -15,7 +15,7 @@
   stat: path=/opt/ddmail_venv
   register: ddmail_venv
 
-- name: Remove /opt/ddmail_venv folder
+- name: Move /opt/ddmail_venv folder
   command: mv /opt/ddmail_venv /opt/ddmail_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
   when: ddmail_venv.stat.exists
 
@@ -84,11 +84,21 @@
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
+  when: env == "prod"
 
 - name: Clone ddmail_webapp repo with separate git directory
   git:
     repo: https://github.com/drzobin/ddmail_webapp.git
     dest: /opt/ddmail_venv/ddmail_webapp
+
+- name: Change ownership of /opt/ddmail_venv to dev user 
+  file:
+    state   : directory
+    recurse : yes
+    owner: "{{ vault_dev_user }}"
+    group: "{{ vault_dev_group }}"  
+    path    : /opt/ddmail_venv
+  when: env == "dev"
 
 - name: stat ddmail_webapp folder
   stat: path=/opt/ddmail_venv/ddmail_webapp
@@ -96,14 +106,26 @@
 
 - name: Move ddmail from ddmail_webapp
   command: mv /opt/ddmail_venv/ddmail_webapp/ddmail /opt/ddmail_venv/
-  when: ddmail_webapp.stat.exists
+  #when: ddmail_webapp.stat.exists
+  when: 
+    - ddmail_webapp.stat.exists
+    - env == "prod"
+      
 
 - name: Remove ddmail_webapp folder
   command: rm -rf /opt/ddmail_venv/ddmail_webapp
-  when: ddmail_webapp.stat.exists
+  #when: ddmail_webapp.stat.exists
+  when: 
+    - ddmail_webapp.stat.exists
+    - env == "prod"
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_venv/ddmail/config.py
   template: src=config.py.j2 dest=/opt/ddmail_venv/ddmail/config.py
+  when: env == "prod"
+
+- name: Create/edit ddmail webapp config file /opt/ddmail_venv//ddmail_webapp/ddmail/config.py
+  template: src=config.py.j2 dest=/opt/ddmail_venv/ddmail_webapp/ddmail/config.py
+  when: env == "dev"
 
 - name: Install ddmail webapp with pip
   pip:
@@ -111,11 +133,13 @@
     extra_args: -e
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
+  when: env == "prod"
 
 - name: Ensure group www-ddmail exists
   group:
     name: www-ddmail
     state: present
+  when: env == "prod"
 
 - name: Add the user www-ddmail
   ansible.builtin.user:
@@ -125,9 +149,12 @@
     create_home: false
     group: www-ddmail
     state: present
+  when: env == "prod"
 
 - name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service 
   template: src=ddmail_gunicorn.service.j2 dest=/etc/systemd/system/ddmail_gunicorn.service
+  when: env == "prod"
 
 - name: Restar ddmail_gunicorn Service
   service: name=ddmail_gunicorn state=restarted enabled=yes
+  when: env == "prod"
