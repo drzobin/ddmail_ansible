@@ -1,4 +1,7 @@
 <VirtualHost *:80>
+    ServerName {{ apache2_port80_server_name }}
+    ServerAlias {{ apache2_port80_server_alias }}
+
     ProxyPass / http://127.0.0.1:5000/
     ProxyPassReverse / http://127.0.0.1:5000/
 
