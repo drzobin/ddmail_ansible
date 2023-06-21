@@ -1,5 +1,6 @@
 <VirtualHost *:80>
-    ServerName www.ddmail.se
-    ServerAlias ddmail.se 
+    ServerName {{ apache2_port80_server_name }}
+    ServerAlias {{ apache2_port80_server_alias }}
+
     Redirect permanent / https://www.ddmail.se/
 </VirtualHost>
