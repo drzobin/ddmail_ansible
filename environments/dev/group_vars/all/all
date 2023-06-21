@@ -50,3 +50,7 @@ sshd_allow_users: "{{ vault_sshd_allow_users }}"
 ddmail_webapp_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_wtf_csrf_secret_key }}"
 ddmail_webapp_secret_key: "{{ vault_ddmail_webapp_secret_key }}"
 ddmail_webapp_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_db_user_rw_password }}@localhost/mail'
+
+# www_ddmail_se
+www_ddmail_se_venv_user_owner: "{{ vault_www_ddmail_se_venv_user_owner }}"
+www_ddmail_se_venv_group_owner: "{{ vault_www_ddmail_se_venv_group_owner }}"
