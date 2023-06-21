@@ -13,21 +13,30 @@
 
 - name: Enable apache2 mod ssl
   ansible.builtin.command: /usr/sbin/a2enmod ssl
+  when: env == "prod"
 
 - name: Enable apache2 mod headers
   ansible.builtin.command: /usr/sbin/a2enmod headers
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf 
-  template: src=000-default.conf.j2 dest=/etc/apache2/sites-available/000-default.conf
+  template: src=000-default.conf-prod.j2 dest=/etc/apache2/sites-available/000-default.conf
+  when: env == "prod"
+
+- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf 
+  template: src=000-default.conf-dev.j2 dest=/etc/apache2/sites-available/000-default.conf
+  when: env == "dev"
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/001-default-ssl.conf
   template: src=001-default-ssl.conf.j2 dest=/etc/apache2/sites-available/001-default-ssl.conf
+  when: env == "prod"
 
 - name: Create/edit apache2 config file /etc/apache2/mods-available/ssl.conf
   template: src=ssl.conf.j2 dest=/etc/apache2/mods-available/ssl.conf
+  when: env == "prod"
 
 - name: Enable apache2 site 001-default-ssl.conf
   ansible.builtin.command: /usr/sbin/a2ensite 001-default-ssl.conf
+  when: env == "prod"
 
 - name: Restar apache2 service
   service: name=apache2 state=restarted enabled=yes
