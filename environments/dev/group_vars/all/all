@@ -46,6 +46,10 @@ sshd_allow_tcp_forwarding: !!str no
 sshd_x11_forwarding: !!str no
 sshd_allow_users: "{{ vault_sshd_allow_users }}"
 
+# apache2
+apache2_port80_server_name: ddmaildev
+apache2_port80_server_alias: www.ddmaildev.se
+
 # ddmail webapp
 ddmail_webapp_server_name: ddmaildev
 ddmail_webapp_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_wtf_csrf_secret_key }}"
