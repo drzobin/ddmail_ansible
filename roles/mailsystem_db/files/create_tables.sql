@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 	assets_in_sek int NOT NULL DEFAULT 0,
 	is_enabled boolean NOT NULL DEFAULT  0,
 	is_gratis boolean NOT NULL DEFAULT  0,
+	created DATETIME NOT NULL,
 	PRIMARY KEY (id) );
 
 CREATE TABLE IF NOT EXISTS users (
