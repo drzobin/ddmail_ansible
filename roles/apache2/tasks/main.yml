@@ -18,11 +18,11 @@
 - name: Enable apache2 mod headers
   ansible.builtin.command: /usr/sbin/a2enmod headers
 
-- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf 
+- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf using template 000-default.conf-prod.j2
   template: src=000-default.conf-prod.j2 dest=/etc/apache2/sites-available/000-default.conf
   when: env == "prod"
 
-- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf 
+- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf using template 000-default.conf-dev.j2
   template: src=000-default.conf-dev.j2 dest=/etc/apache2/sites-available/000-default.conf
   when: env == "dev"
 
