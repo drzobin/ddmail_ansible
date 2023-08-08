@@ -10,10 +10,10 @@ pip install ansible
 # ansible with ssh key and su password
 
 # prod
-ansible-playbook prod_playbook.yml -i environments/prod/ --ask-vault-pass --key-file [key file] --user [user] --ask-become-pass
+ansible-playbook prod_playbook.yml -i environments/prod/ --ask-vault-pass --key-file [key file] --user [user]
 
 # dev
-ansible-playbook dev_playbook.yml -i environments/dev/ --ask-vault-pass --key-file [key file] --user [user] --ask-become-pass
+ansible-playbook dev_playbook.yml -i environments/dev/ --ask-vault-pass --key-file [key file] --user [user]
 
 #
 #
