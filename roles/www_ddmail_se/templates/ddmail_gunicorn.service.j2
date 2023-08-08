@@ -33,5 +33,11 @@ ProtectKernelTunables=yes
 # Set filesystem to read only
 ProtectSystem=strict                  
 
+# 
+CapabilityBoundingSet=~CAP_SYS_ADMIN
+
+# System call filter whitelist @system-service deny all other, for more information regaring what system calls that is included run: systemd-analyze syscall-filter
+SystemCallFilter=@system-service
+
 [Install]
 WantedBy=multi-user.target
