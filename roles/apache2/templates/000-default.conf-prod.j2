@@ -2,10 +2,16 @@
     ServerName ddmail.se
 
     Redirect permanent / https://ddmail.se/
+
+    ErrorLog ${APACHE_LOG_DIR}/clearnet_port80_error.log
+    CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log combined
 </VirtualHost>
 
 <VirtualHost *:80>
     ServerName www.ddmail.se
 
     Redirect permanent / https://www.ddmail.se/
+
+    ErrorLog ${APACHE_LOG_DIR}/clearnet_port80_error.log
+    CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log combined
 </VirtualHost>
