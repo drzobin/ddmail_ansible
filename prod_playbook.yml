@@ -10,6 +10,7 @@
               - disable_ipv6
               - nftables
               - sshd
+              - unattended-upgrades
               - certbot
               - mariadb
               - mailsystem_db
