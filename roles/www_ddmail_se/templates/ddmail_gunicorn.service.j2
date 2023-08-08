@@ -33,7 +33,17 @@ ProtectKernelTunables=yes
 # Set filesystem to read only
 ProtectSystem=strict                  
 
-# 
+# Service may not create SUID/SGID files
+RestrictSUIDSGID=yes
+
+# Service may not create writable and executable memory mappings
+MemoryDenyWriteExecute=yes
+
+# Hide / with a tmpfs filesystem, whitelist path that is needed for the application 
+TemporaryFileSystem=/:ro
+BindReadOnlyPaths=/opt/ddmail_venv
+
+# CAP filter
 CapabilityBoundingSet=~CAP_SYS_ADMIN
 
 # System call filter whitelist @system-service deny all other, for more information regaring what system calls that is included run: systemd-analyze syscall-filter
