@@ -27,6 +27,6 @@
     ProxyPass / http://127.0.0.1:8000/
     ProxyPassReverse / http://127.0.0.1:8000/
 
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    ErrorLog ${APACHE_LOG_DIR}/clearnet_port443_error.log
+    CustomLog ${APACHE_LOG_DIR}/clearnet_port443_access.log combined
 </VirtualHost>
