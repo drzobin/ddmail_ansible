@@ -9,5 +9,29 @@ WorkingDirectory=/opt/ddmail_venv/
 Environment="PATH=/opt/ddmail_venv/bin/"
 ExecStart=/opt/ddmail_venv/bin/gunicorn --workers 2 "ddmail:create_app()"
 
+# Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
+NoNewPrivileges=yes
+
+# Use dedicated /tmp
+PrivateTmp=yes
+
+# Hide system users
+PrivateUsers=yes
+
+# Hide user homes
+ProtectHome=yes
+
+# Prevent access to /dev
+PrivateDevices=yes
+
+# Prevent loading or reading kernel modules
+ProtectKernelModules=yes
+
+# Prevent altering kernel tunables
+ProtectKernelTunables=yes
+
+# Set filesystem to read only
+ProtectSystem=strict                  
+
 [Install]
 WantedBy=multi-user.target
