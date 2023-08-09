@@ -18,33 +18,22 @@ NoNewPrivileges=yes
 # Use dedicated /tmp
 PrivateTmp=yes
 
-# Hide system users
-#PrivateUsers=yes
-
 # Hide user homes
 ProtectHome=yes
 
 # Prevent access to /dev
 PrivateDevices=yes
 
-# Prevent loading or reading kernel modules
-ProtectKernelModules=yes
-
-# Prevent altering kernel tunables
-ProtectKernelTunables=yes
-
-# Set filesystem to read only
-ProtectSystem=strict
-
-# Set those dirs to read and write
-ReadWritePaths=/var/log/apache2/
-ReadWritePaths=/var/run
-
 # Service may not create SUID/SGID files
 RestrictSUIDSGID=yes
 
 # Service may not create writable and executable memory mappings
 MemoryDenyWriteExecute=yes
+
+# Hide / with a tmpfs filesystem, whitelist path that is needed for the application 
+TemporaryFileSystem=/:ro
+BindPaths=/var/log/apache2 /var/run/apache2 /var/lock/apache2
+BindReadOnlyPaths=/bin/sh /usr/share/apache2/ /usr/bin/stat /usr/bin/id /usr/bin/rm /usr/sbin/apache2 /usr/sbin/apachectl /usr/sbin/apache2ctl /lib/x86_64-linux-gnu /lib64 /var/www /var/lib/apache2 /var/cache/apache2 /usr/lib/apache2 /etc/letsencrypt /etc/passwd /etc/group /etc/apache2 /etc/mime.types
 
 # CAP filter
 CapabilityBoundingSet=~CAP_SYS_ADMIN
@@ -55,4 +44,3 @@ SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
-
