@@ -29,9 +29,9 @@ TemporaryFileSystem=/:ro
 BindReadOnlyPaths=/opt/ddmail_venv /usr/bin/ls /usr/bin/python3.9 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.9 /run/mysqld/mysqld.sock
 BindPaths=/var/log/gunicorn/gunicorn.log
 
-# 
-#CapabilityBoundingSet=~CAP_SYS_ADMIN
+# Deny all CAP
 CapabilityBoundingSet=
+AmbientCapabilities=
 
 # System call filter
 SystemCallFilter=@system-service
