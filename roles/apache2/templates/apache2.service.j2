@@ -1,0 +1,58 @@
+[Unit]
+Description=The Apache HTTP Server
+After=network.target remote-fs.target nss-lookup.target
+Documentation=https://httpd.apache.org/docs/2.4/
+
+[Service]
+Type=forking
+Environment=APACHE_STARTED_BY_SYSTEMD=true
+ExecStart=/usr/sbin/apachectl start
+ExecStop=/usr/sbin/apachectl graceful-stop
+ExecReload=/usr/sbin/apachectl graceful
+KillMode=mixed
+Restart=on-abort
+
+# Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
+NoNewPrivileges=yes
+
+# Use dedicated /tmp
+PrivateTmp=yes
+
+# Hide system users
+#PrivateUsers=yes
+
+# Hide user homes
+ProtectHome=yes
+
+# Prevent access to /dev
+PrivateDevices=yes
+
+# Prevent loading or reading kernel modules
+ProtectKernelModules=yes
+
+# Prevent altering kernel tunables
+ProtectKernelTunables=yes
+
+# Set filesystem to read only
+ProtectSystem=strict
+
+# Set those dirs to read and write
+ReadWritePaths=/var/log/apache2/
+ReadWritePaths=/var/run
+
+# Service may not create SUID/SGID files
+RestrictSUIDSGID=yes
+
+# Service may not create writable and executable memory mappings
+MemoryDenyWriteExecute=yes
+
+# CAP filter
+CapabilityBoundingSet=~CAP_SYS_ADMIN
+
+# System call filter whitelist @system-service deny all other, for more information regaring what system calls that is included run: systemd-analyze syscall-filter
+SystemCallFilter=@system-service
+
+
+[Install]
+WantedBy=multi-user.target
+
