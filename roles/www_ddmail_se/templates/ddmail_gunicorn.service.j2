@@ -7,7 +7,7 @@ User=www-ddmail
 Group=www-ddmail
 WorkingDirectory=/opt/ddmail_venv/
 Environment="PATH=/opt/ddmail_venv/bin/"
-ExecStart=/opt/ddmail_venv/bin/gunicorn --workers 2 "ddmail:create_app()"
+ExecStart=/opt/ddmail_venv/bin/gunicorn --log-file /var/log/gunicorn/gunicorn.log --workers 2 "ddmail:create_app()" 
 
 # Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
 NoNewPrivileges=yes
@@ -15,23 +15,8 @@ NoNewPrivileges=yes
 # Use dedicated /tmp
 PrivateTmp=yes
 
-# Hide system users
-PrivateUsers=yes
-
 # Hide user homes
 ProtectHome=yes
-
-# Prevent access to /dev
-PrivateDevices=yes
-
-# Prevent loading or reading kernel modules
-ProtectKernelModules=yes
-
-# Prevent altering kernel tunables
-ProtectKernelTunables=yes
-
-# Set filesystem to read only
-ProtectSystem=strict                  
 
 # Service may not create SUID/SGID files
 RestrictSUIDSGID=yes
@@ -39,15 +24,18 @@ RestrictSUIDSGID=yes
 # Service may not create writable and executable memory mappings
 MemoryDenyWriteExecute=yes
 
-# Hide / with a tmpfs filesystem, whitelist path that is needed for the application 
+# Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/ddmail_venv
+BindReadOnlyPaths=/opt/ddmail_venv /usr/bin/ls /usr/bin/python3.9 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.9 /run/mysqld/mysqld.sock
+BindPaths=/var/log/gunicorn/gunicorn.log
 
-# CAP filter
-CapabilityBoundingSet=~CAP_SYS_ADMIN
+# 
+#CapabilityBoundingSet=~CAP_SYS_ADMIN
+CapabilityBoundingSet=
 
-# System call filter whitelist @system-service deny all other, for more information regaring what system calls that is included run: systemd-analyze syscall-filter
+# System call filter
 SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
+
