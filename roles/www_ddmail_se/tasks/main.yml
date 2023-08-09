@@ -146,6 +146,15 @@
   template: src=ddmail_gunicorn.service.j2 dest=/etc/systemd/system/ddmail_gunicorn.service
   when: env == "prod"
 
+- name: Add logdir for gunicorn.
+    ansible.builtin.file:
+    path: /var/log/gunicorn
+    state: directory
+    owner: www-ddmail
+    group: www-ddmail
+    mode: '0755'
+  when: env == "prod"
+
 - name: Set user and group ownership of /opt/ddmail_venv 
   file:
     state   : directory
