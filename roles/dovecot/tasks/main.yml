@@ -21,7 +21,7 @@
     comment: vmail
     uid: 5000
     group: vmail
-    home: /vat/vmail
+    home: /var/vmail
     create_home: False
 
 - name: Create folder to store mail in.
