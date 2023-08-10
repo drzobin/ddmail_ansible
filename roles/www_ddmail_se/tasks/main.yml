@@ -163,6 +163,9 @@
     group: "{{ www_ddmail_se_venv_group_owner }}"  
     path    : /opt/ddmail_venv
 
+- name: Reload systemd
+  command: systemctl daemon-reload
+
 - name: Restar ddmail_gunicorn Service
   service: name=ddmail_gunicorn state=restarted enabled=yes
   when: env == "prod"
