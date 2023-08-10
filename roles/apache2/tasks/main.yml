@@ -54,5 +54,8 @@
   ansible.builtin.command: /usr/sbin/a2ensite 001-default-ssl.conf
   when: env == "prod"
 
+- name: Reload systemd
+  command: systemctl daemon-reload
+
 - name: Restar apache2 service
   service: name=apache2 state=restarted enabled=yes
