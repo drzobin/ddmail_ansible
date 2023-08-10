@@ -147,7 +147,7 @@
   when: env == "prod"
 
 - name: Add logdir for gunicorn.
-    ansible.builtin.file:
+  ansible.builtin.file:
     path: /var/log/gunicorn
     state: directory
     owner: www-ddmail
