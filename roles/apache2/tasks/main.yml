@@ -3,6 +3,8 @@
   apt:
     pkg:
       - apache2
+      - apache2-utils
+      - libapache2-mod-evasive
     state: latest
 
 - name: Enable apache2 mod proxy
@@ -15,8 +17,22 @@
   ansible.builtin.command: /usr/sbin/a2enmod ssl
   when: env == "prod"
 
+- name: Enable apache2 mod evasive
+  ansible.builtin.command: /usr/sbin/a2enmod evasive
+  when: env == "prod"
+
 - name: Enable apache2 mod headers
   ansible.builtin.command: /usr/sbin/a2enmod headers
+
+- name: Remove server information by edit /etc/apache2/conf-available/security.conf
+  template: src=security.conf.j2 dest=/etc/apache2/conf-available/security.conf
+
+- name: Hardening apache2 systemd unit config with namespaces and seccomp /lib/systemd/system/apache2.service
+  template: src=apache2.service.j2 dest=/lib/systemd/system/apache2.service
+
+- name: Create/edit apache2 config file /etc/apache2/mods-available/evasive.conf using template evasive.conf.j2
+  template: src=evasive.conf.j2 dest=/etc/apache2/mods-available/evasive.conf
+  when: env == "prod"
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf using template 000-default.conf-prod.j2
   template: src=000-default.conf-prod.j2 dest=/etc/apache2/sites-available/000-default.conf
