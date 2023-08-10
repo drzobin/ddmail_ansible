@@ -1,5 +1,5 @@
 ---
-- name: Install packages needed for web application ddmail
+- name: Install packages needed for certbot to get letsencrypt ssl/tls cert
   apt:
     pkg:
       - certbot
@@ -22,13 +22,29 @@
   command: touch /etc/letsencrypt/.registered
   when: not certbot_reg_lockfile.stat.exists
 
-- name: Stat cerbot apache ssl cert
+- name: Stat cerbot apache ssl cert for ddmail.se and www.ddmail.se
   stat: path=/etc/letsencrypt/live/www.ddmail.se/fullchain.pem
   register: certbot_apache_ssl
+
+- name: Stop apache2 service
+  service: name=apache2 state=stopped enabled=yes
+  when: not certbot_apache_ssl.stat.exists
 
 - name: Get apache ssl certificate for www.ddmail.se
   command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d ddmail.se -d www.ddmail.se
   when: not certbot_apache_ssl.stat.exists
+
+- name: Stat cerbot postfix/dovecot ssl cert for mail.ddmail.se
+  stat: path=/etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
+  register: certbot_mail_ssl
+
+- name: Stop apache2 service
+  service: name=apache2 state=stopped enabled=yes
+  when: not certbot_mail_ssl.stat.exists
+
+- name: Get postfix/dovecot ssl certificate for mail.ddmail.se
+  command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d mail.ddmail.se
+  when: not certbot_mail_ssl.stat.exists
 
 - name: Certbot renew as cronjob
   cron:
