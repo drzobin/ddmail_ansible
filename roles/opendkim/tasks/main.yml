@@ -1,0 +1,60 @@
+---
+- name: Install opendkim packages.
+  apt:
+    pkg:
+      - opendkim 
+      - opendkim-tools
+    state: latest
+
+- name: Create/edit opendkim configuration file /etc/opendkim.conf
+  template: src=etc_opendkim.conf.j2 dest=/etc/opendkim.conf
+
+- name: Create/edit opendkim configuration file /etc/default/opendkim
+  template: src=etc_default_opendkim.j2 dest=/etc/default/opendkim
+
+- name: Create /etc/opendkim directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/opendkim
+    state: directory
+    mode: '0755'
+
+- name: Create /etc/opendkim/keys directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/opendkim/keys
+    state: directory
+    mode: '0755'
+
+- name: Create/edit opendkim configuration file /etc/opendkim/TrustedHosts
+  template: src=etc_opendkim_TrustedHosts.j2 dest=/etc/opendkim/TrustedHosts
+
+- name: Create/edit opendkim configuration file /etc/opendkim/KeyTable
+  template: src=etc_opendkim_KeyTable.j2 dest=/etc/opendkim/KeyTable
+
+- name: Create/edit opendkim configuration file /etc/opendkim/SigningTable
+  template: src=etc_opendkim_SigningTable.j2 dest=/etc/opendkim/SigningTable
+
+- name: Create /etc/opendkim/keys/ddmail.se directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/opendkim/keys/ddmail.se
+    state: directory
+    mode: '0755'
+
+- name: Stat ddmail key file /etc/opendkim/keys/ddmail.se/mail.private
+  stat: path=/etc/opendkim/keys/ddmail.se/mail.private
+  register: opendkim_ddmail_private_key
+
+- name: Create dkim cert for ddmail.se
+  ansible.builtin.command: /usr/sbin/opendkim-genkey --bits=4096 --directory=/etc/opendkim/keys/ddmail.se/ -s mail -d ddmail.se
+  when: not opendkim_ddmail_private_key.stat.exists
+
+- name: Change file ownership and group on /etc/opendkim/keys/ddmail.se/mail.private to opendkim
+  ansible.builtin.file:
+    path: /etc/opendkim/keys/ddmail.se/mail.private
+    owner: opendkim
+    group: opendkim
+    mode: '0640'
+  when: not opendkim_ddmail_private_key.stat.exists
+
+- name: Restart opendkim service
+  service: name=opendkim state=restarted enabled=yes
+
