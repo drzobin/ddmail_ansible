@@ -73,7 +73,11 @@ virtual_alias_maps = mysql:/etc/postfix/mysql-virtual-alias.cf
 # Send mail to rspamd.
 #smtpd_milters = unix:/var/lib/rspamd/milter.sock
 # or for TCP socket
-smtpd_milters = inet:localhost:11332
+#smtpd_milters = inet:localhost:11332
+
+# Sending mail to opendkim
+smtpd_milters = inet:localhost:12301
+non_smtpd_milters = inet:localhost:12301
 
 # skip mail without checks if something goes wrong
 milter_default_action = accept
