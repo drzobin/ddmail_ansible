@@ -11,9 +11,9 @@ mariadb_mysql_ip: 127.0.0.1
 # mail database settings
 mail_db_name: mail
 mail_db_user_r: mail_r
-mail_db_user_r_password: "{{ vault_mail_db_user_r_password  }}"
+mail_db_user_r_password: "{{ vault_mail_prod_db_user_r_password  }}"
 mail_db_user_rw: mail_rw
-mail_db_user_rw_password: "{{ vault_mail_db_user_rw_password }}"
+mail_db_user_rw_password: "{{ vault_mail_prod_db_user_rw_password }}"
 
 # postfix main.cf
 postfix_myhostname: mail.ddmail.se
@@ -53,7 +53,7 @@ apache2_port80_server_alias: ddmail.se
 # ddmail webapp
 ddmail_webapp_prod_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_prod_wtf_csrf_secret_key }}"
 ddmail_webapp_prod_secret_key: "{{ vault_ddmail_webapp_prod_secret_key }}"
-ddmail_webapp_prod_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_db_user_rw_password }}@localhost/mail'
+ddmail_webapp_prod_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_prod_db_user_rw_password }}@localhost/mail'
 
 ddmail_webapp_test_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_test_wtf_csrf_secret_key }}"
 ddmail_webapp_test_secret_key: "{{ vault_ddmail_webapp_test_secret_key }}"
