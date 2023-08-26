@@ -32,7 +32,7 @@ MemoryDenyWriteExecute=yes
 
 # Hide / with a tmpfs filesystem, whitelist path that is needed for the application 
 TemporaryFileSystem=/:ro
-BindPaths=/var/log/apache2 /var/run /var/lock
+BindPaths=/var/log/apache2 /var/run /var/lock /run/lock
 BindReadOnlyPaths=/usr/share/apache2/ /bin/sh /usr/bin/mkdir /usr/bin/rmdir /usr/bin/mktemp /usr/bin/chmod /usr/bin/chown /usr/bin/stat /usr/bin/id /usr/bin/rm /usr/sbin/apache2 /usr/sbin/apachectl /usr/sbin/apache2ctl /lib/x86_64-linux-gnu /lib64 /var/www /var/lib/apache2 /var/cache/apache2 /usr/lib/apache2 /etc/letsencrypt /etc/passwd /etc/group /etc/apache2 /etc/mime.types /etc/resolv.conf
 
 # CAP filter whitelist
