@@ -51,10 +51,18 @@ apache2_port80_server_name: ddmaildev
 apache2_port80_server_alias: www.ddmaildev.se
 
 # ddmail webapp
-ddmail_webapp_server_name: ddmaildev
-ddmail_webapp_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_wtf_csrf_secret_key }}"
-ddmail_webapp_secret_key: "{{ vault_ddmail_webapp_secret_key }}"
-ddmail_webapp_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_db_user_rw_password }}@localhost/mail'
+ddmail_webapp_prod_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_prod_wtf_csrf_secret_key }}"
+ddmail_webapp_prod_secret_key: "{{ vault_ddmail_webapp_prod_secret_key }}"
+ddmail_webapp_prod_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_db_user_rw_password }}@localhost/mail'
+
+ddmail_webapp_test_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_test_wtf_csrf_secret_key }}"
+ddmail_webapp_test_secret_key: "{{ vault_ddmail_webapp_test_secret_key }}"
+ddmail_webapp_test_sqlalchemy_database_uri: 'mysql://mail_test_rw:{{ vault_mail_test_db_user_rw_password }}@localhost/mail_test'
+
+ddmail_webapp_dev_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_dev_wtf_csrf_secret_key }}"
+ddmail_webapp_dev_secret_key: "{{ vault_ddmail_webapp_dev_secret_key }}"
+ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_dev_rw:{{ vault_mail_dev_db_user_rw_password }}@localhost/mail_dev'
+
 
 # www_ddmail_se
 www_ddmail_se_venv_user_owner: "{{ vault_www_ddmail_se_venv_user_owner }}"
