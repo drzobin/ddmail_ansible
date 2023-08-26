@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS authenticateds (
 	ON UPDATE CASCADE,
 	PRIMARY KEY (id) );
 
-CREATE TABLE IF NOT EXISTS domains (
+CREATE TABLE IF NOT EXISTS account_domains (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
 	domain varchar(191) NOT NULL UNIQUE,
@@ -58,14 +58,14 @@ CREATE TABLE IF NOT EXISTS global_domains (
 CREATE TABLE IF NOT EXISTS emails (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
-	domain_id int NULL,
+	account_domain_id int NULL,
 	global_domain_id int NULL,
 	email varchar(191) NOT NULL UNIQUE,
 	password_hash varchar(2096) NOT NULL,
 	FOREIGN KEY (account_id) REFERENCES accounts(id)
 		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
-	FOREIGN KEY (domain_id) REFERENCES domains(id)
+	FOREIGN KEY (account_domain_id) REFERENCES domains(id)
     		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
 	FOREIGN KEY (global_domain_id) REFERENCES global_domains(id)
@@ -76,14 +76,14 @@ CREATE TABLE IF NOT EXISTS emails (
 CREATE TABLE IF NOT EXISTS aliases (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
-	src_domain_id int NULL,
+	src_account_domain_id int NULL,
 	src_global_domain_id int NULL,
 	src_email varchar(191) NOT NULL UNIQUE,
 	dst_email_id int NOT NULL,
 	FOREIGN KEY (account_id) REFERENCES accounts(id)
     		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
-	FOREIGN KEY (src_domain_id) REFERENCES domains(id)
+	FOREIGN KEY (src_account_domain_id) REFERENCES domains(id)
     		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
 	FOREIGN KEY (src_global_domain_id) REFERENCES global_domains(id)
