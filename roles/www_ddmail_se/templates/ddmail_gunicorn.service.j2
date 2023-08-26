@@ -3,6 +3,7 @@ Description=Gunicorn instance to serve ddmail
 After=network.target
 
 [Service]
+Environment="MODE=PRODUCTION"
 User=www-ddmail
 Group=www-ddmail
 WorkingDirectory=/opt/ddmail_venv/
