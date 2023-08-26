@@ -16,6 +16,7 @@
               - mailsystem_db
               - redis
               - rspamd
+              - opendkim
               - postfix
               - dovecot
               - apache2
