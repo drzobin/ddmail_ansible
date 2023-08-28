@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 	is_enabled boolean NOT NULL DEFAULT  0,
 	is_gratis boolean NOT NULL DEFAULT  0,
 	created DATETIME NOT NULL,
+	last_time_disabled DATETIME DEFAULT NULL,
 	PRIMARY KEY (id) );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -65,7 +66,7 @@ CREATE TABLE IF NOT EXISTS emails (
 	FOREIGN KEY (account_id) REFERENCES accounts(id)
 		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
-	FOREIGN KEY (account_domain_id) REFERENCES domains(id)
+	FOREIGN KEY (account_domain_id) REFERENCES account_domains(id)
     		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
 	FOREIGN KEY (global_domain_id) REFERENCES global_domains(id)
@@ -83,7 +84,7 @@ CREATE TABLE IF NOT EXISTS aliases (
 	FOREIGN KEY (account_id) REFERENCES accounts(id)
     		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
-	FOREIGN KEY (src_account_domain_id) REFERENCES domains(id)
+	FOREIGN KEY (src_account_domain_id) REFERENCES account_domains(id)
     		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
 	FOREIGN KEY (src_global_domain_id) REFERENCES global_domains(id)
