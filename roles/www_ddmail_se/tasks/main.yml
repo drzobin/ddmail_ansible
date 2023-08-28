@@ -64,6 +64,13 @@
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
+- name: Install dnspython with pip.
+  pip:
+    name: dnspython
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_venv
+
 - name: Install pytest with pip.
   pip:
     name: pytest
