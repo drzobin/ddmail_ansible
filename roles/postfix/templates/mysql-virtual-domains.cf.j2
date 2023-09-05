@@ -4,4 +4,5 @@ hosts = 127.0.0.1
 dbname = {{ mail_db_name }}
 #query = SELECT 1 FROM domains WHERE domain='%s'
 #query = SELECT 1 FROM domains left join accounts on domains.account_id = accounts.id where is_enabled = 1 and domain = '%s'
-query = SELECT 1 FROM global_domains where is_enabled = 1 and domain = '%s'
+#query = SELECT 1 FROM global_domains where is_enabled = 1 and domain = '%s'
+query = SELECT 1 FROM (SELECT domain FROM global_domains where is_enabled = 1 UNION SELECT domain FROM account_domains) AS tmp where tmp.domain = '%s'
