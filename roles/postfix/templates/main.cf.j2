@@ -75,9 +75,9 @@ virtual_alias_maps = mysql:/etc/postfix/mysql-virtual-alias.cf
 # or for TCP socket
 #smtpd_milters = inet:localhost:11332
 
-# Sending mail to opendkim
-smtpd_milters = inet:localhost:12301
-non_smtpd_milters = inet:localhost:12301
+# Sending mail to rspamd and opendkim
+smtpd_milters = inet:localhost:11332, inet:localhost:12301
+non_smtpd_milters = inet:localhost:11332, inet:localhost:12301
 
 # skip mail without checks if something goes wrong
 milter_default_action = accept
