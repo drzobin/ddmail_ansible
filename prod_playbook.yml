@@ -11,12 +11,12 @@
               - nftables
               - sshd
               - unattended-upgrades
+              - unbound
               - certbot
               - mariadb
               - mailsystem_db
               - redis
               - rspamd
-              - opendkim
               - postfix
               - dovecot
               - apache2
