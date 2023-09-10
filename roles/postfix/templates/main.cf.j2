@@ -70,19 +70,16 @@ virtual_mailbox_domains = mysql:/etc/postfix/mysql-virtual-domains.cf
 virtual_mailbox_maps = mysql:/etc/postfix/mysql-virtual-emails.cf
 virtual_alias_maps = mysql:/etc/postfix/mysql-virtual-alias.cf
 
-# Send mail to rspamd.
-#smtpd_milters = unix:/var/lib/rspamd/milter.sock
-# or for TCP socket
-#smtpd_milters = inet:localhost:11332
-
-# Sending mail to rspamd and opendkim
-smtpd_milters = inet:localhost:11332, inet:localhost:12301
-non_smtpd_milters = inet:localhost:11332, inet:localhost:12301
-
-# skip mail without checks if something goes wrong
-milter_default_action = accept
-
 # 6 is the default milter protocol version;
 # prior to Postfix 2.6 the default protocol was 2.
 milter_protocol = 6
 
+# skip mail without checks if something goes wrong
+milter_default_action = accept
+
+# Send mail to rspamd.
+smtpd_milters = inet:localhost:11332
+
+# Sending mail to rspamd and opendkim
+#smtpd_milters = inet:localhost:11332, inet:localhost:12301
+#non_smtpd_milters = inet:localhost:11332, inet:localhost:12301
