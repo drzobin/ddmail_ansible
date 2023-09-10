@@ -1,0 +1,12 @@
+---
+- name: Install unbound packages.
+  apt:
+    pkg:
+      - unbound 
+    state: latest
+
+- name: Create/edit unbound configuration file /etc/unbound/unbound.conf.d/unbound.conf
+  template: src=etc_unbound_unbound.conf.d_unbound.conf.j2 dest=/etc/unbound/unbound.conf.d/unbound.conf
+
+- name: Restar unbound Service
+  service: name=unbound state=restarted enabled=yes

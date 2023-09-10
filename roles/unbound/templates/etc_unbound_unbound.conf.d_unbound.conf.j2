@@ -1,0 +1,16 @@
+server:
+	do-ip6: no
+	do-ip4: yes
+
+	do-udp: yes
+	do-tcp: yes
+
+	interface: 0.0.0.0
+	access-control: 127.0.0.0 allow
+
+	hide-identity: yes
+	hide-version: yes
+	minimal-responses: yes
+
+	harden-glue: yes
+	harden-dnssec-stripped: yes
