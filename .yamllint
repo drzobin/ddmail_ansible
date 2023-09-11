@@ -1,0 +1,14 @@
+---
+# vi: filetype=yaml
+extends: default
+
+yaml-files:
+  - "*.yaml"
+  - "*.yml"
+  - ".ansible-lint"
+  - ".yamllint"
+
+rules:
+  line-length:
+    max: 120
+    level: error

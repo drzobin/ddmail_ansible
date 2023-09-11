@@ -1,0 +1,8 @@
+---
+# vi: filetype=yaml
+profile: production
+
+skip_list:
+  - package-latest
+
+offline: true
