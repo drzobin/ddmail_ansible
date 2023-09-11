@@ -1,0 +1,35 @@
+---
+- name: Add tor apt signing key.
+  ansible.builtin.shell: wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | tee /usr/share/keyrings/tor-archive-keyring.gpg >/dev/null
+
+- name: Add tor apt repository.
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main"
+    state: present
+    filename: tor
+    update_cache: yes
+
+- name: Add tor src apt repository.
+  apt_repository:
+    repo: "deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main"
+    state: present
+    filename: tor
+    update_cache: yes
+
+- name: Run "apt-get update".
+  apt:
+    update_cache: yes
+
+- name: Install latest version of deb.torproject.org-keyring ignoring "install-recommends".
+  apt:
+    name: deb.torproject.org-keyring
+    state: latest
+    install_recommends: no
+    update_cache: yes
+
+- name: Install latest version of tor ignoring "install-recommends".
+  apt:
+    name: tor
+    state: latest
+    install_recommends: no
+    update_cache: yes
