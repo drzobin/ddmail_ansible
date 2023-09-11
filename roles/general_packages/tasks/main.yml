@@ -8,4 +8,5 @@
       - dnsutils
       - mlocate
       - git
+      - apt-transport-https
     state: latest
