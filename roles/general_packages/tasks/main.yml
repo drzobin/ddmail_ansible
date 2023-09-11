@@ -9,4 +9,5 @@
       - mlocate
       - git
       - apt-transport-https
+      - wget
     state: latest
