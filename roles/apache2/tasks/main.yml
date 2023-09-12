@@ -57,5 +57,5 @@
 - name: Reload systemd
   command: systemctl daemon-reload
 
-- name: Restar apache2 service
+- name: Restart apache2 service
   service: name=apache2 state=restarted enabled=yes
