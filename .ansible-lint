@@ -2,6 +2,9 @@
 # vi: filetype=yaml
 profile: production
 
+exclude_paths:
+  - .github/
+
 skip_list:
   - package-latest
 
