@@ -6,7 +6,12 @@
     state: latest
 
 - name: Create/edit nftables configuration file /etc/nftables.conf
-  template: src=nftables.conf.j2 dest=/etc/nftables.conf
+  template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
 
 - name: Restar nftables service
-  service: name=nftables state=restarted enabled=yes
+  service:
+    name: nftables
+    state: restarted
+    enabled: true

@@ -4,4 +4,3 @@
     pkg:
       - redis-server
     state: latest
-

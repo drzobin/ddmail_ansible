@@ -7,14 +7,16 @@
     state: latest
 
 - name: Create/edit unattended-upgrades configuration file /etc/apt/apt.conf.d/50unattended-upgrades.
-  template: src=50unattended-upgrades.j2 dest=/etc/apt/apt.conf.d/50unattended-upgrades
+  template:
+    src: 50unattended-upgrades.j2
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
 
 - name: echo "unattended-upgrades unattended-upgrades/enable_auto_updates boolean true" | debconf-set-selections
-  debconf: 
-    name: unattended-upgrades 
-    question: unattended-upgrades/enable_auto_updates 
-    vtype: boolean 
-    value: 'true'
+  debconf:
+    name: unattended-upgrades
+    question: unattended-upgrades/enable_auto_updates
+    vtype: boolean
+    value: "true"
 
 - name: dpkg-reconfigure -f noninteractive unattended-upgrades
   command:

@@ -9,40 +9,50 @@
     repo: "deb [arch=amd64] https://rspamd.com/apt-stable/ bullseye  main"
     state: present
     filename: rspamd
-    update_cache: yes
+    update_cache: true
 
 - name: Add rspamdi src apt repository.
   apt_repository:
     repo: "deb-src [arch=amd64] https://rspamd.com/apt-stable/ bullseye main"
     state: present
     filename: rspamd
-    update_cache: yes
+    update_cache: true
 
 - name: Run "apt-get update".
   apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Install latest version of rspamd ignoring "install-recommends".
   apt:
     name: rspamd
     state: latest
-    install_recommends: no
-    update_cache: yes
+    install_recommends: false
+    update_cache: true
 
 - name: Create/edit rspamd configuration file /etc/rspamd/local.d/worker-normal.inc.
-  template: src=etc_rspamd_local.d_worker-normal.inc.j2 dest=/etc/rspamd/local.d/worker-normal.inc
+  template:
+    src: etc_rspamd_local.d_worker-normal.inc.j2
+    dest: /etc/rspamd/local.d/worker-normal.inc
 
 - name: Create/edit rspamd configuration file /etc/rspamd/local.d/worker-proxy.inc.
-  template: src=etc_rspamd_local.d_worker-proxy.inc.j2 dest=/etc/rspamd/local.d/worker-proxy.inc
+  template:
+    src: etc_rspamd_local.d_worker-proxy.inc.j2
+    dest: /etc/rspamd/local.d/worker-proxy.inc
 
 - name: Create/edit rspamd configuration file /etc/rspamd/local.d/worker-controller.inc.
-  template: src=etc_rspamd_local.d_worker-controller.inc.j2 dest=/etc/rspamd/local.d/worker-controller.inc
+  template:
+    src: etc_rspamd_local.d_worker-controller.inc.j2
+    dest: /etc/rspamd/local.d/worker-controller.inc
 
 - name: Create/edit rspamd configuration file /etc/rspamd/local.d/milter_headers.conf
-  template: src=etc_rspamd_local.d_milter_headers.conf.j2 dest=/etc/rspamd/local.d/milter_headers.conf
+  template:
+    src: etc_rspamd_local.d_milter_headers.conf.j2
+    dest: /etc/rspamd/local.d/milter_headers.conf
 
 - name: Create/edit rspamd configuration file /etc/rspamd/local.d/classifier-bayes.conf
-  template: src=etc_rspamd_local.d_classifier-bayes.conf.j2 dest=/etc/rspamd/local.d/classifier-bayes.conf
+  template:
+    src: etc_rspamd_local.d_classifier-bayes.conf.j2
+    dest: /etc/rspamd/local.d/classifier-bayes.conf
 
 - name: Create folder to store dkim key in.
   file:
@@ -58,7 +68,9 @@
   register: dkim_key
 
 - name: Create dkim cert.
-  ansible.builtin.shell: /usr/bin/rspamadm dkim_keygen -b 2048 -s mail -k /var/lib/rspamd/dkim/mail.key | /usr/bin/tee -a  /var/lib/rspamd/dkim/mail.pub
+  ansible.builtin.shell: >
+    /usr/bin/rspamadm dkim_keygen -b 2048 -s mail -k /var/lib/rspamd/dkim/mail.key |
+    /usr/bin/tee -a  /var/lib/rspamd/dkim/mail.pub
   when: not dkim_key.stat.exists
 
 - name: Set premission on dkim private key.
@@ -76,7 +88,11 @@
     mode: "u=rwx,g=r,o="
 
 - name: Create/edit rspamd configuration file for dkim /etc/rspamd/local.d/dkim_signing.conf.
-  template: src=etc_rspamd_local.d_dkim_signing.conf.j2 dest=/etc/rspamd/local.d/dkim_signing.conf
+  template:
+    src: etc_rspamd_local.d_dkim_signing.conf.j2
+    dest: /etc/rspamd/local.d/dkim_signing.conf
 
 - name: Create/edit rspamd configuration filei for arc /etc/rspamd/local.d/arc.conf.
-  template: src=etc_rspamd_local.d_dkim_signing.conf.j2 dest=/etc/rspamd/local.d/arc.conf
+  template:
+    src: etc_rspamd_local.d_dkim_signing.conf.j2
+    dest: /etc/rspamd/local.d/arc.conf

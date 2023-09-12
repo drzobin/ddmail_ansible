@@ -12,7 +12,8 @@
     state: latest
 
 - name: stat /opt/ddmail_venv folder
-  stat: path=/opt/ddmail_venv
+  stat:
+    path: /opt/ddmail_venv
   register: ddmail_venv
 
 - name: Move /opt/ddmail_venv folder
@@ -99,30 +100,34 @@
     dest: /opt/ddmail_venv/ddmail_webapp
 
 - name: stat ddmail_webapp folder
-  stat: path=/opt/ddmail_venv/ddmail_webapp
+  stat:
+    path: /opt/ddmail_venv/ddmail_webapp
   register: ddmail_webapp
 
 - name: Move ddmail from ddmail_webapp
   command: mv /opt/ddmail_venv/ddmail_webapp/ddmail /opt/ddmail_venv/
-  #when: ddmail_webapp.stat.exists
-  when: 
+  # when: ddmail_webapp.stat.exists
+  when:
     - ddmail_webapp.stat.exists
     - env == "prod"
-      
 
 - name: Remove ddmail_webapp folder
   command: rm -rf /opt/ddmail_venv/ddmail_webapp
-  #when: ddmail_webapp.stat.exists
-  when: 
+  # when: ddmail_webapp.stat.exists
+  when:
     - ddmail_webapp.stat.exists
     - env == "prod"
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_venv/ddmail/config.py
-  template: src=config.py.j2 dest=/opt/ddmail_venv/ddmail/config.py
+  template:
+    src: config.py.j2
+    dest: /opt/ddmail_venv/ddmail/config.py
   when: env == "prod"
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_venv//ddmail_webapp/ddmail/config.py
-  template: src=config.py.j2 dest=/opt/ddmail_venv/ddmail_webapp/ddmail/config.py
+  template:
+    src: config.py.j2
+    dest: /opt/ddmail_venv/ddmail_webapp/ddmail/config.py
   when: env == "dev"
 
 - name: Install ddmail webapp with pip
@@ -149,8 +154,10 @@
     state: present
   when: env == "prod"
 
-- name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service 
-  template: src=ddmail_gunicorn.service.j2 dest=/etc/systemd/system/ddmail_gunicorn.service
+- name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service
+  template:
+    src: ddmail_gunicorn.service.j2
+    dest: /etc/systemd/system/ddmail_gunicorn.service
   when: env == "prod"
 
 - name: Add logdir for gunicorn.
@@ -159,20 +166,23 @@
     state: directory
     owner: www-ddmail
     group: www-ddmail
-    mode: '0755'
+    mode: "0755"
   when: env == "prod"
 
-- name: Set user and group ownership of /opt/ddmail_venv 
+- name: Set user and group ownership of /opt/ddmail_venv
   file:
-    state   : directory
-    recurse : yes
+    state: directory
+    recurse: true
     owner: "{{ www_ddmail_se_venv_user_owner }}"
-    group: "{{ www_ddmail_se_venv_group_owner }}"  
-    path    : /opt/ddmail_venv
+    group: "{{ www_ddmail_se_venv_group_owner }}"
+    path: /opt/ddmail_venv
 
 - name: Reload systemd
   command: systemctl daemon-reload
 
 - name: Restar ddmail_gunicorn Service
-  service: name=ddmail_gunicorn state=restarted enabled=yes
+  service:
+    name: ddmail_gunicorn
+    state: restarted
+    enabled: true
   when: env == "prod"

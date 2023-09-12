@@ -7,11 +7,14 @@
     state: latest
 
 - name: stat cerbot registration lockfile
-  stat: path=/etc/letsencrypt/.registered
+  stat:
+    path: /etc/letsencrypt/.registered
   register: certbot_reg_lockfile
 
 - name: Stop apache2 service
-  service: name=apache2 state=stopped enabled=yes
+  service:
+    name: apache2 state=stopped
+    enabled: true
   when: not certbot_reg_lockfile.stat.exists
 
 - name: Register certbot
@@ -23,11 +26,15 @@
   when: not certbot_reg_lockfile.stat.exists
 
 - name: Stat cerbot apache ssl cert for ddmail.se and www.ddmail.se
-  stat: path=/etc/letsencrypt/live/www.ddmail.se/fullchain.pem
+  stat:
+    path: /etc/letsencrypt/live/www.ddmail.se/fullchain.pem
   register: certbot_apache_ssl
 
 - name: Stop apache2 service
-  service: name=apache2 state=stopped enabled=yes
+  service:
+    name: apache2
+    state: stopped
+    enabled: true
   when: not certbot_apache_ssl.stat.exists
 
 - name: Get apache ssl certificate for www.ddmail.se
@@ -35,11 +42,15 @@
   when: not certbot_apache_ssl.stat.exists
 
 - name: Stat cerbot postfix/dovecot ssl cert for mail.ddmail.se
-  stat: path=/etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
+  stat:
+    path: /etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
   register: certbot_mail_ssl
 
 - name: Stop apache2 service
-  service: name=apache2 state=stopped enabled=yes
+  service:
+    name: apache2
+    state: stopped
+    enabled: true
   when: not certbot_mail_ssl.stat.exists
 
 - name: Get postfix/dovecot ssl certificate for mail.ddmail.se
@@ -54,4 +65,7 @@
     hour: "04"
 
 - name: Restar apache2 service
-  service: name=apache2 state=restarted enabled=yes
+  service:
+    name: apache2
+    state: restarted
+    enabled: true
