@@ -33,3 +33,26 @@
     state: latest
     install_recommends: no
     update_cache: yes
+
+- name: Create/edit tor config file /etc/tor/torrc
+  template: src=etc_tor_torrc.j2 dest=/etc/tor/torrc
+
+- name: Create folder to store tor onion service keys for ddmail http.
+  file:
+    path: "{{ tor_ddmail_http_hidden_service_dir }}"
+    state: directory
+    owner: debian-tor
+    group: debian-tor
+    mode: "u=rwx,g=,o="
+
+- name: Create/edit apache2 config file /etc/apache2/sites-available/002-ddmail-tor-onion-service.conf
+  template: src=etc_apache2_sites-available_002-ddmail-tor-onion-service.conf.j2 dest=/etc/apache2/sites-available/002-ddmail-tor-onion-service.conf
+
+- name: Enable apache2 site 002-ddmail-tor-onion-service.conf
+  ansible.builtin.command: /usr/sbin/a2ensite 002-ddmail-tor-onion-service.conf
+
+- name: Restart apache2 service
+  service: name=apache2 state=restarted enabled=yes
+
+- name: Restart tor service
+  service: name=tor state=restarted enabled=yes
