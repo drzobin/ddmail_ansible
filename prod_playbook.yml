@@ -12,6 +12,7 @@
               - sshd
               - unattended-upgrades
               - unbound
+              - set_nameserver
               - certbot
               - mariadb
               - mailsystem_db
@@ -21,3 +22,4 @@
               - dovecot
               - apache2
               - www_ddmail_se
+              - tor_onion_service
