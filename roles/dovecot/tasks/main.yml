@@ -36,36 +36,57 @@
   ansible.builtin.template:
     src: dovecot.conf.j2
     dest: /etc/dovecot.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit dovecot configuration file conf.d/10-mail.conf.
   ansible.builtin.template:
     src: 10-mail.conf.j2
     dest: /etc/dovecot/conf.d/10-mail.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit dovecot configuration file conf.d/10-auth.conf.
   ansible.builtin.template:
     src: 10-auth.conf.j2
     dest: /etc/dovecot/conf.d/10-auth.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit dovecot configuration file conf.d/auth-sql.ext.
   ansible.builtin.template:
     src: auth-sql.conf.ext.j2
     dest: /etc/dovecot/conf.d/auth-sql.conf.ext
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit dovecot configuration file dovecot-sql.ext.
   ansible.builtin.template:
     src: dovecot-sql.conf.ext.j2
     dest: /etc/dovecot/dovecot-sql.conf.ext
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit dovecot configuration file conf.d/10-master.conf.
   ansible.builtin.template:
     src: 10-master.conf.j2
     dest: /etc/dovecot/conf.d/10-master.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit dovecot configuration file conf.d/10-ssl.conf.
   ansible.builtin.template:
     src: 10-ssl.conf.j2
     dest: /etc/dovecot/conf.d/10-ssl.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Restart dovecot service
   ansible.builtin.service:
