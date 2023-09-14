@@ -3,6 +3,9 @@
   ansible.builtin.copy:
     src: 70-ipv6.conf
     dest: /etc/sysctl.d/70-ipv6.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Run sysctl -p to activate change in file.
   ansible.builtin.command: /usr/sbin/sysctl -p /etc/sysctl.d/70-ipv6.conf
