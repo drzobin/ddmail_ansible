@@ -6,18 +6,20 @@
   become_method: ansible.builtin.su
 
   roles:
-    - general_packages
-    - disable_ipv6
-    - nftables
-    - sshd
-    - unattended-upgrades
-    - unbound
-    - certbot
-    - mariadb
-    - mailsystem_db
-    - redis
-    - rspamd
-    - postfix
-    - dovecot
-    - apache2
-    - www_ddmail_se
+              - general_packages
+              - disable_ipv6
+              - nftables
+              - sshd
+              - unattended-upgrades
+              - unbound
+              - set_nameserver
+              - certbot
+              - mariadb
+              - mailsystem_db
+              - redis
+              - rspamd
+              - postfix
+              - dovecot
+              - apache2
+              - www_ddmail_se
+              - tor_onion_service

@@ -1,0 +1,58 @@
+---
+- name: Add tor apt signing key.
+  ansible.builtin.shell: wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | tee /usr/share/keyrings/tor-archive-keyring.gpg >/dev/null
+
+- name: Add tor apt repository.
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main"
+    state: present
+    filename: tor
+    update_cache: yes
+
+- name: Add tor src apt repository.
+  apt_repository:
+    repo: "deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main"
+    state: present
+    filename: tor
+    update_cache: yes
+
+- name: Run "apt-get update".
+  apt:
+    update_cache: yes
+
+- name: Install latest version of deb.torproject.org-keyring ignoring "install-recommends".
+  apt:
+    name: deb.torproject.org-keyring
+    state: latest
+    install_recommends: no
+    update_cache: yes
+
+- name: Install latest version of tor ignoring "install-recommends".
+  apt:
+    name: tor
+    state: latest
+    install_recommends: no
+    update_cache: yes
+
+- name: Create/edit tor config file /etc/tor/torrc
+  template: src=etc_tor_torrc.j2 dest=/etc/tor/torrc
+
+- name: Create folder to store tor onion service keys for ddmail http.
+  file:
+    path: "{{ tor_ddmail_http_hidden_service_dir }}"
+    state: directory
+    owner: debian-tor
+    group: debian-tor
+    mode: "u=rwx,g=,o="
+
+- name: Create/edit apache2 config file /etc/apache2/sites-available/002-ddmail-tor-onion-service.conf
+  template: src=etc_apache2_sites-available_002-ddmail-tor-onion-service.conf.j2 dest=/etc/apache2/sites-available/002-ddmail-tor-onion-service.conf
+
+- name: Enable apache2 site 002-ddmail-tor-onion-service.conf
+  ansible.builtin.command: /usr/sbin/a2ensite 002-ddmail-tor-onion-service.conf
+
+- name: Restart apache2 service
+  service: name=apache2 state=restarted enabled=yes
+
+- name: Restart tor service
+  service: name=tor state=restarted enabled=yes

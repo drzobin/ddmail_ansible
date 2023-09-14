@@ -66,3 +66,9 @@ ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_dev_rw:{{ vault_mail_de
 # www_ddmail_se
 www_ddmail_se_venv_user_owner: "{{ vault_www_ddmail_se_venv_user_owner }}"
 www_ddmail_se_venv_group_owner: "{{ vault_www_ddmail_se_venv_group_owner }}"
+
+# tor oniun service
+tor_ddmail_http_hidden_service_dir: /var/lib/tor/ddmail_http/
+tor_ddmail_hidden_service_port: 80 
+tor_ddmail_hidden_service_map: 127.0.0.1:8080
+
