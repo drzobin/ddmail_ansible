@@ -10,11 +10,17 @@
   ansible.builtin.template:
     src: etc_opendkim.conf.j2
     dest: /etc/opendkim.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create/edit opendkim configuration file /etc/default/opendkim
   ansible.builtin.template:
     src: etc_default_opendkim.j2
     dest: /etc/default/opendkim
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create /etc/opendkim directory if it does not exist
   ansible.builtin.file:
@@ -32,16 +38,25 @@
   ansible.builtin.template:
     src: etc_opendkim_TrustedHosts.j2
     dest: /etc/opendkim/TrustedHosts
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create/edit opendkim configuration file /etc/opendkim/KeyTable
   ansible.builtin.template:
     src: etc_opendkim_KeyTable.j2
     dest: /etc/opendkim/KeyTable
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create/edit opendkim configuration file /etc/opendkim/SigningTable
   ansible.builtin.template:
     src: etc_opendkim_SigningTable.j2
     dest: /etc/opendkim/SigningTable
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create /etc/opendkim/keys/ddmail.se directory if it does not exist
   ansible.builtin.file:
@@ -65,7 +80,7 @@
     path: /etc/opendkim/keys/ddmail.se/mail.private
     owner: opendkim
     group: opendkim
-    mode: "0640"
+    mode: "u=rw,g=rx,o="
   when: not opendkim_ddmail_private_key.stat.exists
 
 - name: Restart opendkim service
