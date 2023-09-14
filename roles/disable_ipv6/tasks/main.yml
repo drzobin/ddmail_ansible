@@ -1,7 +1,8 @@
 ---
 - name: Copy sysctl file.
-  copy: src=70-ipv6.conf dest=/etc/sysctl.d/70-ipv6.conf
+  ansible.builtin.copy:
+    src: 70-ipv6.conf
+    dest: /etc/sysctl.d/70-ipv6.conf
 
 - name: Run sysctl -p to activate change in file.
-  command: /usr/sbin/sysctl -p /etc/sysctl.d/70-ipv6.conf
-
+  ansible.builtin.command: /usr/sbin/sysctl -p /etc/sysctl.d/70-ipv6.conf

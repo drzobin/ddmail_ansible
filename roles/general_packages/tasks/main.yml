@@ -1,6 +1,6 @@
 ---
 - name: Install general package.
-  apt:
+  ansible.builtin.apt:
     pkg:
       - vim
       - telnet

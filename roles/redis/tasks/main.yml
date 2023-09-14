@@ -1,7 +1,6 @@
 ---
 - name: Install redis-server packages.
-  apt:
+  ansible.builtin.apt:
     pkg:
       - redis-server
     state: latest
-

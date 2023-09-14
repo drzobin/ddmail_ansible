@@ -1,31 +1,31 @@
 ---
 - name: Install dovecot packages.
-  apt:
+  ansible.builtin.apt:
     pkg:
-      - dovecot-core 
-      - dovecot-imapd 
-      - dovecot-lmtpd 
+      - dovecot-core
+      - dovecot-imapd
+      - dovecot-lmtpd
       - dovecot-mysql
     state: latest
 
 - name: Ensure group vmail exists with correct gid.
-  group:
+  ansible.builtin.group:
     name: vmail
     state: present
     gid: 5000
 
 - name: Add the user vmail.
-  user:
+  ansible.builtin.user:
     name: vmail
     shell: /sbin/nologin
     comment: vmail
     uid: 5000
     group: vmail
     home: /var/vmail
-    create_home: False
+    create_home: false
 
 - name: Create folder to store mail in.
-  file:
+  ansible.builtin.file:
     path: /var/mail
     state: directory
     owner: root
@@ -33,25 +33,42 @@
     mode: "u=rwx,g=rwxs,o=rx"
 
 - name: Create/edit dovecot configuration file dovecot.conf.
-  template: src=dovecot.conf.j2 dest=/etc/dovecot.conf
+  ansible.builtin.template:
+    src: dovecot.conf.j2
+    dest: /etc/dovecot.conf
 
 - name: Create/edit dovecot configuration file conf.d/10-mail.conf.
-  template: src=10-mail.conf.j2 dest=/etc/dovecot/conf.d/10-mail.conf
+  ansible.builtin.template:
+    src: 10-mail.conf.j2
+    dest: /etc/dovecot/conf.d/10-mail.conf
 
 - name: Create/edit dovecot configuration file conf.d/10-auth.conf.
-  template: src=10-auth.conf.j2 dest=/etc/dovecot/conf.d/10-auth.conf
+  ansible.builtin.template:
+    src: 10-auth.conf.j2
+    dest: /etc/dovecot/conf.d/10-auth.conf
 
 - name: Create/edit dovecot configuration file conf.d/auth-sql.ext.
-  template: src=auth-sql.conf.ext.j2 dest=/etc/dovecot/conf.d/auth-sql.conf.ext
+  ansible.builtin.template:
+    src: auth-sql.conf.ext.j2
+    dest: /etc/dovecot/conf.d/auth-sql.conf.ext
 
 - name: Create/edit dovecot configuration file dovecot-sql.ext.
-  template: src=dovecot-sql.conf.ext.j2 dest=/etc/dovecot/dovecot-sql.conf.ext
+  ansible.builtin.template:
+    src: dovecot-sql.conf.ext.j2
+    dest: /etc/dovecot/dovecot-sql.conf.ext
 
 - name: Create/edit dovecot configuration file conf.d/10-master.conf.
-  template: src=10-master.conf.j2 dest=/etc/dovecot/conf.d/10-master.conf
+  ansible.builtin.template:
+    src: 10-master.conf.j2
+    dest: /etc/dovecot/conf.d/10-master.conf
 
 - name: Create/edit dovecot configuration file conf.d/10-ssl.conf.
-  template: src=10-ssl.conf.j2 dest=/etc/dovecot/conf.d/10-ssl.conf
+  ansible.builtin.template:
+    src: 10-ssl.conf.j2
+    dest: /etc/dovecot/conf.d/10-ssl.conf
 
-- name: Restar dovecot Service
-  service: name=dovecot state=restarted enabled=yes
+- name: Restart dovecot service
+  ansible.builtin.service:
+    name: dovecot
+    state: restarted
+    enabled: true

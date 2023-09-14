@@ -1,12 +1,17 @@
 ---
 - name: Install sshd packages.
-  apt:
+  ansible.builtin.apt:
     pkg:
       - openssh-server
     state: latest
 
 - name: Create/edit sshd configuration file /etc/ssh/sshd_config
-  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
 
-- name: Restar sshd Service
-  service: name=ssh state=restarted enabled=yes
+- name: Restart sshd service
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+    enabled: true

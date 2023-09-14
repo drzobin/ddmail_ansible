@@ -1,0 +1,19 @@
+---
+# vi: filetype=yaml
+profile: production
+
+exclude_paths:
+  - .github/
+
+skip_list:
+  - package-latest
+
+# Set expected errors to warnings until we fix them
+warn_list:
+  - latest[git]
+  - no-changed-when
+  - risky-file-permissions
+  - risky-shell-pipe
+  - role-name
+
+offline: true

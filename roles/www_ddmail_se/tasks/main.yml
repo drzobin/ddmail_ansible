@@ -1,6 +1,6 @@
 ---
 - name: Install packages needed for web application ddmail
-  apt:
+  ansible.builtin.apt:
     pkg:
       - python3-pip
       - build-essential
@@ -11,82 +11,83 @@
       - default-libmysqlclient-dev
     state: latest
 
-- name: stat /opt/ddmail_venv folder
-  stat: path=/opt/ddmail_venv
+- name: Stat /opt/ddmail_venv folder
+  ansible.builtin.stat:
+    path: /opt/ddmail_venv
   register: ddmail_venv
 
 - name: Move /opt/ddmail_venv folder
-  command: mv /opt/ddmail_venv /opt/ddmail_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  ansible.builtin.command: mv /opt/ddmail_venv /opt/ddmail_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
   when: ddmail_venv.stat.exists
 
 - name: Create dmail python env.
-  command: python3 -m venv /opt/ddmail_venv
+  ansible.builtin.command: python3 -m venv /opt/ddmail_venv
 
 - name: Install Flask with pip.
-  pip:
+  ansible.builtin.pip:
     name: flask
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install Flask-SQLAlchemy with pip.
-  pip:
+  ansible.builtin.pip:
     name: Flask-SQLAlchemy
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install argon2_cffi with pip.
-  pip:
+  ansible.builtin.pip:
     name: argon2_cffi
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install Flask-Session with pip.
-  pip:
+  ansible.builtin.pip:
     name: Flask-Session
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install Flask-WTF with pip.
-  pip:
+  ansible.builtin.pip:
     name: Flask-WTF
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install mysqlclient with pip.
-  pip:
+  ansible.builtin.pip:
     name: mysqlclient
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install dnspython with pip.
-  pip:
+  ansible.builtin.pip:
     name: dnspython
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install pytest with pip.
-  pip:
+  ansible.builtin.pip:
     name: pytest
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install coverage with pip.
-  pip:
+  ansible.builtin.pip:
     name: coverage
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
 
 - name: Install gunicorn with pip.
-  pip:
+  ansible.builtin.pip:
     name: gunicorn
     state: latest
     virtualenv_python: python3
@@ -94,39 +95,43 @@
   when: env == "prod"
 
 - name: Clone ddmail_webapp repo with separate git directory
-  git:
+  ansible.builtin.git:
     repo: https://github.com/drzobin/ddmail_webapp.git
     dest: /opt/ddmail_venv/ddmail_webapp
 
-- name: stat ddmail_webapp folder
-  stat: path=/opt/ddmail_venv/ddmail_webapp
+- name: Stat ddmail_webapp folder
+  ansible.builtin.stat:
+    path: /opt/ddmail_venv/ddmail_webapp
   register: ddmail_webapp
 
 - name: Move ddmail from ddmail_webapp
-  command: mv /opt/ddmail_venv/ddmail_webapp/ddmail /opt/ddmail_venv/
-  #when: ddmail_webapp.stat.exists
-  when: 
+  ansible.builtin.command: mv /opt/ddmail_venv/ddmail_webapp/ddmail /opt/ddmail_venv/
+  # when: ddmail_webapp.stat.exists
+  when:
     - ddmail_webapp.stat.exists
     - env == "prod"
-      
 
 - name: Remove ddmail_webapp folder
-  command: rm -rf /opt/ddmail_venv/ddmail_webapp
-  #when: ddmail_webapp.stat.exists
-  when: 
+  ansible.builtin.command: rm -rf /opt/ddmail_venv/ddmail_webapp
+  # when: ddmail_webapp.stat.exists
+  when:
     - ddmail_webapp.stat.exists
     - env == "prod"
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_venv/ddmail/config.py
-  template: src=config.py.j2 dest=/opt/ddmail_venv/ddmail/config.py
+  ansible.builtin.template:
+    src: config.py.j2
+    dest: /opt/ddmail_venv/ddmail/config.py
   when: env == "prod"
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_venv//ddmail_webapp/ddmail/config.py
-  template: src=config.py.j2 dest=/opt/ddmail_venv/ddmail_webapp/ddmail/config.py
+  ansible.builtin.template:
+    src: config.py.j2
+    dest: /opt/ddmail_venv/ddmail_webapp/ddmail/config.py
   when: env == "dev"
 
 - name: Install ddmail webapp with pip
-  pip:
+  ansible.builtin.pip:
     name: /opt/ddmail_venv/ddmail
     extra_args: -e
     virtualenv_python: python3
@@ -134,7 +139,7 @@
   when: env == "prod"
 
 - name: Ensure group www-ddmail exists
-  group:
+  ansible.builtin.group:
     name: www-ddmail
     state: present
   when: env == "prod"
@@ -149,8 +154,10 @@
     state: present
   when: env == "prod"
 
-- name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service 
-  template: src=ddmail_gunicorn.service.j2 dest=/etc/systemd/system/ddmail_gunicorn.service
+- name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service
+  ansible.builtin.template:
+    src: ddmail_gunicorn.service.j2
+    dest: /etc/systemd/system/ddmail_gunicorn.service
   when: env == "prod"
 
 - name: Add logdir for gunicorn.
@@ -159,20 +166,24 @@
     state: directory
     owner: www-ddmail
     group: www-ddmail
-    mode: '0755'
+    mode: "0755"
   when: env == "prod"
 
-- name: Set user and group ownership of /opt/ddmail_venv 
-  file:
-    state   : directory
-    recurse : yes
+- name: Set user and group ownership of /opt/ddmail_venv
+  ansible.builtin.file:
+    state: directory
+    recurse: true
     owner: "{{ www_ddmail_se_venv_user_owner }}"
-    group: "{{ www_ddmail_se_venv_group_owner }}"  
-    path    : /opt/ddmail_venv
+    group: "{{ www_ddmail_se_venv_group_owner }}"
+    path: /opt/ddmail_venv
 
 - name: Reload systemd
-  command: systemctl daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
 
-- name: Restar ddmail_gunicorn Service
-  service: name=ddmail_gunicorn state=restarted enabled=yes
+- name: Restart ddmail_gunicorn service
+  ansible.builtin.service:
+    name: ddmail_gunicorn
+    state: restarted
+    enabled: true
   when: env == "prod"

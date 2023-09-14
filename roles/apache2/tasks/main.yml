@@ -1,6 +1,6 @@
 ---
 - name: Install packages needed for web application ddmail
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apache2
       - apache2-utils
@@ -25,29 +25,43 @@
   ansible.builtin.command: /usr/sbin/a2enmod headers
 
 - name: Remove server information by edit /etc/apache2/conf-available/security.conf
-  template: src=security.conf.j2 dest=/etc/apache2/conf-available/security.conf
+  ansible.builtin.template:
+    src: security.conf.j2
+    dest: /etc/apache2/conf-available/security.conf
 
 - name: Hardening apache2 systemd unit config with namespaces and seccomp /lib/systemd/system/apache2.service
-  template: src=apache2.service.j2 dest=/lib/systemd/system/apache2.service
+  ansible.builtin.template:
+    src: apache2.service.j2
+    dest: /lib/systemd/system/apache2.service
 
-- name: Create/edit apache2 config file /etc/apache2/mods-available/evasive.conf using template evasive.conf.j2
-  template: src=evasive.conf.j2 dest=/etc/apache2/mods-available/evasive.conf
+- name: Create/edit apache2 config file /etc/apache2/mods-available/evasive.conf for prod environment
+  ansible.builtin.template:
+    src: evasive.conf.j2
+    dest: /etc/apache2/mods-available/evasive.conf
   when: env == "prod"
 
-- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf using template 000-default.conf-prod.j2
-  template: src=000-default.conf-prod.j2 dest=/etc/apache2/sites-available/000-default.conf
+- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf (prod)
+  ansible.builtin.template:
+    src: 000-default.conf-prod.j2
+    dest: /etc/apache2/sites-available/000-default.conf
   when: env == "prod"
 
-- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf using template 000-default.conf-dev.j2
-  template: src=000-default.conf-dev.j2 dest=/etc/apache2/sites-available/000-default.conf
+- name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf (dev)
+  ansible.builtin.template:
+    src: 000-default.conf-dev.j2
+    dest: /etc/apache2/sites-available/000-default.conf
   when: env == "dev"
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/001-default-ssl.conf
-  template: src=001-default-ssl.conf.j2 dest=/etc/apache2/sites-available/001-default-ssl.conf
+  ansible.builtin.template:
+    src: 001-default-ssl.conf.j2
+    dest: /etc/apache2/sites-available/001-default-ssl.conf
   when: env == "prod"
 
 - name: Create/edit apache2 config file /etc/apache2/mods-available/ssl.conf
-  template: src=ssl.conf.j2 dest=/etc/apache2/mods-available/ssl.conf
+  ansible.builtin.template:
+    src: ssl.conf.j2
+    dest: /etc/apache2/mods-available/ssl.conf
   when: env == "prod"
 
 - name: Enable apache2 site 001-default-ssl.conf
@@ -55,7 +69,11 @@
   when: env == "prod"
 
 - name: Reload systemd
-  command: systemctl daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
 
 - name: Restart apache2 service
-  service: name=apache2 state=restarted enabled=yes
+  ansible.builtin.service:
+    name: apache2
+    state: restarted
+    enabled: true
