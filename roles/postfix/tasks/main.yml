@@ -10,31 +10,49 @@
   ansible.builtin.template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit postfix configuration file /etc/mailname
   ansible.builtin.template:
     src: mailname.j2
     dest: /etc/mailname
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit postfix configuration file master.cf
   ansible.builtin.template:
     src: master.cf.j2
     dest: /etc/postfix/master.cf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit postfix configuration file mysql-virtual-domains.cf
   ansible.builtin.template:
     src: mysql-virtual-domains.cf.j2
     dest: /etc/postfix/mysql-virtual-domains.cf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit postfix configuration file mysql-virtual-emails.cf
   ansible.builtin.template:
     src: mysql-virtual-emails.cf.j2
     dest: /etc/postfix/mysql-virtual-emails.cf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Create/edit postfix configuration file mysql-virtual-alias.cf
   ansible.builtin.template:
     src: mysql-virtual-alias.cf.j2
     dest: /etc/postfix/mysql-virtual-alias.cf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
 
 - name: Restart postfix service
   ansible.builtin.service:
