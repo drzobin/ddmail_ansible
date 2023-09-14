@@ -1,18 +1,18 @@
 ---
 - name: Install opendkim packages.
-  apt:
+  ansible.builtin.apt:
     pkg:
       - opendkim
       - opendkim-tools
     state: latest
 
 - name: Create/edit opendkim configuration file /etc/opendkim.conf
-  template:
+  ansible.builtin.template:
     src: etc_opendkim.conf.j2
     dest: /etc/opendkim.conf
 
 - name: Create/edit opendkim configuration file /etc/default/opendkim
-  template:
+  ansible.builtin.template:
     src: etc_default_opendkim.j2
     dest: /etc/default/opendkim
 
@@ -29,17 +29,17 @@
     mode: "0755"
 
 - name: Create/edit opendkim configuration file /etc/opendkim/TrustedHosts
-  template:
+  ansible.builtin.template:
     src: etc_opendkim_TrustedHosts.j2
     dest: /etc/opendkim/TrustedHosts
 
 - name: Create/edit opendkim configuration file /etc/opendkim/KeyTable
-  template:
+  ansible.builtin.template:
     src: etc_opendkim_KeyTable.j2
     dest: /etc/opendkim/KeyTable
 
 - name: Create/edit opendkim configuration file /etc/opendkim/SigningTable
-  template:
+  ansible.builtin.template:
     src: etc_opendkim_SigningTable.j2
     dest: /etc/opendkim/SigningTable
 
@@ -50,7 +50,7 @@
     mode: "0755"
 
 - name: Stat ddmail key file /etc/opendkim/keys/ddmail.se/mail.private
-  stat:
+  ansible.builtin.stat:
     path: /etc/opendkim/keys/ddmail.se/mail.private
   register: opendkim_ddmail_private_key
 
@@ -69,7 +69,7 @@
   when: not opendkim_ddmail_private_key.stat.exists
 
 - name: Restart opendkim service
-  service:
+  ansible.builtin.service:
     name: opendkim
     state: restarted
     enabled: true

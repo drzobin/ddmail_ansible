@@ -1,71 +1,72 @@
 ---
 - name: Install packages needed for certbot to get letsencrypt ssl/tls cert
-  apt:
+  ansible.builtin.apt:
     pkg:
       - certbot
       - python3-certbot-apache
     state: latest
 
-- name: stat cerbot registration lockfile
-  stat:
+- name: Stat cerbot registration lockfile
+  ansible.builtin.stat:
     path: /etc/letsencrypt/.registered
   register: certbot_reg_lockfile
 
 - name: Stop apache2 service
-  service:
-    name: apache2 state=stopped
+  ansible.builtin.service:
+    name: apache2
+    state: stopped
     enabled: true
   when: not certbot_reg_lockfile.stat.exists
 
 - name: Register certbot
-  command: certbot -n register --agree-tos --email {{ vault_certbot_reg_email }}
+  ansible.builtin.command: certbot -n register --agree-tos --email {{ vault_certbot_reg_email }}
   when: not certbot_reg_lockfile.stat.exists
 
 - name: Create certbot registration lockfile
-  command: touch /etc/letsencrypt/.registered
+  ansible.builtin.command: touch /etc/letsencrypt/.registered
   when: not certbot_reg_lockfile.stat.exists
 
 - name: Stat cerbot apache ssl cert for ddmail.se and www.ddmail.se
-  stat:
+  ansible.builtin.stat:
     path: /etc/letsencrypt/live/www.ddmail.se/fullchain.pem
   register: certbot_apache_ssl
 
 - name: Stop apache2 service
-  service:
+  ansible.builtin.service:
     name: apache2
     state: stopped
     enabled: true
   when: not certbot_apache_ssl.stat.exists
 
 - name: Get apache ssl certificate for www.ddmail.se
-  command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d ddmail.se -d www.ddmail.se
+  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d ddmail.se -d www.ddmail.se
   when: not certbot_apache_ssl.stat.exists
 
 - name: Stat cerbot postfix/dovecot ssl cert for mail.ddmail.se
-  stat:
+  ansible.builtin.stat:
     path: /etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
   register: certbot_mail_ssl
 
 - name: Stop apache2 service
-  service:
+  ansible.builtin.service:
     name: apache2
     state: stopped
     enabled: true
   when: not certbot_mail_ssl.stat.exists
 
 - name: Get postfix/dovecot ssl certificate for mail.ddmail.se
-  command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d mail.ddmail.se
+  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d mail.ddmail.se
   when: not certbot_mail_ssl.stat.exists
 
 - name: Certbot renew as cronjob
-  cron:
+  ansible.builtin.cron:
     name: certbot-renewal
     job: '/usr/bin/certbot renew --pre-hook "systemctl stop apache2" --post-hook "systemctl start apache2"'
     minute: "0"
     hour: "04"
 
-- name: Restar apache2 service
-  service:
+- name: Restart apache2 service
+  ansible.builtin.service:
     name: apache2
     state: restarted
     enabled: true

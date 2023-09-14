@@ -1,43 +1,43 @@
 ---
 - name: Install postfix packages.
-  apt:
+  ansible.builtin.apt:
     pkg:
       - postfix
       - postfix-mysql
     state: latest
 
 - name: Create/edit postfix configuration file main.cf
-  template:
+  ansible.builtin.template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
 
 - name: Create/edit postfix configuration file /etc/mailname
-  template:
+  ansible.builtin.template:
     src: mailname.j2
     dest: /etc/mailname
 
 - name: Create/edit postfix configuration file master.cf
-  template:
+  ansible.builtin.template:
     src: master.cf.j2
     dest: /etc/postfix/master.cf
 
 - name: Create/edit postfix configuration file mysql-virtual-domains.cf
-  template:
+  ansible.builtin.template:
     src: mysql-virtual-domains.cf.j2
     dest: /etc/postfix/mysql-virtual-domains.cf
 
 - name: Create/edit postfix configuration file mysql-virtual-emails.cf
-  template:
+  ansible.builtin.template:
     src: mysql-virtual-emails.cf.j2
     dest: /etc/postfix/mysql-virtual-emails.cf
 
 - name: Create/edit postfix configuration file mysql-virtual-alias.cf
-  template:
+  ansible.builtin.template:
     src: mysql-virtual-alias.cf.j2
     dest: /etc/postfix/mysql-virtual-alias.cf
 
-- name: Restar postfix Service
-  service:
+- name: Restart postfix service
+  ansible.builtin.service:
     name: postfix
     state: restarted
     enabled: true

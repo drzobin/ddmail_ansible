@@ -1,6 +1,6 @@
 ---
 - name: Install mariadb server.
-  apt:
+  ansible.builtin.apt:
     pkg:
       - mariadb-server
     state: latest

@@ -1,17 +1,17 @@
 ---
 - name: Install nftables.
-  apt:
+  ansible.builtin.apt:
     pkg:
       - nftables
     state: latest
 
 - name: Create/edit nftables configuration file /etc/nftables.conf
-  template:
+  ansible.builtin.template:
     src: nftables.conf.j2
     dest: /etc/nftables.conf
 
-- name: Restar nftables service
-  service:
+- name: Restart nftables service
+  ansible.builtin.service:
     name: nftables
     state: restarted
     enabled: true
