@@ -94,6 +94,22 @@
     virtualenv: /opt/ddmail_venv
   when: env == "prod"
 
+- name: Add the group "{{ www_ddmail_se_gunicorn_group }}"
+  ansible.builtin.group:
+    name: "{{ www_ddmail_se_gunicorn_group }}"
+    state: present
+  when: env == "prod"
+
+- name: Add the user "{{ www_ddmail_se_gunicorn_user }}"
+  ansible.builtin.user:
+    name: "{{ www_ddmail_se_gunicorn_user }}"
+    shell: /usr/sbin/nologin
+    home: /opt/ddmail_venv
+    create_home: false
+    group: "{{ www_ddmail_se_gunicorn_group }}"
+    state: present
+  when: env == "prod"
+
 - name: Clone ddmail_webapp repo with separate git directory
   ansible.builtin.git:
     repo: https://github.com/drzobin/ddmail_webapp.git
@@ -122,9 +138,9 @@
   ansible.builtin.template:
     src: config.py.j2
     dest: /opt/ddmail_venv/ddmail/config.py
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
+    owner: "{{ www_ddmail_se_gunicorn_user }}"
+    group: "{{ www_ddmail_se_gunicorn_group }}"
+    mode: "u=rw,g=r,o="
   when: env == "prod"
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_venv//ddmail_webapp/ddmail/config.py
@@ -142,22 +158,6 @@
     extra_args: -e
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
-  when: env == "prod"
-
-- name: Ensure group www-ddmail exists
-  ansible.builtin.group:
-    name: www-ddmail
-    state: present
-  when: env == "prod"
-
-- name: Add the user www-ddmail
-  ansible.builtin.user:
-    name: www-ddmail
-    shell: /usr/sbin/nologin
-    home: /opt/ddmail_venv
-    create_home: false
-    group: www-ddmail
-    state: present
   when: env == "prod"
 
 - name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_gunicorn.service
