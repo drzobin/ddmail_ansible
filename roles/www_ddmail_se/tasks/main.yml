@@ -134,16 +134,24 @@
     - ddmail_webapp.stat.exists
     - env == "prod"
 
+- name: Set user and group ownership of /opt/ddmail_venv
+  ansible.builtin.file:
+    state: directory
+    recurse: true
+    owner: "{{ www_ddmail_se_venv_user_owner }}"
+    group: "{{ www_ddmail_se_venv_group_owner }}"
+    path: /opt/ddmail_venv
+
 - name: Create/edit ddmail webapp config file /opt/ddmail_venv/ddmail/config.py
   ansible.builtin.template:
     src: config.py.j2
     dest: /opt/ddmail_venv/ddmail/config.py
-    owner: "{{ www_ddmail_se_gunicorn_user }}"
-    group: "{{ www_ddmail_se_gunicorn_group }}"
+    owner: '{{ www_ddmail_se_gunicorn_user }}'
+    group: '{{ www_ddmail_se_gunicorn_group }}'
     mode: "u=rw,g=r,o="
   when: env == "prod"
 
-- name: Create/edit ddmail webapp config file /opt/ddmail_venv//ddmail_webapp/ddmail/config.py
+- name: Create/edit ddmail webapp config file /opt/ddmail_venv/ddmail_webapp/ddmail/config.py
   ansible.builtin.template:
     src: config.py.j2
     dest: /opt/ddmail_venv/ddmail_webapp/ddmail/config.py
@@ -173,18 +181,10 @@
   ansible.builtin.file:
     path: /var/log/gunicorn
     state: directory
-    owner: www-ddmail
-    group: www-ddmail
+    owner: '{{ www_ddmail_se_gunicorn_user }}'
+    group: '{{ www_ddmail_se_gunicorn_group }}'
     mode: "u=rwx,g=rx,o=rx"
   when: env == "prod"
-
-- name: Set user and group ownership of /opt/ddmail_venv
-  ansible.builtin.file:
-    state: directory
-    recurse: true
-    owner: "{{ www_ddmail_se_venv_user_owner }}"
-    group: "{{ www_ddmail_se_venv_group_owner }}"
-    path: /opt/ddmail_venv
 
 - name: Reload systemd
   ansible.builtin.systemd:
