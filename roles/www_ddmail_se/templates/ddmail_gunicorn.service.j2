@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Environment="MODE=PRODUCTION"
-User=www-ddmail
-Group=www-ddmail
+User={{ www_ddmail_se_gunicorn_user }}
+Group={{ www_ddmail_se_gunicorn_group }}
 WorkingDirectory=/opt/ddmail_venv/
 Environment="PATH=/opt/ddmail_venv/bin/"
 ExecStart=/opt/ddmail_venv/bin/gunicorn --log-file /var/log/gunicorn/gunicorn.log --workers 2 "ddmail:create_app()" 
