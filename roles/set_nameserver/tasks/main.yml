@@ -1,6 +1,8 @@
 ---
 - name: Create/edit configuration file /etc/resolv.conf
-  template: src=etc_resolv.conf.j2 dest=/etc/resolv.conf
-  owner: root
-  group: root
-  mode: "u=rw,g=r,o=r"
+  ansible.builtin.template:
+    src: etc_resolv.conf.j2 
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
