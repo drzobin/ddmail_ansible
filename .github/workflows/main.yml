@@ -1,0 +1,27 @@
+---
+name: main
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  setup:
+    uses: ./.github/workflows/python.yml
+
+  ansible-lint:
+    needs: setup
+    uses: ./.github/workflows/python.yml
+    with:
+      ansible-lint: true
+
+  yamllint:
+    needs: setup
+    uses: ./.github/workflows/python.yml
+    with:
+      yamllint: true
