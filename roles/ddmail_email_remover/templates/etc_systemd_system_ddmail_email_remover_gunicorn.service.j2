@@ -26,6 +26,9 @@ RestrictSUIDSGID=yes
 # Service may not create writable and executable memory mappings
 MemoryDenyWriteExecute=yes
 
+# Service may only use loopback network interface
+PrivateNetwork=yes
+
 # Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
 BindReadOnlyPaths=/opt/ddmail_email_remover_venv /usr/bin/ls /usr/bin/python3.9 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.9
