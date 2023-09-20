@@ -22,4 +22,5 @@
               - dovecot
               - apache2
               - www_ddmail_se
+              - ddmail_email_remover
               - tor_onion_service
