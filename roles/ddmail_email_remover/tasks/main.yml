@@ -22,13 +22,6 @@
 - name: Create ddmail_email_remover python env.
   ansible.builtin.command: python3 -m venv /opt/ddmail_email_remover_venv
 
-- name: Install requirenments with pip.
-  ansible.builtin.pip:
-    requirements: /my_app/requirements.txt
-    state: latest
-    virtualenv_python: python3
-    virtualenv: /opt/ddmail_email_remover_venv
-
 - name: Add the group "{{ ddmail_email_remover_gunicorn_group }}"
   ansible.builtin.group:
     name: "{{ ddmail_email_remover_gunicorn_group }}"
@@ -52,21 +45,27 @@
 
 - name: Stat ddmail_email_remover folder
   ansible.builtin.stat:
-    path: /opt/ddmail_email_remover_venv/ddmail_email_remover_webapp
+    path: /opt/ddmail_email_remover_venv/ddmail_email_remover
   register: ddmail_email_remover
 
 - name: Move email_remover from ddmail_email_remover
   ansible.builtin.command: mv /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover /opt/ddmail_email_remover_venv/
-  # when: ddmail_webapp.stat.exists
   when:
     - ddmail_email_remover.stat.exists
     - env == "prod"
 
-- name: Remove ddmail__email_remover folder
+- name: Remove ddmail_email_remover folder
   ansible.builtin.command: rm -rf /opt/ddmail_email_remover_venv/ddmail_email_remover
   when:
     - ddmail_email_remover.stat.exists
     - env == "prod"
+
+- name: Install requirenments with pip.
+  ansible.builtin.pip:
+    requirements: /opt/ddmail_email_remover_venv/email_remover/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_email_remover_venv
 
 - name: Set user and group ownership of /opt/ddmail_email_remover_venv
   ansible.builtin.file:
@@ -78,7 +77,7 @@
 
 - name: Create/edit ddmail_email_remover config file /opt/ddmail_email_remover_venv/email_remover/config.py
   ansible.builtin.template:
-    src: config.py.j2
+    src: opt_ddmail_email_remover_venv_email_remover_config.py.j2
     dest: /opt/ddmail_email_remover_venv/email_remover/config.py
     owner: '{{ ddmail_email_remover_gunicorn_user }}'
     group: '{{ ddmail_email_remover_gunicorn_group }}'
@@ -87,7 +86,7 @@
 
 - name: Create/edit ddmail_email_remover config file /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover/config.py
   ansible.builtin.template:
-    src: config.py.j2
+    src: opt_ddmail_email_remover_venv_email_remover_config.py.j2
     dest: /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover/config.py
     owner: root
     group: root
@@ -104,7 +103,7 @@
 
 - name: Create/edit ddmail_email_remover gunicorne service configuration file /etc/systemd/system/ddmail_email_remover_gunicorn.service
   ansible.builtin.template:
-    src: ddmail_email_remover_gunicorn.service.j2
+    src: etc_systemd_system_ddmail_email_remover_gunicorn.service.j2
     dest: /etc/systemd/system/ddmail_email_remover_gunicorn.service
     owner: root
     group: root
@@ -113,8 +112,8 @@
 
 - name: Add logdir for ddmail_email_remover gunicorn.
   ansible.builtin.file:
-    path: /var/log/gunicorn_ddmail_email_remover
-    state: directory
+    path: /var/log/gunicorn/ddmail_email_remover.log
+    state: touch
     owner: '{{ ddmail_email_remover_gunicorn_user }}'
     group: '{{ ddmail_email_remover_gunicorn_group }}'
     mode: "u=rwx,g=rx,o=rx"
