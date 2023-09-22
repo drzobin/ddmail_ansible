@@ -160,15 +160,6 @@
     mode: "u=rw,g=r,o=r"
   when: env == "dev"
 
-- name: Copy tor onion service hostname file to ddmail_webapp templates folder.
-  ansible.builtin.copy:
-    src: /var/lib/tor/ddmail_http/hostname
-    dest: /opt/ddmail_venv/ddmail/ddmail/templates/tor_hostname
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  when: env == "dev"
-
 - name: Install ddmail webapp with pip
   ansible.builtin.pip:
     name: /opt/ddmail_venv/ddmail
