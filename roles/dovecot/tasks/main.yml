@@ -30,7 +30,7 @@
     state: directory
     owner: root
     group: vmail
-    mode: "u=rwx,g=rwxs,o=rx"
+    mode: "u=rwx,g=rwxs,o="
 
 - name: Create/edit dovecot configuration file dovecot.conf.
   ansible.builtin.template:
