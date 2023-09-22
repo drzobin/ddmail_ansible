@@ -56,3 +56,13 @@
 
 - name: Restart tor service
   service: name=tor state=restarted enabled=yes
+
+- name: Copy tor onion service hostname file to ddmail_webapp templates folder.
+  ansible.builtin.copy:
+    remote_src: True
+    src: /var/lib/tor/ddmail_http/hostname
+    dest: /opt/ddmail_venv/ddmail/ddmail/templates/tor_hostname
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
