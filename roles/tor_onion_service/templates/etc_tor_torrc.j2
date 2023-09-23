@@ -78,7 +78,7 @@
 HiddenServiceDir {{ tor_ddmail_http_hidden_service_dir }}
 HiddenServicePort {{ tor_ddmail_hidden_service_port }} {{ tor_ddmail_hidden_service_map }}
 HiddenServicePort {{ tor_dovecot_hidden_service_port }} {{ tor_dovecot_hidden_service_map }}
-#HiddenServicePort {{ tor_postfix_hidden_service_port }} {{ tor_postfix_hidden_service_map }}
+HiddenServicePort {{ tor_postfix_hidden_service_port }} {{ tor_postfix_hidden_service_map }}
 
 ################ This section is just for relays #####################
 #
