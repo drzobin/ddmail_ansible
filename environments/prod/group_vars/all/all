@@ -85,5 +85,5 @@ tor_ddmail_hidden_service_map: 127.0.0.1:8080
 tor_dovecot_hidden_service_port: 143
 tor_dovecot_hidden_service_map: 127.0.0.1:143
 tor_postfix_hidden_service_port: 25
-tor_postfix_hidden_service_map: 127.0.0.1:25
+tor_postfix_hidden_service_map: 127.0.0.1:10025
 
