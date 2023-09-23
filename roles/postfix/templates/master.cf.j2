@@ -37,6 +37,19 @@ smtps     inet  n       -       -       -       -       smtpd
   -o smtpd_sasl_path=private/auth
   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
   -o milter_macro_daemon_name=ORIGINATING
+#
+# Used for tor onion service
+127.0.0.1:10025      inet  n       -       -       -       -       smtpd
+  -o syslog_name=postfix/smtpd/tor_onion_service
+  -o smtpd_use_tls=no
+  -o smtpd_tls_auth_only=no
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_sasl_type=dovecot
+  -o smtpd_sasl_path=private/auth
+  -o smtpd_sasl_security_options=noanonymous
+  -o smtpd_sasl_tls_security_options=noanonymous
+  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATING
 #smtps     inet  n       -       y       -       -       smtpd
 #  -o syslog_name=postfix/smtps
 #  -o smtpd_tls_wrappermode=yes
