@@ -3,13 +3,16 @@ class Prod():
     SECRET_KEY = '{{ ddmail_webapp_prod_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_prod_sqlalchemy_database_uri }}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
+    EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_prod_password }}'
 class Test():
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_test_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_test_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_test_sqlalchemy_database_uri }}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
+    EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_test_password }}'
 class Dev():
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_dev_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_dev_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_dev_sqlalchemy_database_uri }}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
+    EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_dev_password }}'
