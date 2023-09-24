@@ -75,7 +75,9 @@ ddmail_email_remover_venv_group_owner: root
 ddmail_email_remover_gunicorn_user: ddmail-email-remover
 ddmail_email_remover_gunicorn_group: vmail
 ddmail_email_remover_secret_key: "{{ vault_ddmail_email_remover_secret_key }}"
-ddmail_email_remover_password: "{{ vault_ddmail_email_remover_password }}"
+ddmail_email_remover_prod_password: "{{ vault_ddmail_email_remover_password }}"
+ddmail_email_remover_test_password: "{{ vault_ddmail_email_remover_password }}"
+ddmail_email_remover_dev_password: "{{ vault_ddmail_email_remover_password }}"
 ddmail_email_remover_password_hash: "{{ vault_ddmail_email_remover_password_hash }}"
 
 # tor oniun service
