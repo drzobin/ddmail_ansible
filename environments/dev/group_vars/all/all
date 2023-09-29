@@ -66,3 +66,20 @@ ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_dev_db
 # www_ddmail_se
 www_ddmail_se_venv_user_owner: "{{ vault_www_ddmail_se_venv_user_owner }}"
 www_ddmail_se_venv_group_owner: "{{ vault_www_ddmail_se_venv_group_owner }}"
+
+# ddmail_email_remover
+ddmail_email_remover_venv_user_owner: "{{ vault_ddmail_email_remover_venv_user_owner }}"
+ddmail_email_remover_venv_group_owner: "{{ vault_ddmail_email_remover_venv_group_owner }}"
+ddmail_email_remover_gunicorn_user: vmail
+ddmail_email_remover_gunicorn_group: vmail
+ddmail_email_remover_prod_secret_key: "{{ vault_ddmail_email_remover_prod_secret_key }}"
+ddmail_email_remover_test_secret_key: "{{ vault_ddmail_email_remover_test_secret_key }}"
+ddmail_email_remover_dev_secret_key: "{{ vault_ddmail_email_remover_dev_secret_key }}"
+
+ddmail_email_remover_prod_password: "{{ vault_ddmail_email_remover_prod_password }}"
+ddmail_email_remover_test_password: "{{ vault_ddmail_email_remover_test_password }}"
+ddmail_email_remover_dev_password: "{{ vault_ddmail_email_remover_dev_password }}"
+
+ddmail_email_remover_prod_password_hash: "{{ vault_ddmail_email_remover_prod_password_hash }}"
+ddmail_email_remover_test_password_hash: "{{ vault_ddmail_email_remover_test_password_hash }}"
+ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_password_hash }}"
