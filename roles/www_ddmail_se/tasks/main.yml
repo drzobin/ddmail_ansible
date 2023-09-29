@@ -69,6 +69,15 @@
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_venv
+  when: env == "prod"
+
+- name: Install requirenments with pip.
+  ansible.builtin.pip:
+    requirements: /opt/ddmail_venv/ddmail_webapp/ddmail/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_venv
+  when: env == "dev"
 
 - name: Set user and group ownership of /opt/ddmail_venv
   ansible.builtin.file:
