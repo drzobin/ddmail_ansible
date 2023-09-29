@@ -74,11 +74,17 @@ ddmail_email_remover_venv_user_owner: root
 ddmail_email_remover_venv_group_owner: root
 ddmail_email_remover_gunicorn_user: vmail
 ddmail_email_remover_gunicorn_group: vmail
-ddmail_email_remover_secret_key: "{{ vault_ddmail_email_remover_secret_key }}"
-ddmail_email_remover_prod_password: "{{ vault_ddmail_email_remover_password }}"
-ddmail_email_remover_test_password: "{{ vault_ddmail_email_remover_password }}"
-ddmail_email_remover_dev_password: "{{ vault_ddmail_email_remover_password }}"
-ddmail_email_remover_password_hash: "{{ vault_ddmail_email_remover_password_hash }}"
+ddmail_email_remover_prod_secret_key: "{{ vault_ddmail_email_remover_prod_secret_key }}"
+ddmail_email_remover_test_secret_key: "{{ vault_ddmail_email_remover_test_secret_key }}"
+ddmail_email_remover_dev_secret_key: "{{ vault_ddmail_email_remover_dev_secret_key }}"
+
+ddmail_email_remover_prod_password: "{{ vault_ddmail_email_remover_prod_password }}"
+ddmail_email_remover_test_password: "{{ vault_ddmail_email_remover_test_password }}"
+ddmail_email_remover_dev_password: "{{ vault_ddmail_email_remover_dev_password }}"
+
+ddmail_email_remover_prod_password_hash: "{{ vault_ddmail_email_remover_prod_password_hash }}"
+ddmail_email_remover_test_password_hash: "{{ vault_ddmail_email_remover_test_password_hash }}"
+ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_password_hash }}"
 
 # tor oniun service
 tor_ddmail_http_hidden_service_dir: /var/lib/tor/ddmail_http/
