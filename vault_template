@@ -22,6 +22,9 @@ vault_www_ddmail_se_venv_group_owner: user
 vault_srv01_ansible_ssh_user: user
 vault_srv01_ansible_become_pass: change_me
 
+vault_ddmaildev_ansible_ssh_user: user
+vault_ddmaildev_ansible_become_pass: change_me
+
 vault_ddmail_email_remover_prod_secret_key: change_me
 vault_ddmail_email_remover_prod_password: change_me
 vault_ddmail_email_remover_prod_password_hash: change_me
@@ -31,3 +34,6 @@ vault_ddmail_email_remover_test_password_hash: change_me
 vault_ddmail_email_remover_dev_secret_key: change_me
 vault_ddmail_email_remover_dev_password: change_me
 vault_ddmail_email_remover_dev_password_hash: change_me
+
+vault_ddmail_email_remover_venv_user_owner: user
+vault_ddmail_email_remover_venv_group_owner: user
