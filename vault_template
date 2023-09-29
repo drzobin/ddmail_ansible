@@ -1,0 +1,29 @@
+vault_sshd_port: 22
+vault_sshd_allow_users: user1 user2
+
+vault_mail_prod_db_user_r_password: change_me
+vault_mail_test_db_user_r_password: change_me
+vault_mail_dev_db_user_r_password: change_me
+
+vault_mail_prod_db_user_rw_password: change_me
+vault_mail_test_db_user_rw_password: change_me
+vault_mail_dev_db_user_rw_password: change_me
+
+vault_ddmail_webapp_prod_wtf_csrf_secret_key: change_me
+vault_ddmail_webapp_prod_secret_key: change_me
+
+vault_ddmail_webapp_test_wtf_csrf_secret_key: change_me
+vault_ddmail_webapp_test_secret_key: change_me
+
+vault_ddmail_webapp_dev_wtf_csrf_secret_key: change_me
+vault_ddmail_webapp_dev_secret_key: change_me
+
+vault_www_ddmail_se_venv_user_owner: user
+vault_www_ddmail_se_venv_group_owner: user
+
+vault_srv01_ansible_ssh_user: user
+vault_srv01_ansible_become_pass: change_me
+
+vault_ddmail_email_remover_secret_key: change_me
+vault_ddmail_email_remover_password: change_me
+vault_ddmail_email_remover_password_hash: change_me
