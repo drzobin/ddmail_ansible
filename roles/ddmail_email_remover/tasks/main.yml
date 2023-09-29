@@ -65,6 +65,15 @@
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_email_remover_venv
+  when: env == "prod"
+
+- name: Install requirenments with pip.
+  ansible.builtin.pip:
+    requirements: /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_email_remover_venv
+  when: env == "dev"
 
 - name: Set user and group ownership of /opt/ddmail_email_remover_venv
   ansible.builtin.file:
@@ -87,8 +96,8 @@
   ansible.builtin.template:
     src: opt_ddmail_email_remover_venv_email_remover_config.py.j2
     dest: /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover/config.py
-    owner: root
-    group: root
+    owner: "{{ ddmail_email_remover_venv_user_owner }}"
+    group: "{{ ddmail_email_remover_venv_group_owner }}"
     mode: "u=rw,g=r,o=r"
   when: env == "dev"
 
@@ -121,6 +130,7 @@
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
+  when: env == "prod"
 
 - name: Restart ddmail_email_remover_gunicorn service
   ansible.builtin.service:
