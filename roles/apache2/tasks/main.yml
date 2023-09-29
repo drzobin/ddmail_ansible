@@ -39,6 +39,7 @@
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
+  when: env == "prod"
 
 - name: Create/edit apache2 config file /etc/apache2/mods-available/evasive.conf for prod environment
   ansible.builtin.template:
