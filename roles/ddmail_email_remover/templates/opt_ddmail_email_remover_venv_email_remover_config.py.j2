@@ -1,14 +1,14 @@
 class Prod():
-    SECRET_KEY = '{{ ddmail_email_remover_secret_key }}'
-    PASSWORD_HASH = '{{ ddmail_email_remover_password_hash }}'
+    SECRET_KEY = '{{ ddmail_email_remover_prod_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_email_remover_prod_password_hash }}'
     EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
 
 class Test():
-    SECRET_KEY = 'change_me'
-    PASSWORD_HASH = '$argon2id$v=19$m=65536,t=3,p=4$mzqiveNU7Y9jwj6I9cadUw$hVabWZSN+fPRzBqDrEMOSCfOQEYgq8mRzc2ny7azCXA'
-    EMAIL_ACCOUNT_PATH = '/tmp/mail/vhost/'
+    SECRET_KEY = '{{ ddmail_email_remover_test_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_email_remover_test_password_hash }}'
+    EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
 
 class Dev():
-    SECRET_KEY = 'change_me'
-    PASSWORD_HASH = '$argon2id$v=19$m=65536,t=3,p=4$mzqiveNU7Y9jwj6I9cadUw$hVabWZSN+fPRzBqDrEMOSCfOQEYgq8mRzc2ny7azCXA'
-    EMAIL_ACCOUNT_PATH = '/tmp/mail/vhost/'
+    SECRET_KEY = '{{ ddmail_email_remover_dev_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_email_remover_dev_password_hash }}'
+    EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
