@@ -11,10 +11,8 @@ vault_mail_dev_db_user_rw_password: change_me
 
 vault_ddmail_webapp_prod_wtf_csrf_secret_key: change_me
 vault_ddmail_webapp_prod_secret_key: change_me
-
 vault_ddmail_webapp_test_wtf_csrf_secret_key: change_me
 vault_ddmail_webapp_test_secret_key: change_me
-
 vault_ddmail_webapp_dev_wtf_csrf_secret_key: change_me
 vault_ddmail_webapp_dev_secret_key: change_me
 
@@ -24,6 +22,12 @@ vault_www_ddmail_se_venv_group_owner: user
 vault_srv01_ansible_ssh_user: user
 vault_srv01_ansible_become_pass: change_me
 
-vault_ddmail_email_remover_secret_key: change_me
-vault_ddmail_email_remover_password: change_me
-vault_ddmail_email_remover_password_hash: change_me
+vault_ddmail_email_remover_prod_secret_key: change_me
+vault_ddmail_email_remover_prod_password: change_me
+vault_ddmail_email_remover_prod_password_hash: change_me
+vault_ddmail_email_remover_test_secret_key: change_me
+vault_ddmail_email_remover_test_password: change_me
+vault_ddmail_email_remover_test_password_hash: change_me
+vault_ddmail_email_remover_dev_secret_key: change_me
+vault_ddmail_email_remover_dev_password: change_me
+vault_ddmail_email_remover_dev_password_hash: change_me
