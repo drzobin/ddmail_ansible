@@ -68,6 +68,7 @@ www_ddmail_se_venv_user_owner: "{{ vault_www_ddmail_se_venv_user_owner }}"
 www_ddmail_se_venv_group_owner: "{{ vault_www_ddmail_se_venv_group_owner }}"
 
 # ddmail_email_remover
+ddmail_email_remover_runas: "{{ vault_ddmail_email_remover_runas }}"
 ddmail_email_remover_venv_user_owner: "{{ vault_ddmail_email_remover_venv_user_owner }}"
 ddmail_email_remover_venv_group_owner: "{{ vault_ddmail_email_remover_venv_group_owner }}"
 ddmail_email_remover_gunicorn_user: vmail
