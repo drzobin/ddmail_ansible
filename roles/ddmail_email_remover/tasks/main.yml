@@ -138,7 +138,7 @@
   ansible.builtin.command: screen -X -S ddmail_email_remover kill
   become: true
   become_method: su
-  become_user: user053
+  become_user: "{{ ddmail_email_remover_runas }}"
   ignore_errors: true
   when: env == "dev"
 
@@ -146,7 +146,7 @@
   ansible.builtin.command: screen -S ddmail_email_remover -d -m bash -c "sleep 5; source /opt/ddmail_email_remover_venv/bin/activate; cd /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover; export MODE=DEVELOPMENT; flask --app email_remover:create_app run --host=127.0.0.1 --port 8001 --debug; /bin/bash"
   become: true
   become_method: su
-  become_user: user053
+  become_user: "{{ ddmail_email_remover_runas }}"
   when: env == "dev"
 
 - name: Reload systemd
