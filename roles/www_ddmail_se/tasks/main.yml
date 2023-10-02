@@ -11,6 +11,13 @@
       - default-libmysqlclient-dev
     state: latest
 
+- name: Install screen in dev
+  ansible.builtin.apt:
+    pkg:
+      - screen
+    state: latest
+  when: env == "dev"
+
 - name: Stat /opt/ddmail_venv folder
   ansible.builtin.stat:
     path: /opt/ddmail_webapp_venv
