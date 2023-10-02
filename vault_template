@@ -9,6 +9,7 @@ vault_mail_prod_db_user_rw_password: change_me
 vault_mail_test_db_user_rw_password: change_me
 vault_mail_dev_db_user_rw_password: change_me
 
+vault_ddmail_webapp_runas: user
 vault_ddmail_webapp_prod_wtf_csrf_secret_key: change_me
 vault_ddmail_webapp_prod_secret_key: change_me
 vault_ddmail_webapp_test_wtf_csrf_secret_key: change_me
