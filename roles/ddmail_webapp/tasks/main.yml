@@ -90,16 +90,16 @@
   ansible.builtin.file:
     state: directory
     recurse: true
-    owner: "{{ www_ddmail_se_venv_user_owner }}"
-    group: "{{ www_ddmail_se_venv_group_owner }}"
+    owner: "{{ ddmail_webapp_venv_user_owner }}"
+    group: "{{ ddmail_webapp_venv_group_owner }}"
     path: /opt/ddmail_webapp_venv
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_webapp_venv/ddmail/config.py
   ansible.builtin.template:
     src: config.py.j2
     dest: /opt/ddmail_webapp_venv/ddmail/config.py
-    owner: '{{ www_ddmail_se_gunicorn_user }}'
-    group: '{{ www_ddmail_se_gunicorn_group }}'
+    owner: '{{ ddmail_webapp_gunicorn_user }}'
+    group: '{{ ddmail_webapp_gunicorn_group }}'
     mode: "u=rw,g=r,o="
   when: env == "prod"
 
