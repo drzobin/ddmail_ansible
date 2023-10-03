@@ -9,11 +9,11 @@ mariadb_mysql_port: 3306
 mariadb_mysql_ip: 127.0.0.1
 
 # mail prod database settings
-mail_db_name: mail
+mail_db_name: mail_dev
 mail_db_user_r: mail_r
-mail_db_user_r_password: "{{ vault_mail_prod_db_user_r_password  }}"
+mail_db_user_r_password: "{{ vault_mail_dev_db_user_r_password  }}"
 mail_db_user_rw: mail_rw
-mail_db_user_rw_password: "{{ vault_mail_prod_db_user_rw_password }}"
+mail_db_user_rw_password: "{{ vault_mail_dev_db_user_rw_password }}"
 
 # postfix main.cf
 postfix_myhostname: mail.ddmail.se
