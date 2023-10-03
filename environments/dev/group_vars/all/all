@@ -8,12 +8,19 @@ mariadb_mysqlservice: mysqld
 mariadb_mysql_port: 3306
 mariadb_mysql_ip: 127.0.0.1
 
-# mail prod database settings
+# mail_dev database settings
 mail_db_name: mail_dev
 mail_db_user_r: mail_r
 mail_db_user_r_password: "{{ vault_mail_dev_db_user_r_password  }}"
 mail_db_user_rw: mail_rw
 mail_db_user_rw_password: "{{ vault_mail_dev_db_user_rw_password }}"
+
+# mail_test database settings
+mail_test_db_name: mail_test
+mail_test_db_user_r: mail_test_r
+mail_test_db_user_r_password: "{{ vault_mail_test_db_user_r_password  }}"
+mail_test_db_user_rw: mail_test_rw
+mail_test_db_user_rw_password: "{{ vault_mail_test_db_user_rw_password }}"
 
 # postfix main.cf
 postfix_myhostname: mail.ddmail.se
@@ -52,21 +59,21 @@ apache2_port80_server_alias: www.ddmaildev.se
 
 # ddmail_webapp
 ddmail_webapp_runas: "{{ vault_ddmail_webapp_runas }}"
+ddmail_webapp_venv_user_owner: "{{ vault_ddmail_webapp_venv_user_owner }}"
+ddmail_webapp_venv_group_owner: "{{ vault_ddmail_webapp_venv_group_owner }}"
+
 ddmail_webapp_prod_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_prod_wtf_csrf_secret_key }}"
 ddmail_webapp_prod_secret_key: "{{ vault_ddmail_webapp_prod_secret_key }}"
 ddmail_webapp_prod_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_prod_db_user_rw_password }}@localhost/mail'
 
 ddmail_webapp_test_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_test_wtf_csrf_secret_key }}"
 ddmail_webapp_test_secret_key: "{{ vault_ddmail_webapp_test_secret_key }}"
-ddmail_webapp_test_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_test_db_user_rw_password }}@localhost/mail_test'
+ddmail_webapp_test_sqlalchemy_database_uri: 'mysql://mail_test_rw:{{ vault_mail_test_db_user_rw_password }}@localhost/mail_test'
 
 ddmail_webapp_dev_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_dev_wtf_csrf_secret_key }}"
 ddmail_webapp_dev_secret_key: "{{ vault_ddmail_webapp_dev_secret_key }}"
 ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_dev_db_user_rw_password }}@localhost/mail_dev'
 
-# www_ddmail_se
-www_ddmail_se_venv_user_owner: "{{ vault_www_ddmail_se_venv_user_owner }}"
-www_ddmail_se_venv_group_owner: "{{ vault_www_ddmail_se_venv_group_owner }}"
 
 # ddmail_email_remover
 ddmail_email_remover_runas: "{{ vault_ddmail_email_remover_runas }}"
@@ -74,6 +81,7 @@ ddmail_email_remover_venv_user_owner: "{{ vault_ddmail_email_remover_venv_user_o
 ddmail_email_remover_venv_group_owner: "{{ vault_ddmail_email_remover_venv_group_owner }}"
 ddmail_email_remover_gunicorn_user: vmail
 ddmail_email_remover_gunicorn_group: vmail
+
 ddmail_email_remover_prod_secret_key: "{{ vault_ddmail_email_remover_prod_secret_key }}"
 ddmail_email_remover_test_secret_key: "{{ vault_ddmail_email_remover_test_secret_key }}"
 ddmail_email_remover_dev_secret_key: "{{ vault_ddmail_email_remover_dev_secret_key }}"
