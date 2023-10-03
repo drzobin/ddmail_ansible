@@ -34,6 +34,35 @@
     host: localhost
     state: present
 
+- name: Create mail system database for test
+  community.mysql.mysql_db:
+    name: "{{ mail_test_db_name }}"
+    login_user: root
+    login_unix_socket: /run/mysqld/mysqld.sock
+    state: present
+
+- name: Create mail database user user_r with read access for test
+  community.mysql.mysql_user:
+    name: "{{ mail_test_db_user_r }}"
+    login_user: root
+    login_unix_socket: /run/mysqld/mysqld.sock
+    password: "{{ mail_test_db_user_r_password }}"
+    priv: "{{ mail_test_db_name }}.*:SELECT"
+    update_password: always
+    host: localhost
+    state: present
+
+- name: Create mail database user user_rw with read and write access for test
+  community.mysql.mysql_user:
+    name: "{{ mail_test_db_user_rw }}"
+    login_user: root
+    login_unix_socket: /run/mysqld/mysqld.sock
+    password: "{{ mail_test_db_user_rw_password }}"
+    priv: "{{ mail_test_db_name }}.*:ALL"
+    update_password: always
+    host: localhost
+    state: present
+
 - name: Create MariaDB create tables sql file
   ansible.builtin.copy:
     src: create_tables.sql
@@ -44,5 +73,13 @@
     name: "{{ mail_db_name }}"
     login_user: "{{ mail_db_user_rw }}"
     login_password: "{{ mail_db_user_rw_password }}"
+    state: import
+    target: /root/create_tables.sql
+
+- name: Create tables for mail db using create tables sql file for test
+  community.mysql.mysql_db:
+    name: "{{ mail_test_db_name }}"
+    login_user: "{{ mail_test_db_user_rw }}"
+    login_password: "{{ mail_test_db_user_rw_password }}"
     state: import
     target: /root/create_tables.sql
