@@ -19,6 +19,7 @@
     login_unix_socket: /run/mysqld/mysqld.sock
     password: "{{ mail_db_user_r_password }}"
     priv: "{{ mail_db_name }}.*:SELECT"
+    update_password: always
     host: localhost
     state: present
 
@@ -29,6 +30,7 @@
     login_unix_socket: /run/mysqld/mysqld.sock
     password: "{{ mail_db_user_rw_password }}"
     priv: "{{ mail_db_name }}.*:ALL"
+    update_password: always
     host: localhost
     state: present
 
