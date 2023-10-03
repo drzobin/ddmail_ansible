@@ -15,5 +15,5 @@
     - mariadb
     - mailsystem_db
     - apache2
-    - www_ddmail_se
+    - ddmail_webapp
     - ddmail_email_remover
