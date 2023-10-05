@@ -15,6 +15,13 @@ mail_db_user_r_password: "{{ vault_mail_prod_db_user_r_password  }}"
 mail_db_user_rw: mail_rw
 mail_db_user_rw_password: "{{ vault_mail_prod_db_user_rw_password }}"
 
+# mail_test database settings
+mail_test_db_name: mail_test
+mail_test_db_user_r: mail_test_r
+mail_test_db_user_r_password: "{{ vault_mail_test_db_user_r_password  }}"
+mail_test_db_user_rw: mail_test_rw
+mail_test_db_user_rw_password: "{{ vault_mail_test_db_user_rw_password }}"
+
 # postfix main.cf
 postfix_myhostname: mail.ddmail.se
 postfix_mydomain: ddmail.se
