@@ -22,6 +22,12 @@ mail_test_db_user_r_password: "{{ vault_mail_test_db_user_r_password  }}"
 mail_test_db_user_rw: mail_test_rw
 mail_test_db_user_rw_password: "{{ vault_mail_test_db_user_rw_password }}"
 
+# self_signed_certs
+self_signed_certs_folder: /etc/self_signed_certs
+self_signed_certs_folder_mail_ddmail_se:  '{{ self_signed_certs_folder }}/mail.ddmail.se'
+self_signed_certs_cert_mail_ddmail_se: '{{ self_signed_certs_folder_mail_ddmail_se }}/cert.pem'
+self_signed_certs_privkey_mail_ddmail_se: '{{ self_signed_certs_folder_mail_ddmail_se }}/privkey.pem'
+
 # postfix main.cf
 postfix_myhostname: mail.ddmail.se
 postfix_mydomain: ddmail.se
@@ -33,12 +39,12 @@ postfix_inet_protocols: ipv4
 postfix_relay_domains: $mydestination
 postfix_message_size_limit: 30720000
 postfix_unknown_local_recipient_reject_code: 550
-postfix_smtpd_tls_cert_file: /etc/letsencrypt/live/mail.ddmail.se/cert.pem
-postfix_smtpd_tls_key_file: /etc/letsencrypt/live/mail.ddmail.se/privkey.pem
+postfix_smtpd_tls_cert_file: "{{ self_signed_certs_cert_mail_ddmail_se }}"
+postfix_smtpd_tls_key_file: "{{ self_signed_certs_privkey_mail_ddmail_se }}"
 
 # dovecot
-dovecot_ssl_cert: </etc/letsencrypt/live/mail.ddmail.se/cert.pem
-dovecot_ssl_key: </etc/letsencrypt/live/mail.ddmail.se/privkey.pem
+dovecot_ssl_cert: "<{{ self_signed_certs_cert_mail_ddmail_se }}"
+dovecot_ssl_key: "<{{ self_signed_certs_privkey_mail_ddmail_se }}"
 
 # rspamd
 
