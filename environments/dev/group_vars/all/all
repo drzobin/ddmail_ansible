@@ -33,6 +33,8 @@ postfix_inet_protocols: ipv4
 postfix_relay_domains: $mydestination
 postfix_message_size_limit: 30720000
 postfix_unknown_local_recipient_reject_code: 550
+postfix_smtpd_tls_cert_file: /etc/letsencrypt/live/mail.ddmail.se/cert.pem
+postfix_smtpd_tls_key_file: /etc/letsencrypt/live/mail.ddmail.se/privkey.pem
 
 # dovecot
 
