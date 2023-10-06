@@ -14,6 +14,11 @@
     - unattended-upgrades
     - mariadb
     - mailsystem_db
+    - self_signed_certs
+    - rspamd
+    - redis
+    - postfix
+    - dovecot
     - apache2
     - ddmail_webapp
     - ddmail_email_remover
