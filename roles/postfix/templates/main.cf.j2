@@ -25,8 +25,8 @@ readme_directory = no
 compatibility_level = 2
 
 # TLS configuration
-smtpd_tls_cert_file = /etc/letsencrypt/live/mail.ddmail.se/cert.pem
-smtpd_tls_key_file = /etc/letsencrypt/live/mail.ddmail.se/privkey.pem
+smtpd_tls_cert_file = {{ postfix_smtpd_tls_cert_file }}
+smtpd_tls_key_file = {{ postfix_smtpd_tls_key_file }}
 
 smtp_tls_security_level = may
 smtpd_tls_security_level = may
