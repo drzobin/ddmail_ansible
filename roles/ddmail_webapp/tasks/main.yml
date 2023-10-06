@@ -30,19 +30,19 @@
 - name: Create ddmail python env.
   ansible.builtin.command: python3 -m venv /opt/ddmail_webapp_venv
 
-- name: Add the group "{{ www_ddmail_se_gunicorn_group }}"
+- name: Add the group "{{ ddmail_webapp_gunicorn_group }}"
   ansible.builtin.group:
-    name: "{{ www_ddmail_se_gunicorn_group }}"
+    name: "{{ ddmail_webapp_gunicorn_group }}"
     state: present
   when: env == "prod"
 
-- name: Add the user "{{ www_ddmail_se_gunicorn_user }}"
+- name: Add the user "{{ ddmail_webapp_gunicorn_user }}"
   ansible.builtin.user:
-    name: "{{ www_ddmail_se_gunicorn_user }}"
+    name: "{{ ddmail_webapp_gunicorn_user }}"
     shell: /usr/sbin/nologin
     home: /opt/ddmail_webapp_venv
     create_home: false
-    group: "{{ www_ddmail_se_gunicorn_group }}"
+    group: "{{ ddmail_webapp_gunicorn_group }}"
     state: present
   when: env == "prod"
 
@@ -149,8 +149,8 @@
   ansible.builtin.file:
     path: /var/log/gunicorn
     state: directory
-    owner: '{{ www_ddmail_se_gunicorn_user }}'
-    group: '{{ www_ddmail_se_gunicorn_group }}'
+    owner: '{{ ddmail_webapp_gunicorn_user }}'
+    group: '{{ ddmail_webapp_gunicorn_group }}'
     mode: "u=rwx,g=rx,o=rx"
   when: env == "prod"
 
