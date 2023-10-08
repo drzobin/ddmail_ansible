@@ -1,0 +1,33 @@
+---
+- name: Get purplei2p gpg key..
+  ansible.builtin.shell: wget -q -O- https://repo.i2pd.xyz/r4sas.gpg | gpg --dearmor > /usr/share/keyrings/purplei2p.gpg
+
+- name: Add purplei2p apt signing key.
+  ansible.builtin.apt_key:
+    file: /usr/share/keyrings/purplei2p.gpg
+    state: present
+
+- name: Add purplei2p apt repository.
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/purplei2p.gpg] https://repo.i2pd.xyz/debian bullseye main"
+    state: present
+    filename: purplei2p
+    update_cache: true
+
+- name: Add purplei2p src apt repository.
+  ansible.builtin.apt_repository:
+    repo: "deb-src [signed-by=/usr/share/keyrings/purplei2p.gpg] https://repo.i2pd.xyz/debian bullseye main"
+    state: present
+    filename: purplei2p
+    update_cache: true
+
+- name: Run "apt-get update".
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install latest version of i2pd ignoring "install-recommends".
+  ansible.builtin.apt:
+    name: i2pd
+    state: latest
+    install_recommends: false
+    update_cache: true
