@@ -107,7 +107,13 @@
     src: etc_rspamd_local.d_dkim_signing.conf.j2
     dest: /etc/rspamd/local.d/dkim_signing.conf
 
-- name: Create/edit rspamd configuration filei for arc /etc/rspamd/local.d/arc.conf.
+- name: Create/edit rspamd configuration file for arc /etc/rspamd/local.d/arc.conf.
   ansible.builtin.template:
     src: etc_rspamd_local.d_dkim_signing.conf.j2
     dest: /etc/rspamd/local.d/arc.conf
+
+- name: Restart rspamd service
+  ansible.builtin.service:
+    name: rspamd
+    state: restarted
+    enabled: true
