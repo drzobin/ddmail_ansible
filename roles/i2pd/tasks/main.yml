@@ -31,3 +31,25 @@
     state: latest
     install_recommends: false
     update_cache: true
+
+- name: Create/edit i2pd configuration file /etc/i2pd/i2pd.conf
+  ansible.builtin.template:
+    src: i2pd.conf.j2
+    dest: /etc/i2pd/i2pd.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Create/edit i2pd tunnels configuration file /etc/i2pd/tunnels.conf
+  ansible.builtin.template:
+    src: tunnels.conf.j2
+    dest: /etc/i2pd/tunnels.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Restart i2pd service
+  ansible.builtin.service:
+    name: i2pd
+    state: restarted
+    enabled: true
