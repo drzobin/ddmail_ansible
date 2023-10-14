@@ -1,4 +1,11 @@
 ---
+- name: Install dep package.
+  ansible.builtin.apt:
+    pkg:
+      - gpg
+      - apt-transport-https
+    state: latest
+
 - name: Add rspamd apt signing key.
   ansible.builtin.apt_key:
     url: https://rspamd.com/apt-stable/gpg.key
@@ -6,14 +13,14 @@
 
 - name: Add rspamd apt repository.
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://rspamd.com/apt-stable/ bullseye  main"
+    repo: "deb [arch=amd64] https://rspamd.com/apt-stable/ bookworm main"
     state: present
     filename: rspamd
     update_cache: true
 
 - name: Add rspamdi src apt repository.
   ansible.builtin.apt_repository:
-    repo: "deb-src [arch=amd64] https://rspamd.com/apt-stable/ bullseye main"
+    repo: "deb-src [arch=amd64] https://rspamd.com/apt-stable/ bookworm main"
     state: present
     filename: rspamd
     update_cache: true
