@@ -102,3 +102,7 @@ ddmail_email_remover_dev_password: "{{ vault_ddmail_email_remover_dev_password }
 ddmail_email_remover_prod_password_hash: "{{ vault_ddmail_email_remover_prod_password_hash }}"
 ddmail_email_remover_test_password_hash: "{{ vault_ddmail_email_remover_test_password_hash }}"
 ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_password_hash }}"
+
+# github
+github_ssh_privkey: "{{ vault_github_ssh_privkey }}" 
+github_ssh_pubkey: "{{ vault_github_ssh_pubkey }}" 
