@@ -49,6 +49,10 @@
     repo: https://github.com/drzobin/ddmail_email_remover.git
     dest: /opt/ddmail_email_remover_venv/ddmail_email_remover
 
+- name: Set git remote for ddmail_email_remover
+  ansible.builtin.shell: cd /opt/ddmail_email_remover_venv/ddmail_email_remover; git remote set-url origin git@github.com:drzobin/ddmail_email_remover.git
+  when: env == "dev"
+
 - name: Stat ddmail_email_remover folder
   ansible.builtin.stat:
     path: /opt/ddmail_email_remover_venv/ddmail_email_remover
