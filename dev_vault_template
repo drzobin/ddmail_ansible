@@ -20,11 +20,8 @@ vault_ddmail_webapp_dev_secret_key: change_me
 vault_ddmail_webapp_venv_user_owner: user
 vault_ddmail_webapp_venv_group_owner: user
 
-vault_srv01_ansible_ssh_user: user
-vault_srv01_ansible_become_pass: change_me
-
-vault_ddmaildev_ansible_ssh_user: user
-vault_ddmaildev_ansible_become_pass: change_me
+vault_ansible_ssh_user: user
+vault_ansible_become_pass: change_me
 
 vault_ddmail_email_remover_runas: user
 vault_ddmail_email_remover_prod_secret_key: change_me
