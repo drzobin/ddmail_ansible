@@ -1,4 +1,12 @@
 ---
+- name: Install dep package.
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - wget
+      - gpg
+    state: latest
+
 - name: Get purplei2p gpg key..
   ansible.builtin.shell: wget -q -O- https://repo.i2pd.xyz/r4sas.gpg | gpg --dearmor > /usr/share/keyrings/purplei2p.gpg
 
