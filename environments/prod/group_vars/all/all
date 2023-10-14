@@ -1,6 +1,5 @@
 ---
 # global vars
-srv1_ip: 155.4.244.189
 env: prod
 
 # mariadb
