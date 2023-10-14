@@ -52,6 +52,9 @@
     repo: https://github.com/drzobin/ddmail_webapp.git
     dest: /opt/ddmail_webapp_venv/ddmail_webapp
 
+- name: Set git remote for ddmail_webapp
+  ansible.builtin.shell: cd /opt/ddmail_webapp_venv/ddmail_webapp; git remote set-url origin git@github.com:drzobin/ddmail_webapp.git
+
 - name: Stat ddmail_webapp folder
   ansible.builtin.stat:
     path: /opt/ddmail_webapp_venv/ddmail_webapp
