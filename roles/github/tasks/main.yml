@@ -1,0 +1,39 @@
+---
+- name: Install dep package.
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - git
+    state: latest
+
+- name: Add .ssh for "{{ ansible_ssh_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ ansible_ssh_user }}/.ssh"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: "u=rwx,g=,o="
+
+- name: Add ssh config for "{{ ansible_ssh_user }}"
+  ansible.builtin.template:
+    src: config.j2
+    dest: "/home/{{ ansible_ssh_user }}/.ssh/config"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: "u=rw,g=,o="
+
+- name: Add ssh github private key for "{{ ansible_ssh_user }}"
+  ansible.builtin.copy: 
+    content: "{{ github_ssh_privkey }}" 
+    dest: "/home/{{ ansible_ssh_user }}/.ssh/github"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: "u=rw,g=,o="
+
+- name: Add ssh github public key for "{{ ansible_ssh_user }}"
+  ansible.builtin.copy: 
+    content: "{{ github_ssh_pubkey }}" 
+    dest: "/home/{{ ansible_ssh_user }}/.ssh/github.pub"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: "u=rw,g=,o="
