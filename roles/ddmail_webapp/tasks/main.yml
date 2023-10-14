@@ -8,6 +8,7 @@
       - libffi-dev
       - python3-dev
       - python3-venv
+      - pkg-config
       - default-libmysqlclient-dev
     state: latest
 
