@@ -12,14 +12,14 @@
 
 - name: Add tor apt repository.
   apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main"
+    repo: "deb [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bookworm main"
     state: present
     filename: tor
     update_cache: yes
 
 - name: Add tor src apt repository.
   apt_repository:
-    repo: "deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main"
+    repo: "deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bookworm main"
     state: present
     filename: tor
     update_cache: yes
