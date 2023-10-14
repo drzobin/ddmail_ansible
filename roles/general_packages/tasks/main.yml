@@ -3,10 +3,6 @@
   ansible.builtin.apt:
     pkg:
       - vim
-      - telnet
-      - net-tools
-      - dnsutils
-      - mlocate
       - git
       - apt-transport-https
       - wget
