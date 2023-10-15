@@ -36,3 +36,5 @@ vault_ddmail_email_remover_dev_password_hash: change_me
 
 vault_ddmail_email_remover_venv_user_owner: user
 vault_ddmail_email_remover_venv_group_owner: user
+vault_git_global_user_name: user
+vault_git_global_user_email: user
