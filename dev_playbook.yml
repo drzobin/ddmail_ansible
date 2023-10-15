@@ -13,6 +13,7 @@
     - sshd
     - unattended-upgrades
     - unbound
+    - set_nameserver
     - mariadb
     - mailsystem_db
     - self_signed_certs
