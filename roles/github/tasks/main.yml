@@ -6,6 +6,20 @@
       - git
     state: latest
 
+- name: Set git global user name
+  become: true
+  become_user: "{{ ansible_ssh_user }}"
+  become_method: ansible.builtin.su
+  become_flags: '-'
+  ansible.builtin.command: git config --global user.name "\"{{ git_global_user_name  }}\""
+
+- name: Set git global user name
+  become: true
+  become_user: "{{ ansible_ssh_user }}"
+  become_method: ansible.builtin.su
+  become_flags: '-'
+  ansible.builtin.command: git config --global user.email "\"{{ git_global_user_email  }}\""
+
 - name: Add .ssh for "{{ ansible_ssh_user }}"
   ansible.builtin.file:
     path: "/home/{{ ansible_ssh_user }}/.ssh"
