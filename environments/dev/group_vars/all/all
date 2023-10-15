@@ -106,3 +106,5 @@ ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_passw
 # github
 github_ssh_privkey: "{{ vault_github_ssh_privkey }}" 
 github_ssh_pubkey: "{{ vault_github_ssh_pubkey }}" 
+git_global_user_name: "{{ vault_git_global_user_name }}"
+git_global_user_email: "{{ vault_git_global_user_email }}"
