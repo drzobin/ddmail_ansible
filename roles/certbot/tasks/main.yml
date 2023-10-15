@@ -28,7 +28,7 @@
 
 - name: Stat cerbot apache ssl cert for ddmail.se and www.ddmail.se
   ansible.builtin.stat:
-    path: /etc/letsencrypt/live/www.ddmail.se/fullchain.pem
+    path: /etc/letsencrypt/live/ddmail.se/fullchain.pem
   register: certbot_apache_ssl
 
 - name: Stop apache2 service
@@ -38,7 +38,7 @@
     enabled: true
   when: not certbot_apache_ssl.stat.exists
 
-- name: Get apache ssl certificate for www.ddmail.se
+- name: Get apache ssl certificate for ddmail.se and www.ddmail.se
   ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d ddmail.se -d www.ddmail.se
   when: not certbot_apache_ssl.stat.exists
 
@@ -57,13 +57,6 @@
 - name: Get postfix/dovecot ssl certificate for mail.ddmail.se
   ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d mail.ddmail.se
   when: not certbot_mail_ssl.stat.exists
-
-- name: Certbot renew as cronjob
-  ansible.builtin.cron:
-    name: certbot-renewal
-    job: '/usr/bin/certbot renew --pre-hook "systemctl stop apache2" --post-hook "systemctl start apache2"'
-    minute: "0"
-    hour: "04"
 
 - name: Restart apache2 service
   ansible.builtin.service:
