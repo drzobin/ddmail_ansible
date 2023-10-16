@@ -9,7 +9,7 @@ Group={{ ddmail_email_remover_gunicorn_group }}
 WorkingDirectory=/opt/ddmail_email_remover_venv/
 Environment="PATH=/opt/ddmail_email_remover_venv/bin/"
 ExecStart=/opt/ddmail_email_remover_venv/bin/gunicorn -b 127.0.0.1:8001 --log-file /var/log/gunicorn/ddmail_email_remover.log --workers 2 "email_remover:create_app()" 
-RuntimeDirectory=
+RuntimeDirectory=ddmail_email_remover
 
 # Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
 NoNewPrivileges=yes
@@ -31,7 +31,7 @@ MemoryDenyWriteExecute=yes
 
 # Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/ddmail_email_remover_venv /usr/bin/ls /usr/bin/python3.9 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.9
+BindReadOnlyPaths=/opt/ddmail_email_remover_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11
 BindPaths=/var/log/gunicorn/ddmail_email_remover.log /var/mail/vhosts
 
 # Deny all CAP
