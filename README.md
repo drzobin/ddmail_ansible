@@ -1,6 +1,9 @@
 # ddmail_ansible
 Ansible for ddmail, ddmail is a e-mail system/service for reasonable paranoid people who value privacy and security.
 
+# Operating system
+Developt for and tested on debian 12.
+
 # Installation and setup for dev and prod
 export EDITOR=[your editor of choise]<br>
 cp dev_vault_template environments/dev/group_vars/all/vault<br>
