@@ -154,9 +154,18 @@
   ansible.builtin.file:
     path: /var/log/gunicorn
     state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when: env == "prod"
+
+- name: Add logfile /var/log/gunicorn/ddmail_webapp.log
+  ansible.builtin.file:
+    path: /var/log/gunicorn/ddmail_webapp.log
+    state: touch
     owner: '{{ ddmail_webapp_gunicorn_user }}'
     group: '{{ ddmail_webapp_gunicorn_group }}'
-    mode: "u=rwx,g=rx,o=rx"
+    mode: u=rw,g=r,o=
   when: env == "prod"
 
 - name: Reload systemd
