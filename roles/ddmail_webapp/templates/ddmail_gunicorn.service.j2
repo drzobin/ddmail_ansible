@@ -6,9 +6,9 @@ After=network.target
 Environment="MODE=PRODUCTION"
 User={{ ddmail_webapp_gunicorn_user }}
 Group={{ ddmail_webapp_gunicorn_group }}
-WorkingDirectory=/opt/ddmail_venv/
-Environment="PATH=/opt/ddmail_venv/bin/"
-ExecStart=/opt/ddmail_venv/bin/gunicorn --log-file /var/log/gunicorn/gunicorn.log --workers 2 "ddmail:create_app()" 
+WorkingDirectory=/opt/ddmail_webapp_venv/
+Environment="PATH=/opt/ddmail_webapp_venv/bin/"
+ExecStart=/opt/ddmail_webapp_venv/bin/gunicorn --log-file /var/log/gunicorn/ddmail_webapp.log --workers 2 "ddmail:create_app()" 
 RuntimeDirectory=
 
 # Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
@@ -31,8 +31,8 @@ MemoryDenyWriteExecute=yes
 
 # Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/ddmail_venv /usr/bin/ls /usr/bin/python3.9 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.9 /run/mysqld/mysqld.sock
-BindPaths=/var/log/gunicorn/gunicorn.log
+BindReadOnlyPaths=/opt/ddmail_webapp_venv /usr/bin/ls /usr/bin/python3.9 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.9 /run/mysqld/mysqld.sock
+BindPaths=/var/log/gunicorn/ddmail_webapp.log
 
 # Deny all CAP
 CapabilityBoundingSet=
