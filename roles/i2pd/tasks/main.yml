@@ -56,6 +56,12 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
+- name: Restart i2pd service
+  ansible.builtin.service:
+    name: i2pd
+    state: restarted
+    enabled: true
+
 - name: Set i2p hostname/b32 address for ddmail_webapp in prod
   ansible.builtin.shell: echo "$(head -c 391 /var/lib/i2pd/ddmail_key.dat | sha256sum | cut -f1 -d\  | xxd -r -p | base32 | tr '[:upper:]' '[:lower:]' | sed -r 's/=//g').b32.i2p" > /opt/ddmail_webapp_venv/ddmail/ddmail/templates/i2p_hostname
   when: env == "prod"
@@ -64,8 +70,8 @@
   ansible.builtin.shell: echo "$(head -c 391 /var/lib/i2pd/ddmail_key.dat | sha256sum | cut -f1 -d\  | xxd -r -p | base32 | tr '[:upper:]' '[:lower:]' | sed -r 's/=//g').b32.i2p" > /opt/ddmail_webapp_venv/ddmail_webapp/ddmail/ddmail/templates/i2p_hostname
   when: env == "dev"
 
-- name: Restart i2pd service
+- name: Restart ddmail_gunicorn service
   ansible.builtin.service:
-    name: i2pd
+    name: ddmail_gunicorn
     state: restarted
     enabled: true
