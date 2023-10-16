@@ -1,2 +1,21 @@
 # ddmail_ansible
-Ansible for ddmail. E-mail system/service for reasonable paranoid people who value privacy and security.
+Ansible for ddmail, ddmail is a e-mail system/service for reasonable paranoid people who value privacy and security.
+
+# Installation and setup for dev and prod
+export EDITOR=[your editor of choise]
+cp dev_vault_template environments/dev/group_vars/all/vault
+ansible-vault encrypt environments/dev/group_vars/all/vault
+ansible-vault edit environments/dev/group_vars/all/vault
+[edit vault file to match your dev env]
+
+cp prod_vault_template environments/prod/group_vars/all/vault
+ansible-vault encrypt environments/prod/group_vars/all/vault
+ansible-vault edit environments/prod/group_vars/all/vault
+[edit vault file to match your prod env]
+
+# Run ansible for prod
+ansible-playbook prod_playbook.yml -i environments/prod/ --ask-vault-pass --key-file [key file]
+
+# Run ansible for dev
+ansible-playbook dev_playbook.yml -i environments/dev/ --ask-vault-pass --key-file [key file]
+
