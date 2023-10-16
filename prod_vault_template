@@ -1,6 +1,8 @@
 vault_sshd_port: 22
 vault_sshd_allow_users: user1 user2
 
+vault_certbot_reg_email: change.to@your.own.email.com
+
 vault_mail_prod_db_user_r_password: change_me
 vault_mail_test_db_user_r_password: change_me
 vault_mail_dev_db_user_r_password: change_me
