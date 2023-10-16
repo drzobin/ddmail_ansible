@@ -80,7 +80,7 @@
     requirements: /opt/ddmail_webapp_venv/ddmail/requirements.txt
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/ddmail_venv
+    virtualenv: /opt/ddmail_webapp_venv
   when: env == "prod"
 
 - name: Install requirenments with pip.
