@@ -129,14 +129,24 @@
     mode: "u=rw,g=r,o=r"
   when: env == "prod"
 
+- name: Add logdir for gunicorn.
+  ansible.builtin.file:
+    path: /var/log/gunicorn
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when: env == "prod"
+
 - name: Add logdir for ddmail_email_remover gunicorn.
   ansible.builtin.file:
     path: /var/log/gunicorn/ddmail_email_remover.log
     state: touch
     owner: '{{ ddmail_email_remover_gunicorn_user }}'
     group: '{{ ddmail_email_remover_gunicorn_group }}'
-    mode: "u=rwx,g=rx,o="
+    mode: u=rw,g=r,o=
   when: env == "prod"
+
 
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_email_remover kill
