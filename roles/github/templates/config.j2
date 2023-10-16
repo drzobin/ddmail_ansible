@@ -1,0 +1,7 @@
+# ssh config
+Host github.com
+        User git
+        Hostname github.com
+        PreferredAuthentications publickey
+        IdentityFile /home/{{ ansible_ssh_user }}/.ssh/github
+
