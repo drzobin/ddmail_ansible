@@ -5,6 +5,7 @@
       - apt-transport-https
       - wget
       - gpg
+      - xxd
     state: latest
 
 - name: Get purplei2p gpg key..
