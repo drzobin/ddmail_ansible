@@ -34,19 +34,20 @@
 type = http
 host = 127.0.0.1  
 port = 8080
-keys = http-in.dat
+keys = key.dat
 
 [smtp-in]
 type = server
 host = 127.0.0.1
 port = 10025
-keys = smtp-in.dat
+inport: 25
+keys = key.dat
 
 [imap-in]
 type = server
 host = 127.0.0.1
 port = 143
-keys = imap-in.dat
+keys = key.dat
 
 # see more examples at https://i2pd.readthedocs.io/en/latest/user-guide/tunnels/
 
