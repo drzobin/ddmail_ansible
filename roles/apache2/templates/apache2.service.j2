@@ -33,15 +33,38 @@ RestrictSUIDSGID=yes
 # Service may not create writable and executable memory mappings
 MemoryDenyWriteExecute=yes
 
+# Mount filesystem as read only
 ProtectSystem=strict
-ProtectDevices=yes
+
+# Disables modification of /proc and /sys
 ProtectKernelTunables=yes
+
+# Prohibits loading or unloading modules and masks /usr/lib/modules from the application
 ProtectKernelModules=yes
+
+# Linux Control Groups (cgroups) hierarchies accessible through /sys/fs/cgroup will be made read-only to all processes of the unit
 ProtectControlGroups=yes
 
-InaccessibleDirectories=/var/mail /opt /root /home
-ReadWriteDirectories=/var/log/apache2
+# Sets up a new /dev mount for the executed processes and only adds API pseudo devices such as /dev/null, /dev/zero or /dev/random
+PrivateDevices=yes
 
+# Only allows access to standard pseudo devices including /dev/null, /dev/zero, /dev/full, /dev/random, and /dev/urandom.
+DevicePolicy=closed
+
+# Restricts access to the socket system call
+RestrictAddressFamilies=AF_UNIX AF_INET AF_NETLINK
+
+# Attempts to enable realtime scheduling in a process of the unit are refused.
+RestrictRealtime=yes
+
+# Locks down the personality system call so that the kernel execution domain may not be changed from the default
+LockPersonality=yes
+
+# Dirs that is inaccessible
+InaccessibleDirectories=/var/mail /opt /root /home /var/lib/tor /var/lib/i2pd /etc/i2pd /etc/tor /etc/postfix /etc/dovecot /etc/mysql /etc/rspamd /var/lib/mysql
+
+# Dirs that is read and writable
+ReadWriteDirectories=/var/log/apache2
 
 # Hide / with a tmpfs filesystem, whitelist path that is needed for the application 
 #TemporaryFileSystem=/:ro
