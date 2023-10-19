@@ -1,0 +1,14 @@
+class Prod():
+    SECRET_KEY = '{{ ddmail_dmcp_keyhandler_prod_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_dmcp_keyhandler_prod_password_hash }}'
+    DOVEADM_BIN = '/usr/bin/doveadm'
+
+class Test():
+    SECRET_KEY = '{{ ddmail_dmcp_keyhandler_test_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_dmcp_keyhandler_test_password_hash }}'
+    DOVEADM_BIN = '/usr/bin/doveadm'
+
+class Dev():
+    SECRET_KEY = '{{ ddmail_dmcp_keyhandler_dev_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_dmcp_keyhandler_dev_password_hash }}'
+    DOVEADM_BIN = '/usr/bin/doveadm'
