@@ -88,6 +88,14 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
+- name: Create/edit dovecot configuration file conf.d/10-mailcrypt.conf.
+  ansible.builtin.template:
+    src: 10-mailcrypt.conf.j2
+    dest: /etc/dovecot/conf.d/10-mailcrypt.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
 - name: Restart dovecot service
   ansible.builtin.service:
     name: dovecot
