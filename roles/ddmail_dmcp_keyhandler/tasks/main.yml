@@ -51,6 +51,9 @@
 
 - name: Set git remote for ddmail_dmcp_keyhandler
   ansible.builtin.shell: cd /opt/ddmail_dmcp_keyhandler_venv/ddmail_dmcp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_dmcp_keyhandler.git
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_dmcp_keyhandler_runas }}"
   when: env == "dev"
 
 - name: Stat ddmail_dmcp_keyhandler folder
