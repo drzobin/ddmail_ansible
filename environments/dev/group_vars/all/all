@@ -103,6 +103,26 @@ ddmail_email_remover_prod_password_hash: "{{ vault_ddmail_email_remover_prod_pas
 ddmail_email_remover_test_password_hash: "{{ vault_ddmail_email_remover_test_password_hash }}"
 ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_password_hash }}"
 
+# ddmail_dmcp_keyhandler
+ddmail_dcmp_keyhandler_doas_user: "{{ vault_ddmail_dmcp_keyhandler_runas }}"
+ddmail_dmcp_keyhandler_runas: "{{ vault_ddmail_dmcp_keyhandler_runas }}"
+ddmail_dmcp_keyhandler_venv_user_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_user_owner }}"
+ddmail_dmcp_keyhandler_venv_group_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_group_owner }}"
+ddmail_dmcp_keyhandler_gunicorn_user: vmail
+ddmail_dmcp_keyhandler_gunicorn_group: vmail
+
+ddmail_dmcp_keyhandler_prod_secret_key: "{{ vault_ddmail_dmcp_keyhandler_prod_secret_key }}"
+ddmail_dmcp_keyhandler_test_secret_key: "{{ vault_ddmail_dmcp_keyhandler_test_secret_key }}"
+ddmail_dmcp_keyhandler_dev_secret_key: "{{ vault_ddmail_dmcp_keyhandler_dev_secret_key }}"
+
+ddmail_dmcp_keyhandler_prod_password: "{{ vault_ddmail_dmcp_keyhandler_prod_password }}"
+ddmail_dmcp_keyhandler_test_password: "{{ vault_ddmail_dmcp_keyhandler_test_password }}"
+ddmail_dmcp_keyhandler_dev_password: "{{ vault_ddmail_dmcp_keyhandler_dev_password }}"
+
+ddmail_dmcp_keyhandler_prod_password_hash: "{{ vault_ddmail_dmcp_keyhandler_prod_password_hash }}"
+ddmail_dmcp_keyhandler_test_password_hash: "{{ vault_ddmail_dmcp_keyhandler_test_password_hash }}"
+ddmail_dmcp_keyhandler_dev_password_hash: "{{ vault_ddmail_dmcp_keyhandler_dev_password_hash }}"
+
 # github
 github_ssh_privkey: "{{ vault_github_ssh_privkey }}" 
 github_ssh_pubkey: "{{ vault_github_ssh_pubkey }}" 
