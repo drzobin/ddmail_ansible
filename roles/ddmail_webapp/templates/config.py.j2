@@ -15,7 +15,7 @@ class Test():
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_test_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
-    DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dhmp_keyhandler_test_password }}'
+    DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dmcp_keyhandler_test_password }}'
 class Dev():
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_dev_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_dev_secret_key }}'
@@ -24,4 +24,4 @@ class Dev():
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_dev_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
-    DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dhmp_keyhandler_dev_password }}'
+    DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dmcp_keyhandler_dev_password }}'
