@@ -37,6 +37,19 @@ vault_ddmail_email_remover_dev_password_hash: change_me
 vault_ddmail_email_remover_venv_user_owner: user
 vault_ddmail_email_remover_venv_group_owner: user
 
+vault_ddmail_dmcp_keyhandler_runas: user
+vault_ddmail_dmcp_keyhandler_prod_secret_key: change_me
+vault_ddmail_dmcp_keyhandler_prod_password: change_me
+vault_ddmail_dmcp_keyhandler_prod_password_hash: change_me
+vault_ddmail_dmcp_keyhandler_test_secret_key: change_me
+vault_ddmail_dmcp_keyhandler_test_password: change_me
+vault_ddmail_dmcp_keyhandler_test_password_hash: change_me
+vault_ddmail_dmcp_keyhandler_dev_secret_key: change_me
+vault_ddmail_dmcp_keyhandler_dev_password: change_me
+vault_ddmail_dmcp_keyhandler_dev_password_hash: change_me
+vault_ddmail_dmcp_keyhandler_venv_user_owner: user
+vault_ddmail_dmcp_keyhandler_venv_group_owner: user
+
 vault_github_ssh_pubkey: change_me
 vault_github_ssh_privkey: "-----BEGIN OPENSSH PRIVATE KEY-----\n[ssh privkey data\n more ssh privkey data]\n-----END OPENSSH PRIVATE KEY-----"
 vault_git_global_user_name: user
