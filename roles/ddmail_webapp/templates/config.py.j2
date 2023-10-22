@@ -5,6 +5,8 @@ class Prod():
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_prod_password }}'
+    DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
+    DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dhcp_keyhandler_prod_password }}'
 class Test():
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_test_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_test_secret_key }}'
@@ -12,6 +14,8 @@ class Test():
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_test_password }}'
+    DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
+    DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dhcp_keyhandler_test_password }}'
 class Dev():
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_dev_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_dev_secret_key }}'
@@ -19,3 +23,5 @@ class Dev():
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_dev_password }}'
+    DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
+    DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dhcp_keyhandler_dev_password }}'
