@@ -15,31 +15,31 @@ RuntimeDirectory=ddmail_dmcp_keyhandler
 #NoNewPrivileges=yes
 
 # Use dedicated /tmp
-PrivateTmp=yes
+#PrivateTmp=yes
 
 # Hide user homes
-ProtectHome=yes
+#ProtectHome=yes
 
 # Service may not create SUID/SGID files
 #RestrictSUIDSGID=yes
 
 # Service may not create writable and executable memory mappings
-MemoryDenyWriteExecute=yes
+#MemoryDenyWriteExecute=yes
 
 # Service may only use loopback network interface
 #PrivateNetwork=yes
 
 # Create a filesystem jail with namespace
-TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/ddmail_dmcp_keyhandler_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/doas
-BindPaths=/var/log/gunicorn/ddmail_dmcp_keyhandler.log
+#TemporaryFileSystem=/:ro
+#BindReadOnlyPaths=/opt/ddmail_dmcp_keyhandler_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/doas /usr/bin/doveadm /usr/lib/dovecot /etc/dovecot
+#BindPaths=/var/log/gunicorn/ddmail_dmcp_keyhandler.log
 
 # Deny all CAP
-CapabilityBoundingSet=
-AmbientCapabilities=
+#CapabilityBoundingSet=
+#AmbientCapabilities=
 
 # System call filter
-SystemCallFilter=@system-service
+#SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
