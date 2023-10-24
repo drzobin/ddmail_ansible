@@ -39,7 +39,7 @@
   when: not certbot_apache_ssl.stat.exists
 
 - name: Get apache ssl certificate for ddmail.se and www.ddmail.se
-  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d ddmail.se -d www.ddmail.se
+  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d ddmail.se -d www.ddmail.se -d mta-sts.ddmail.se
   when: not certbot_apache_ssl.stat.exists
 
 - name: Stat cerbot postfix/dovecot ssl cert for mail.ddmail.se
