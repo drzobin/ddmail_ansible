@@ -27,6 +27,9 @@ compatibility_level = 2
 # Disable vrfy
 disable_vrfy_command=yes
 
+# Require HELO EHLO
+smtpd_helo_required=yes
+
 # TLS configuration
 smtpd_tls_cert_file = {{ postfix_smtpd_tls_cert_file }}
 smtpd_tls_key_file = {{ postfix_smtpd_tls_key_file }}
