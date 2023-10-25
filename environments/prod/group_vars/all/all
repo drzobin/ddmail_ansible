@@ -32,7 +32,7 @@ postfix_inet_protocols: ipv4
 postfix_relay_domains: $mydestination
 postfix_message_size_limit: 30720000
 postfix_unknown_local_recipient_reject_code: 550
-postfix_smtpd_tls_cert_file: /etc/letsencrypt/live/mail.ddmail.se/cert.pem
+postfix_smtpd_tls_cert_file: /etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
 postfix_smtpd_tls_key_file: /etc/letsencrypt/live/mail.ddmail.se/privkey.pem
 
 # dovecot
@@ -96,8 +96,6 @@ ddmail_dmcp_keyhandler_venv_group_owner: root
 ddmail_dmcp_keyhandler_gunicorn_user: dmcp-keyhandler
 ddmail_dmcp_keyhandler_gunicorn_group: dmcp-keyhandler
 ddmail_dmcp_keyhandler_doas_user: dmcp-keyhandler
-ddmail_dmcp_keyhandler_venv_user_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_user_owner }}"
-ddmail_dmcp_keyhandler_venv_group_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_group_owner }}"
 ddmail_dmcp_keyhandler_prod_secret_key: "{{ vault_ddmail_dmcp_keyhandler_prod_secret_key }}"
 ddmail_dmcp_keyhandler_test_secret_key: "{{ vault_ddmail_dmcp_keyhandler_test_secret_key }}"
 ddmail_dmcp_keyhandler_dev_secret_key: "{{ vault_ddmail_dmcp_keyhandler_dev_secret_key }}"
