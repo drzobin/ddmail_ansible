@@ -1,0 +1,14 @@
+---
+- name: Install packages needed for doas
+  ansible.builtin.apt:
+    pkg:
+      - doas
+    state: latest
+
+- name: Create/edit doas /etc/doas.conf
+  ansible.builtin.template:
+    src: doas.conf.j2
+    dest: /etc/doas.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
