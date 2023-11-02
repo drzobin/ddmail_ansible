@@ -52,10 +52,6 @@
     repo: https://github.com/drzobin/ddmail_webapp.git
     dest: /opt/ddmail_webapp_venv/ddmail_webapp
 
-- name: Set git remote for ddmail_webapp
-  ansible.builtin.shell: cd /opt/ddmail_webapp_venv/ddmail_webapp; git remote set-url origin git@github.com:drzobin/ddmail_webapp.git
-  when: env == "dev"
-
 - name: Stat ddmail_webapp folder
   ansible.builtin.stat:
     path: /opt/ddmail_webapp_venv/ddmail_webapp
@@ -91,13 +87,20 @@
     virtualenv: /opt/ddmail_webapp_venv
   when: env == "dev"
 
-- name: Set user and group ownership of /opt/ddmail_venv
+- name: Set user and group ownership of /opt/ddmail_webapp_venv
   ansible.builtin.file:
     state: directory
     recurse: true
     owner: "{{ ddmail_webapp_venv_user_owner }}"
     group: "{{ ddmail_webapp_venv_group_owner }}"
     path: /opt/ddmail_webapp_venv
+
+- name: Set git remote for ddmail_webapp
+  ansible.builtin.shell: cd /opt/ddmail_webapp_venv/ddmail_webapp; git remote set-url origin git@github.com:drzobin/ddmail_webapp.git
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_email_remover_runas }}"
+  when: env == "dev"
 
 - name: Create/edit ddmail webapp config file /opt/ddmail_webapp_venv/ddmail/config.py
   ansible.builtin.template:
