@@ -22,6 +22,8 @@
     - postfix
     - dovecot
     - apache2
+    - doas
     - ddmail_webapp
     - ddmail_email_remover
+    - ddmail_dmcp_keyhandler
     - github
