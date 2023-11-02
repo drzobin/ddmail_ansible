@@ -49,13 +49,6 @@
     repo: https://github.com/drzobin/ddmail_email_remover.git
     dest: /opt/ddmail_email_remover_venv/ddmail_email_remover
 
-- name: Set git remote for ddmail_email_remover
-  ansible.builtin.shell: cd /opt/ddmail_email_remover_venv/ddmail_email_remover; git remote set-url origin git@github.com:drzobin/ddmail_email_remover.git
-  become: true
-  become_method: su
-  become_user: "{{ ddmail_email_remover_runas }}"
-  when: env == "dev"
-
 - name: Stat ddmail_email_remover folder
   ansible.builtin.stat:
     path: /opt/ddmail_email_remover_venv/ddmail_email_remover
@@ -96,6 +89,13 @@
     owner: "{{ ddmail_email_remover_venv_user_owner }}"
     group: "{{ ddmail_email_remover_venv_group_owner }}"
     path: /opt/ddmail_email_remover_venv
+
+- name: Set git remote for ddmail_email_remover
+  ansible.builtin.shell: cd /opt/ddmail_email_remover_venv/ddmail_email_remover; git remote set-url origin git@github.com:drzobin/ddmail_email_remover.git
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_email_remover_runas }}"
+  when: env == "dev"
 
 - name: Create/edit ddmail_email_remover config file /opt/ddmail_email_remover_venv/email_remover/config.py
   ansible.builtin.template:
