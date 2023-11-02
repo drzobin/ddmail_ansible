@@ -12,34 +12,34 @@ ExecStart=/opt/ddmail_email_remover_venv/bin/gunicorn -b 127.0.0.1:8001 --log-fi
 RuntimeDirectory=ddmail_email_remover
 
 # Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
-NoNewPrivileges=yes
+#NoNewPrivileges=yes
 
 # Use dedicated /tmp
-PrivateTmp=yes
+#PrivateTmp=yes
 
 # Hide user homes
-ProtectHome=yes
+#ProtectHome=yes
 
 # Service may not create SUID/SGID files
-RestrictSUIDSGID=yes
+#RestrictSUIDSGID=yes
 
 # Service may not create writable and executable memory mappings
-MemoryDenyWriteExecute=yes
+#MemoryDenyWriteExecute=yes
 
 # Service may only use loopback network interface
 #PrivateNetwork=yes
 
 # Create a filesystem jail with namespace
-TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/ddmail_email_remover_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11
-BindPaths=/var/log/gunicorn/ddmail_email_remover.log /var/mail
+#TemporaryFileSystem=/:ro
+#BindReadOnlyPaths=/opt/ddmail_email_remover_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11
+#BindPaths=/var/log/gunicorn/ddmail_email_remover.log /var/mail
 
 # Deny all CAP
-CapabilityBoundingSet=
-AmbientCapabilities=
+#CapabilityBoundingSet=
+#AmbientCapabilities=
 
 # System call filter
-SystemCallFilter=@system-service
+#SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
