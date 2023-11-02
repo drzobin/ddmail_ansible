@@ -8,7 +8,6 @@
       - libffi-dev
       - python3-dev
       - python3-venv
-      - doas
     state: latest
 
 - name: Install screen in dev
@@ -17,15 +16,6 @@
       - screen
     state: latest
   when: env == "dev"
-
-- name: Create/edit doas /etc/doas.conf
-  ansible.builtin.template:
-    src: doas.conf.j2
-    dest: /etc/doas.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  when: env == "prod"
 
 - name: Stat /opt/ddmail_dmcp_keyhandler_venv folder
   ansible.builtin.stat:
@@ -58,13 +48,6 @@
   ansible.builtin.git:
     repo: https://github.com/drzobin/ddmail_dmcp_keyhandler.git
     dest: /opt/ddmail_dmcp_keyhandler_venv/ddmail_dmcp_keyhandler
-
-- name: Set git remote for ddmail_dmcp_keyhandler
-  ansible.builtin.shell: cd /opt/ddmail_dmcp_keyhandler_venv/ddmail_dmcp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_dmcp_keyhandler.git
-  become: true
-  become_method: su
-  become_user: "{{ ddmail_dmcp_keyhandler_runas }}"
-  when: env == "dev"
 
 - name: Stat ddmail_dmcp_keyhandler folder
   ansible.builtin.stat:
@@ -106,6 +89,13 @@
     owner: "{{ ddmail_dmcp_keyhandler_venv_user_owner }}"
     group: "{{ ddmail_dmcp_keyhandler_venv_group_owner }}"
     path: /opt/ddmail_dmcp_keyhandler_venv
+
+- name: Set git remote for ddmail_dmcp_keyhandler
+  ansible.builtin.shell: cd /opt/ddmail_dmcp_keyhandler_venv/ddmail_dmcp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_dmcp_keyhandler.git
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_dmcp_keyhandler_runas }}"
+  when: env == "dev"
 
 - name: Create/edit ddmail_dmcp_keyhandler config file /opt/ddmail_dmcp_keyhandler_venv/dmcp_keyhandler/config.py
   ansible.builtin.template:
@@ -151,7 +141,7 @@
     mode: "u=rwx,g=rx,o=rx"
   when: env == "prod"
 
-- name: Add logdir for ddmail_dmcp_keyhandler gunicorn.
+- name: Add logfile for ddmail_dmcp_keyhandler gunicorn.
   ansible.builtin.file:
     path: /var/log/gunicorn/ddmail_dmcp_keyhandler.log
     state: touch
