@@ -4,7 +4,7 @@
     Redirect permanent / https://ddmail.se/
 
     ErrorLog ${APACHE_LOG_DIR}/clearnet_port80_error.log
-    CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log combined
+    CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log privacy
 </VirtualHost>
 
 <VirtualHost *:80>
@@ -13,5 +13,5 @@
     Redirect permanent / https://www.ddmail.se/
 
     ErrorLog ${APACHE_LOG_DIR}/clearnet_port80_error.log
-    CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log combined
+    CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log privacy
 </VirtualHost>
