@@ -11,6 +11,7 @@
               - disable_ipv6
               - nftables
               - sshd
+              - rsyslog
               - unattended-upgrades
               - unbound
               - set_nameserver
@@ -21,10 +22,10 @@
               - rspamd
               - postfix
               - dovecot
-              - apache2
               - doas
               - ddmail_webapp
               - ddmail_email_remover
               - ddmail_dmcp_keyhandler
               - tor_onion_service
               - i2pd
+              - apache2
