@@ -4,6 +4,7 @@
     pkg:
       - certbot
       - python3-certbot-apache
+      - apache2
     state: latest
 
 - name: Stat cerbot registration lockfile
