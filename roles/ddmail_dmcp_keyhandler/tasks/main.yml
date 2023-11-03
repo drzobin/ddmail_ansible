@@ -150,6 +150,23 @@
     mode: u=rw,g=r,o=
   when: env == "prod"
 
+- name: Add logfile for ddmail_dmcp_keyhandler.
+  ansible.builtin.file:
+    path: /var/log/ddmail_dmcp_keyhandler.log
+    state: touch
+    owner: '{{ ddmail_dmcp_keyhandler_gunicorn_user }}'
+    group: '{{ ddmail_dmcp_keyhandler_gunicorn_group }}'
+    mode: u=rw,g=r,o=
+  when: env == "prod"
+
+- name: Add logfile for ddmail_dmcp_keyhandler.
+  ansible.builtin.file:
+    path: /var/log/ddmail_dmcp_keyhandler.log
+    state: touch
+    owner: '{{ ddmail_dmcp_keyhandler_runas }}'
+    group: '{{ ddmail_dmcp_keyhandler_runas }}'
+    mode: u=rw,g=r,o=
+  when: env == "dev"
 
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_dmcp_keyhandler kill
