@@ -24,6 +24,17 @@
 - name: Enable apache2 mod headers
   ansible.builtin.command: /usr/sbin/a2enmod headers
 
+- name: Add privacy friendly logging in /etc/apache2/conf-available/privacy_log.conf
+  ansible.builtin.template:
+    src: privacy_log.conf.j2
+    dest: /etc/apache2/conf-available/privacy_log.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Enable conf for privacy friendly logging
+  ansible.builtin.command: /usr/sbin/a2enconf privacy_log.conf
+
 - name: Remove server information by edit /etc/apache2/conf-available/security.conf
   ansible.builtin.template:
     src: security.conf.j2
