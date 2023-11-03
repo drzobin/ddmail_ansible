@@ -150,6 +150,23 @@
     mode: u=rw,g=r,o=
   when: env == "prod"
 
+- name: Add logdir for ddmail_email_remover.
+  ansible.builtin.file:
+    path: /var/log/ddmail_email_remover.log
+    state: touch
+    owner: '{{ ddmail_email_remover_gunicorn_user }}'
+    group: '{{ ddmail_email_remover_gunicorn_group }}'
+    mode: u=rw,g=r,o=
+  when: env == "prod"
+
+- name: Add logdir for ddmail_email_remover.
+  ansible.builtin.file:
+    path: /var/log/ddmail_email_remover.log
+    state: touch
+    owner: '{{ ddmail_email_remover_runas }}'
+    group: '{{ ddmail_email_remover_runas }}'
+    mode: u=rw,g=r,o=
+  when: env == "dev"
 
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_email_remover kill
