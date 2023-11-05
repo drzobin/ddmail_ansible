@@ -83,6 +83,7 @@ ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_dev_db
 
 # ddmail_email_remover
 ddmail_email_remover_runas_user: "{{ vault_ddmail_email_remover_runas_user }}"
+ddmail_email_remover_runas_group: "{{ vault_ddmail_email_remover_runas_user }}"
 ddmail_email_remover_doas_user: "{{ vault_ddmail_email_remover_runas_user }}"
 ddmail_email_remover_venv_user_owner: "{{ vault_ddmail_email_remover_venv_user_owner }}"
 ddmail_email_remover_venv_group_owner: "{{ vault_ddmail_email_remover_venv_group_owner }}"
@@ -98,6 +99,7 @@ ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_passw
 
 # ddmail_dmcp_keyhandler
 ddmail_dmcp_keyhandler_runas_user: "{{ vault_ddmail_dmcp_keyhandler_runas_user }}"
+ddmail_dmcp_keyhandler_runas_group: "{{ vault_ddmail_dmcp_keyhandler_runas_user }}"
 ddmail_dmcp_keyhandler_doas_user: "{{ vault_ddmail_dmcp_keyhandler_runas_user }}"
 ddmail_dmcp_keyhandler_venv_user_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_user_owner }}"
 ddmail_dmcp_keyhandler_venv_group_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_group_owner }}"
