@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Environment="MODE=PRODUCTION"
-User={{ ddmail_email_remover_gunicorn_user }}
-Group={{ ddmail_email_remover_gunicorn_group }}
+User={{ ddmail_email_remover_runas_user }}
+Group={{ ddmail_email_remover_runas_group }}
 WorkingDirectory=/opt/ddmail_email_remover_venv/
 Environment="PATH=/opt/ddmail_email_remover_venv/bin/"
 ExecStart=/opt/ddmail_email_remover_venv/bin/gunicorn -b 127.0.0.1:8001 --log-file /var/log/gunicorn/ddmail_email_remover.log --workers 2 "email_remover:create_app()" 
