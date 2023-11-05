@@ -125,7 +125,7 @@
 
 - name: Create/edit ddmail_email_remover gunicorne service configuration file /etc/systemd/system/ddmail_email_remover.service
   ansible.builtin.template:
-    src: ddmail_email_remover.service.j2
+    src: systemd.service.j2
     dest: /etc/systemd/system/ddmail_email_remover.service
     owner: root
     group: root
