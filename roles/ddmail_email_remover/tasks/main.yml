@@ -94,7 +94,7 @@
   ansible.builtin.shell: cd /opt/ddmail_email_remover_venv/ddmail_email_remover; git remote set-url origin git@github.com:drzobin/ddmail_email_remover.git
   become: true
   become_method: su
-  become_user: "{{ ddmail_email_remover_runas }}"
+  become_user: "{{ ddmail_email_remover_runas_user }}"
   when: env == "dev"
 
 - name: Create/edit ddmail_email_remover config file /opt/ddmail_email_remover_venv/email_remover/config.py
@@ -163,8 +163,8 @@
   ansible.builtin.file:
     path: /var/log/ddmail_email_remover.log
     state: touch
-    owner: '{{ ddmail_email_remover_runas }}'
-    group: '{{ ddmail_email_remover_runas }}'
+    owner: '{{ ddmail_email_remover_runas_user }}'
+    group: '{{ ddmail_email_remover_runas_group }}'
     mode: u=rw,g=r,o=
   when: env == "dev"
 
@@ -172,7 +172,7 @@
   ansible.builtin.command: screen -X -S ddmail_email_remover kill
   become: true
   become_method: su
-  become_user: "{{ ddmail_email_remover_runas }}"
+  become_user: "{{ ddmail_email_remover_runas_user }}"
   ignore_errors: true
   when: env == "dev"
 
@@ -180,7 +180,7 @@
   ansible.builtin.command: screen -S ddmail_email_remover -d -m bash -c "sleep 5; source /opt/ddmail_email_remover_venv/bin/activate; cd /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover; export MODE=DEVELOPMENT; flask --app email_remover:create_app run --host=127.0.0.1 --port 8001 --debug; /bin/bash"
   become: true
   become_method: su
-  become_user: "{{ ddmail_email_remover_runas }}"
+  become_user: "{{ ddmail_email_remover_runas_user }}"
   when: env == "dev"
 
 - name: Reload systemd
