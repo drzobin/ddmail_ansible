@@ -67,7 +67,7 @@ apache2_port80_server_name: ddmaildev
 apache2_port80_server_alias: www.ddmaildev.se
 
 # ddmail_webapp
-ddmail_webapp_runas_user: "{{ vault_ddmail_webapp_runas }}"
+ddmail_webapp_runas_user: "{{ vault_ddmail_webapp_runas_user }}"
 ddmail_webapp_venv_user_owner: "{{ vault_ddmail_webapp_venv_user_owner }}"
 ddmail_webapp_venv_group_owner: "{{ vault_ddmail_webapp_venv_group_owner }}"
 ddmail_webapp_prod_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_prod_wtf_csrf_secret_key }}"
@@ -82,10 +82,10 @@ ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_dev_db
 
 
 # ddmail_email_remover
-ddmail_email_remover_runas_user: "{{ vault_ddmail_email_remover_runas }}"
+ddmail_email_remover_runas_user: "{{ vault_ddmail_email_remover_runas_user }}"
+ddmail_email_remover_doas_user: "{{ vault_ddmail_email_remover_runas_user }}"
 ddmail_email_remover_venv_user_owner: "{{ vault_ddmail_email_remover_venv_user_owner }}"
 ddmail_email_remover_venv_group_owner: "{{ vault_ddmail_email_remover_venv_group_owner }}"
-ddmail_email_remover_doas_user: "{{ vault_ddmail_email_remover_runas }}"
 ddmail_email_remover_prod_secret_key: "{{ vault_ddmail_email_remover_prod_secret_key }}"
 ddmail_email_remover_test_secret_key: "{{ vault_ddmail_email_remover_test_secret_key }}"
 ddmail_email_remover_dev_secret_key: "{{ vault_ddmail_email_remover_dev_secret_key }}"
@@ -97,8 +97,8 @@ ddmail_email_remover_test_password_hash: "{{ vault_ddmail_email_remover_test_pas
 ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_password_hash }}"
 
 # ddmail_dmcp_keyhandler
-ddmail_dmcp_keyhandler_runas_user: "{{ vault_ddmail_dmcp_keyhandler_runas }}"
-ddmail_dmcp_keyhandler_doas_user: "{{ vault_ddmail_dmcp_keyhandler_runas }}"
+ddmail_dmcp_keyhandler_runas_user: "{{ vault_ddmail_dmcp_keyhandler_runas_user }}"
+ddmail_dmcp_keyhandler_doas_user: "{{ vault_ddmail_dmcp_keyhandler_runas_user }}"
 ddmail_dmcp_keyhandler_venv_user_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_user_owner }}"
 ddmail_dmcp_keyhandler_venv_group_owner: "{{ vault_ddmail_dmcp_keyhandler_venv_group_owner }}"
 ddmail_dmcp_keyhandler_prod_secret_key: "{{ vault_ddmail_dmcp_keyhandler_prod_secret_key }}"
