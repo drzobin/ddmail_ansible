@@ -29,18 +29,18 @@
 - name: Create ddmail_dmcp_keyhandler python env.
   ansible.builtin.command: python3 -m venv /opt/ddmail_dmcp_keyhandler_venv
 
-- name: Add the group "{{ ddmail_dmcp_keyhandler_gunicorn_group }}"
+- name: Add the group "{{ ddmail_dmcp_keyhandler_runas_group }}"
   ansible.builtin.group:
-    name: "{{ ddmail_dmcp_keyhandler_gunicorn_group }}"
+    name: "{{ ddmail_dmcp_keyhandler_runas_group }}"
     state: present
   when: env == "prod"
 
-- name: Add the user "{{ ddmail_dmcp_keyhandler_gunicorn_user }}"
+- name: Add the user "{{ ddmail_dmcp_keyhandler_runas_user }}"
   ansible.builtin.user:
-    name: "{{ ddmail_dmcp_keyhandler_gunicorn_user }}"
+    name: "{{ ddmail_dmcp_keyhandler_runas_user }}"
     shell: /sbin/nologin
     create_home: false
-    group: "{{ ddmail_dmcp_keyhandler_gunicorn_group }}"
+    group: "{{ ddmail_dmcp_keyhandler_runas_group }}"
     state: present
   when: env == "prod"
 
@@ -101,8 +101,8 @@
   ansible.builtin.template:
     src: config.py.j2
     dest: /opt/ddmail_dmcp_keyhandler_venv/dmcp_keyhandler/config.py
-    owner: '{{ ddmail_dmcp_keyhandler_gunicorn_user }}'
-    group: '{{ ddmail_dmcp_keyhandler_gunicorn_group }}'
+    owner: '{{ ddmail_dmcp_keyhandler_runas_user }}'
+    group: '{{ ddmail_dmcp_keyhandler_runas_group }}'
     mode: "u=rw,g=r,o="
   when: env == "prod"
 
@@ -123,10 +123,10 @@
     virtualenv: /opt/ddmail_dmcp_keyhandler_venv
   when: env == "prod"
 
-- name: Create/edit ddmail_dmcp_keyhandler gunicorne service configuration file /etc/systemd/system/dmcp_keyhandler.service
+- name: Create/edit ddmail_dmcp_keyhandler gunicorne service configuration file /etc/systemd/system/ddmail_dmcp_keyhandler.service
   ansible.builtin.template:
-    src: gunicorn.service.j2
-    dest: /etc/systemd/system/dmcp_keyhandler.service
+    src: ddmail_dmcp_keyhandler.service.j2
+    dest: /etc/systemd/system/ddmail_dmcp_keyhandler.service
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
@@ -145,8 +145,8 @@
   ansible.builtin.file:
     path: /var/log/gunicorn/ddmail_dmcp_keyhandler.log
     state: touch
-    owner: '{{ ddmail_dmcp_keyhandler_gunicorn_user }}'
-    group: '{{ ddmail_dmcp_keyhandler_gunicorn_group }}'
+    owner: '{{ ddmail_dmcp_keyhandler_runas_user }}'
+    group: '{{ ddmail_dmcp_keyhandler_runas_group }}'
     mode: u=rw,g=r,o=
   when: env == "prod"
 
@@ -154,8 +154,8 @@
   ansible.builtin.file:
     path: /var/log/ddmail_dmcp_keyhandler.log
     state: touch
-    owner: '{{ ddmail_dmcp_keyhandler_gunicorn_user }}'
-    group: '{{ ddmail_dmcp_keyhandler_gunicorn_group }}'
+    owner: '{{ ddmail_dmcp_keyhandler_runas_user }}'
+    group: '{{ ddmail_dmcp_keyhandler_runas_group }}'
     mode: u=rw,g=r,o=
   when: env == "prod"
 
@@ -188,9 +188,9 @@
     daemon_reload: true
   when: env == "prod"
 
-- name: Restart dmcp_keyhandler gunicorn service
+- name: Restart ddmail_dmcp_keyhandler gunicorn service
   ansible.builtin.service:
-    name: dmcp_keyhandler
+    name: ddmail_dmcp_keyhandler
     state: restarted
     enabled: true
   when: env == "prod"
