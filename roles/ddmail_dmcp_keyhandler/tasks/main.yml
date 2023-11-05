@@ -94,7 +94,7 @@
   ansible.builtin.shell: cd /opt/ddmail_dmcp_keyhandler_venv/ddmail_dmcp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_dmcp_keyhandler.git
   become: true
   become_method: su
-  become_user: "{{ ddmail_dmcp_keyhandler_runas }}"
+  become_user: "{{ ddmail_dmcp_keyhandler_runas_user }}"
   when: env == "dev"
 
 - name: Create/edit ddmail_dmcp_keyhandler config file /opt/ddmail_dmcp_keyhandler_venv/dmcp_keyhandler/config.py
@@ -163,8 +163,8 @@
   ansible.builtin.file:
     path: /var/log/ddmail_dmcp_keyhandler.log
     state: touch
-    owner: '{{ ddmail_dmcp_keyhandler_runas }}'
-    group: '{{ ddmail_dmcp_keyhandler_runas }}'
+    owner: '{{ ddmail_dmcp_keyhandler_runas_user }}'
+    group: '{{ ddmail_dmcp_keyhandler_runas_user }}'
     mode: u=rw,g=r,o=
   when: env == "dev"
 
@@ -172,7 +172,7 @@
   ansible.builtin.command: screen -X -S ddmail_dmcp_keyhandler kill
   become: true
   become_method: su
-  become_user: "{{ ddmail_dmcp_keyhandler_runas }}"
+  become_user: "{{ ddmail_dmcp_keyhandler_runas_user }}"
   ignore_errors: true
   when: env == "dev"
 
@@ -180,7 +180,7 @@
   ansible.builtin.command: screen -S ddmail_dmcp_keyhandler -d -m bash -c "sleep 5; source /opt/ddmail_dmcp_keyhandler_venv/bin/activate; cd /opt/ddmail_dmcp_keyhandler_venv/ddmail_dmcp_keyhandler/dmcp_keyhandler; export MODE=DEVELOPMENT; flask --app dmcp_keyhandler:create_app run --host=127.0.0.1 --port 8002 --debug; /bin/bash"
   become: true
   become_method: su
-  become_user: "{{ ddmail_dmcp_keyhandler_runas }}"
+  become_user: "{{ ddmail_dmcp_keyhandler_runas_user }}"
   when: env == "dev"
 
 - name: Reload systemd
