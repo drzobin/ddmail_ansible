@@ -1,5 +1,8 @@
-# Intro
-Ansible for ddmail, ddmail is a e-mail system/service for reasonable paranoid people who value privacy and security. A current production example can be found at www.ddmail.se
+# What is ddmail_ansible
+Ansible for ddmail project. 
+
+# What is ddmail
+ddmail is a e-mail system/service that prioritize privacy and security. A current production example can be found at www.ddmail.se
 
 # Operating system
 Developt for and tested on debian 12.
