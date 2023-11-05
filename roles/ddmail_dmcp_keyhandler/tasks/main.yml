@@ -125,7 +125,7 @@
 
 - name: Create/edit ddmail_dmcp_keyhandler gunicorne service configuration file /etc/systemd/system/ddmail_dmcp_keyhandler.service
   ansible.builtin.template:
-    src: ddmail_dmcp_keyhandler.service.j2
+    src: systemd.service.j2
     dest: /etc/systemd/system/ddmail_dmcp_keyhandler.service
     owner: root
     group: root
