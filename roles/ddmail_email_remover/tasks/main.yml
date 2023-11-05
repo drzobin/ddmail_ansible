@@ -29,18 +29,18 @@
 - name: Create ddmail_email_remover python env.
   ansible.builtin.command: python3 -m venv /opt/ddmail_email_remover_venv
 
-- name: Add the group "{{ ddmail_email_remover_gunicorn_group }}"
+- name: Add the group "{{ ddmail_email_remover_runas_group }}"
   ansible.builtin.group:
-    name: "{{ ddmail_email_remover_gunicorn_group }}"
+    name: "{{ ddmail_email_remover_runas_group }}"
     state: present
   when: env == "prod"
 
-- name: Add the user "{{ ddmail_email_remover_gunicorn_user }}"
+- name: Add the user "{{ ddmail_email_remover_runas_user }}"
   ansible.builtin.user:
-    name: "{{ ddmail_email_remover_gunicorn_user }}"
+    name: "{{ ddmail_email_remover_runas_user }}"
     shell: /sbin/nologin
     create_home: false
-    group: "{{ ddmail_email_remover_gunicorn_group }}"
+    group: "{{ ddmail_email_remover_runas_group }}"
     state: present
   when: env == "prod"
 
@@ -101,8 +101,8 @@
   ansible.builtin.template:
     src: opt_ddmail_email_remover_venv_email_remover_config.py.j2
     dest: /opt/ddmail_email_remover_venv/email_remover/config.py
-    owner: '{{ ddmail_email_remover_gunicorn_user }}'
-    group: '{{ ddmail_email_remover_gunicorn_group }}'
+    owner: '{{ ddmail_email_remover_runas_user }}'
+    group: '{{ ddmail_email_remover_runas_group }}'
     mode: "u=rw,g=r,o="
   when: env == "prod"
 
@@ -123,10 +123,10 @@
     virtualenv: /opt/ddmail_email_remover_venv
   when: env == "prod"
 
-- name: Create/edit ddmail_email_remover gunicorne service configuration file /etc/systemd/system/ddmail_email_remover_gunicorn.service
+- name: Create/edit ddmail_email_remover gunicorne service configuration file /etc/systemd/system/ddmail_email_remover.service
   ansible.builtin.template:
-    src: etc_systemd_system_ddmail_email_remover_gunicorn.service.j2
-    dest: /etc/systemd/system/ddmail_email_remover_gunicorn.service
+    src: ddmail_email_remover.service.j2
+    dest: /etc/systemd/system/ddmail_email_remover.service
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
@@ -145,8 +145,8 @@
   ansible.builtin.file:
     path: /var/log/gunicorn/ddmail_email_remover.log
     state: touch
-    owner: '{{ ddmail_email_remover_gunicorn_user }}'
-    group: '{{ ddmail_email_remover_gunicorn_group }}'
+    owner: '{{ ddmail_email_remover_runas_user }}'
+    group: '{{ ddmail_email_remover_runas_group }}'
     mode: u=rw,g=r,o=
   when: env == "prod"
 
@@ -154,8 +154,8 @@
   ansible.builtin.file:
     path: /var/log/ddmail_email_remover.log
     state: touch
-    owner: '{{ ddmail_email_remover_gunicorn_user }}'
-    group: '{{ ddmail_email_remover_gunicorn_group }}'
+    owner: '{{ ddmail_email_remover_runas_user }}'
+    group: '{{ ddmail_email_remover_runas_group }}'
     mode: u=rw,g=r,o=
   when: env == "prod"
 
@@ -188,9 +188,9 @@
     daemon_reload: true
   when: env == "prod"
 
-- name: Restart ddmail_email_remover_gunicorn service
+- name: Restart ddmail_email_remover gunicorn service
   ansible.builtin.service:
-    name: ddmail_email_remover_gunicorn
+    name: ddmail_email_remover
     state: restarted
     enabled: true
   when: env == "prod"
