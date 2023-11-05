@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Environment="MODE=PRODUCTION"
-User={{ ddmail_dmcp_keyhandler_gunicorn_user }}
-Group={{ ddmail_dmcp_keyhandler_gunicorn_group }}
+User={{ ddmail_dmcp_keyhandler_runas_user }}
+Group={{ ddmail_dmcp_keyhandler_runas_group }}
 WorkingDirectory=/opt/ddmail_dmcp_keyhandler_venv/
 Environment="PATH=/opt/ddmail_dmcp_keyhandler_venv/bin/"
 ExecStart=/opt/ddmail_dmcp_keyhandler_venv/bin/gunicorn -b 127.0.0.1:8002 --log-file /var/log/gunicorn/ddmail_dmcp_keyhandler.log --workers 2 "dmcp_keyhandler:create_app()" 
