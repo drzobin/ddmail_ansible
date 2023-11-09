@@ -40,7 +40,7 @@
   when: not certbot_apache_ssl.stat.exists
 
 - name: Get apache ssl certificate for ddmail.se and www.ddmail.se
-  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d ddmail.se -d www.ddmail.se -d mta-sts.ddmail.se
+  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 --keep --reuse-key --pre-hook "systemctl stop apache2" --post-hook "systemctl start apache2" -d ddmail.se -d www.ddmail.se -d mta-sts.ddmail.se
   when: not certbot_apache_ssl.stat.exists
 
 - name: Stat cerbot postfix/dovecot ssl cert for mail.ddmail.se
@@ -56,7 +56,7 @@
   when: not certbot_mail_ssl.stat.exists
 
 - name: Get postfix/dovecot ssl certificate for mail.ddmail.se
-  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 -d mail.ddmail.se
+  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 --keep --reuse-key --pre-hook "systemctl stop apache2" --post-hook "systemctl start apache2" -d mail.ddmail.se
   when: not certbot_mail_ssl.stat.exists
 
 - name: Restart apache2 service
