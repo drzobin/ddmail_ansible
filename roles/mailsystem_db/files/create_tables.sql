@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 	assets_in_sek int NOT NULL DEFAULT 0,
 	is_enabled boolean NOT NULL DEFAULT  0,
 	is_gratis boolean NOT NULL DEFAULT  0,
+	total_storage_space_mb int NOT NULL DEFAULT 0,
 	created DATETIME NOT NULL,
 	last_time_disabled DATETIME DEFAULT NULL,
 	PRIMARY KEY (id) );
@@ -63,6 +64,7 @@ CREATE TABLE IF NOT EXISTS emails (
 	global_domain_id int NULL,
 	email varchar(191) NOT NULL UNIQUE,
 	password_hash varchar(2096) NOT NULL,
+	storage_space_mb int NOT NULL DEFAULT 0,
 	FOREIGN KEY (account_id) REFERENCES accounts(id)
 		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
