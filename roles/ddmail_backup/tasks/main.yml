@@ -1,0 +1,57 @@
+---
+- name: Install packages needed for web application ddmail
+  ansible.builtin.apt:
+    pkg:
+      - python3
+      - tar
+    state: latest
+
+- name: Stat /root/ddmail_backup folder
+  ansible.builtin.stat:
+    path: /root/ddmail_backup
+  register: ddmail_backup
+
+- name: Move /root/ddmail_backup folder
+  ansible.builtin.command: mv /root/ddmail_backup /root/ddmail_backup_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: ddmail_backup.stat.exists
+
+- name: Clone ddmail_backup repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_backup.git
+    dest: /root/ddmail_backup
+
+- name: Set user and group ownership of /root/ddmail_backup
+  ansible.builtin.file:
+    state: directory
+    recurse: true
+    owner: root
+    group: root
+    path: /root/ddmail_backup
+
+- name: Set git remote for ddmail_backup
+  ansible.builtin.shell: cd /root/ddmail_backup; git remote set-url origin git@github.com:drzobin/ddmail_backup.git
+  when: env == "dev"
+
+- name: Create/edit ddmail_backup config file /root/ddmail_backup/config.ini
+  ansible.builtin.template:
+    src: config.ini.j2
+    dest: /root/ddmail_backup/config.ini
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+
+- name: Add backup folder.
+  ansible.builtin.file:
+    path: /root/backups
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=,o="
+
+- name: Add backup tmp folder.
+  ansible.builtin.file:
+    path: /root/backups/tmp
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=,o="
