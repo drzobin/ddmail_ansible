@@ -4,3 +4,13 @@
     pkg:
       - mariadb-server
     state: latest
+
+- name: Set mariadb root user password and host
+  community.mysql.mysql_user:
+    name: root
+    login_user: root
+    login_unix_socket: /run/mysqld/mysqld.sock
+    password: "{{ mariadb_root_password }}"
+    update_password: always
+    host: localhost
+    state: present
