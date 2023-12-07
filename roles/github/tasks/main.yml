@@ -52,7 +52,7 @@
 
 - name: Add ssh config for root
   ansible.builtin.template:
-    src: config.j2
+    src: root_config.j2
     dest: /root/.ssh/config
     owner: root
     group: root
