@@ -13,11 +13,17 @@
   become_flags: '-'
   ansible.builtin.command: git config --global user.name "\"{{ git_global_user_name  }}\""
 
-- name: Set git global user name
+- name: Set git global user name for root
+  ansible.builtin.command: git config --global user.name "\"{{ git_global_user_name  }}\""
+
+- name: Set git global user email
   become: true
   become_user: "{{ ansible_ssh_user }}"
   become_method: ansible.builtin.su
   become_flags: '-'
+  ansible.builtin.command: git config --global user.email "\"{{ git_global_user_email  }}\""
+
+- name: Set git global user email for root
   ansible.builtin.command: git config --global user.email "\"{{ git_global_user_email  }}\""
 
 - name: Add .ssh for "{{ ansible_ssh_user }}"
@@ -28,12 +34,28 @@
     group: "{{ ansible_ssh_user }}"
     mode: "u=rwx,g=,o="
 
+- name: Add .ssh for root
+  ansible.builtin.file:
+    path: /root/.ssh
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=,o="
+
 - name: Add ssh config for "{{ ansible_ssh_user }}"
   ansible.builtin.template:
     src: config.j2
     dest: "/home/{{ ansible_ssh_user }}/.ssh/config"
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
+    mode: "u=rw,g=,o="
+
+- name: Add ssh config for root
+  ansible.builtin.template:
+    src: config.j2
+    dest: /root/.ssh/config
+    owner: root
+    group: root
     mode: "u=rw,g=,o="
 
 - name: Add ssh github private key for "{{ ansible_ssh_user }}"
@@ -44,10 +66,26 @@
     group: "{{ ansible_ssh_user }}"
     mode: "u=rw,g=,o="
 
+- name: Add ssh github private key for root
+  ansible.builtin.copy: 
+    content: "{{ github_ssh_privkey }}" 
+    dest: /root/.ssh/github
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+
 - name: Add ssh github public key for "{{ ansible_ssh_user }}"
   ansible.builtin.copy: 
     content: "{{ github_ssh_pubkey }}" 
     dest: "/home/{{ ansible_ssh_user }}/.ssh/github.pub"
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
+    mode: "u=rw,g=,o="
+
+- name: Add ssh github public key for root
+  ansible.builtin.copy: 
+    content: "{{ github_ssh_pubkey }}" 
+    dest: /root/.ssh/github.pub
+    owner: root
+    group: root
     mode: "u=rw,g=,o="
