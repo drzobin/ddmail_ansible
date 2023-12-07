@@ -9,14 +9,14 @@
   community.mysql.mysql_db:
     name: "{{ mail_db_name }}"
     login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: "{{ mariadb_root_password }}"
     state: present
 
 - name: Create mail database user user_r with read access
   community.mysql.mysql_user:
     name: "{{ mail_db_user_r }}"
     login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: "{{ mariadb_root_password }}"
     password: "{{ mail_db_user_r_password }}"
     priv: "{{ mail_db_name }}.*:SELECT"
     update_password: always
@@ -27,7 +27,7 @@
   community.mysql.mysql_user:
     name: "{{ mail_db_user_rw }}"
     login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: "{{ mariadb_root_password }}"
     password: "{{ mail_db_user_rw_password }}"
     priv: "{{ mail_db_name }}.*:ALL"
     update_password: always
@@ -38,14 +38,14 @@
   community.mysql.mysql_db:
     name: "{{ mail_test_db_name }}"
     login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: "{{ mariadb_root_password }}"
     state: present
 
 - name: Create mail database user user_r with read access for test
   community.mysql.mysql_user:
     name: "{{ mail_test_db_user_r }}"
     login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: "{{ mariadb_root_password }}"
     password: "{{ mail_test_db_user_r_password }}"
     priv: "{{ mail_test_db_name }}.*:SELECT"
     update_password: always
@@ -56,7 +56,7 @@
   community.mysql.mysql_user:
     name: "{{ mail_test_db_user_rw }}"
     login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: "{{ mariadb_root_password }}"
     password: "{{ mail_test_db_user_rw_password }}"
     priv: "{{ mail_test_db_name }}.*:ALL"
     update_password: always
