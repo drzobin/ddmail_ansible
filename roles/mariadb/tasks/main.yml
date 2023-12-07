@@ -14,11 +14,27 @@
     update_password: always
     host: localhost
     state: present
+  ignore_errors: true
 
 - name: Removes all anonymous user accounts
   community.mysql.mysql_user:
-    name: ''
     login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: "{{ mariadb_root_password }}"
+    name: ''
     host_all: true
+    state: absent
+
+- name: Removes anonymous user account for localhost
+  community.mysql.mysql_user:
+    login_user: root
+    login_password: "{{ mariadb_root_password }}"
+    name: ''
+    host: localhost
+    state: absent
+
+- name: Delete database with name 'test'
+  community.mysql.mysql_db:
+    login_user: root
+    login_password: "{{ mariadb_root_password }}"
+    name: test
     state: absent
