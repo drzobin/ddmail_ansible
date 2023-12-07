@@ -1,0 +1,11 @@
+[DEFAULT]
+save_backups_to = /root/backups
+tmp_folder = /root/backups/tmp
+folders_to_backup = /var/mail /var/lib/rspamd/dkim
+tar_bin = /usr/bin/tar
+mysqldump_bin = /usr/bin/mysqldump 
+
+[mariadb]
+take_backup = True
+databases = all
+root_password = {{ mariadb_root_password }}
