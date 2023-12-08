@@ -26,4 +26,5 @@
     - ddmail_webapp
     - ddmail_email_remover
     - ddmail_dmcp_keyhandler
+    - ddmail_backup
     - github
