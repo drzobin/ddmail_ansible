@@ -11,4 +11,4 @@ logfile = /var/log/ddmail_backup.log
 [mariadb]
 take_backup = True
 databases = all
-root_password = change_me
+root_password = {{ mariadb_root_password }}
