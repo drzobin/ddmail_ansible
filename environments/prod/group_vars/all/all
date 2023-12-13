@@ -6,6 +6,7 @@ env: prod
 mariadb_mysqlservice: mysqld
 mariadb_mysql_port: 3306
 mariadb_mysql_ip: 127.0.0.1
+mariadb_root_password: "{{ vault_mariadb_root_password }}"
 
 # mail database settings
 mail_db_name: mail
