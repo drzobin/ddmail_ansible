@@ -5,6 +5,9 @@ vault_srv01_ansible_become_pass: change_me
 vault_ddmaildev_ansible_ssh_user: user
 vault_ddmaildev_ansible_become_pass: change_me
 
+# mariadb
+vault_mariadb_root_password: change_me
+
 # certbot
 vault_certbot_reg_email: change.to@your.own.email.com
 
