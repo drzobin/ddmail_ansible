@@ -1,6 +1,8 @@
 [Unit]
 Description=Gunicorn instance to serve ddmail_dmcp_keyhandler
 After=network.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
 
 [Service]
 Environment="MODE=PRODUCTION"
@@ -10,6 +12,8 @@ WorkingDirectory=/opt/ddmail_dmcp_keyhandler_venv/
 Environment="PATH=/opt/ddmail_dmcp_keyhandler_venv/bin/"
 ExecStart=/opt/ddmail_dmcp_keyhandler_venv/bin/gunicorn -b 127.0.0.1:8002 --log-file /var/log/gunicorn/ddmail_dmcp_keyhandler.log --workers 2 "dmcp_keyhandler:create_app()" 
 RuntimeDirectory=ddmail_dmcp_keyhandler
+Restart=on-failure
+RestartSec=10s
 
 # Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
 #NoNewPrivileges=yes
