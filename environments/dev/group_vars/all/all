@@ -130,6 +130,9 @@ ddmail_dmcp_keyhandler_prod_password_hash: "{{ vault_ddmail_dmcp_keyhandler_prod
 ddmail_dmcp_keyhandler_test_password_hash: "{{ vault_ddmail_dmcp_keyhandler_test_password_hash }}"
 ddmail_dmcp_keyhandler_dev_password_hash: "{{ vault_ddmail_dmcp_keyhandler_dev_password_hash }}"
 
+# ddmail_backup
+ddmail_backup_folders_to_backup: /var/mail /var/lib/rspamd/dkim/
+
 # github
 github_ssh_privkey: "{{ vault_github_ssh_privkey }}" 
 github_ssh_pubkey: "{{ vault_github_ssh_pubkey }}" 
