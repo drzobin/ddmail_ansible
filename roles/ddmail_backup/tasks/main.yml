@@ -55,3 +55,10 @@
     owner: root
     group: root
     mode: "u=rwx,g=,o="
+
+- name: Ensure ddmail_backup take_backups.py runs at 5 every day.
+  ansible.builtin.cron:
+    name: "Take backups"
+    minute: "0"
+    hour: "5"
+    job: "python /root/ddmail_backup/take_backup.py /root/ddmail_backup/config.ini > /dev/null"
