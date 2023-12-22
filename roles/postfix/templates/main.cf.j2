@@ -72,6 +72,10 @@ tls_random_source = dev:/dev/urandom
 smtp_dns_support_level = dnssec
 smtp_tls_security_level = dane
 
+# mitigare smtp smuggeling
+smtpd_data_restrictions = reject_unauth_pipelining
+smtpd_forbid_unauth_pipelining = yes
+
 # sasl configuration
 smtpd_sasl_security_options = noanonymous, noplaintext
 smtpd_sasl_tls_security_options = noanonymous
