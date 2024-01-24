@@ -1,0 +1,27 @@
+---
+- name: Install clamav packages.
+  ansible.builtin.apt:
+    pkg:
+      - clamav
+      - clamav-daemon
+    state: latest
+
+- name: Create/edit clamd configuration file /etc/clam/clamd.conf
+  ansible.builtin.template:
+    src: clamd.conf.j2
+    dest: /etc/clamav/clamd.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Restart clamav-daemon service
+  ansible.builtin.service:
+    name: clamav-daemon
+    state: restarted
+    enabled: true
+
+- name: Restart clamav-freshclam service
+  ansible.builtin.service:
+    name: clamav-freshclam
+    state: restarted
+    enabled: true
