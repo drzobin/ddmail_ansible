@@ -20,6 +20,7 @@
     - mariadb
     - mailsystem_db
     - redis
+    - clamav
     - rspamd
     - postfix
     - dovecot
