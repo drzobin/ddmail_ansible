@@ -1,0 +1,82 @@
+[Unit]
+Description=rapid spam filtering system
+After=nss-lookup.target network-online.target
+Documentation=https://rspamd.com/doc/
+
+[Service]
+LimitNOFILE=1048576
+NonBlocking=true
+ExecStart=/usr/bin/rspamd -c /etc/rspamd/rspamd.conf -f
+ExecReload=/bin/kill -HUP $MAINPID
+User=_rspamd
+RuntimeDirectory=rspamd
+RuntimeDirectoryMode=0755
+Restart=always
+
+# Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
+NoNewPrivileges=yes
+
+# Use dedicated /tmp
+PrivateTmp=yes
+
+# Hide user homes
+ProtectHome=yes
+
+# Prevent access to /dev
+PrivateDevices=yes
+
+# Service may not create SUID/SGID files
+RestrictSUIDSGID=yes
+
+# Service may not create writable and executable memory mappings
+#MemoryDenyWriteExecute=yes
+
+# Mount filesystem as read only
+ProtectSystem=strict
+
+# Disables modification of /proc and /sys
+ProtectKernelTunables=yes
+
+# Prohibits loading or unloading modules and masks /usr/lib/modules from the application
+ProtectKernelModules=yes
+
+# Linux Control Groups (cgroups) hierarchies accessible through /sys/fs/cgroup will be made read-only to all processes of the unit
+ProtectControlGroups=yes
+
+# Sets up a new /dev mount for the executed processes and only adds API pseudo devices such as /dev/null, /dev/zero or /dev/random
+PrivateDevices=yes
+
+# Only allows access to standard pseudo devices including /dev/null, /dev/zero, /dev/full, /dev/random, and /dev/urandom.
+DevicePolicy=closed
+
+# Restricts access to the socket system call
+RestrictAddressFamilies=AF_UNIX AF_INET AF_NETLINK
+
+# Attempts to enable realtime scheduling in a process of the unit are refused.
+RestrictRealtime=yes
+
+# Locks down the personality system call so that the kernel execution domain may not be changed from the default
+LockPersonality=yes
+
+# Dirs that is inaccessible
+InaccessibleDirectories=/var/mail /opt /root /home /etc/postfix /etc/dovecot /etc/mysql /var/lib/mysql /etc/letsencrypt /etc/ssl /etc/i2pd /var/lib/i2pd /etc/tor /var/lib/tor
+
+# Dirs that is read and writable
+ReadWriteDirectories=/run/clamav/clamd.ctl /var/lib/rspamd /var/log/rspamd /var/run/rspamd /run/rspamd
+
+# Create a filesystem jail with namespace
+#TemporaryFileSystem=/:ro
+#BindReadOnlyPaths=/usr/bin /etc/gai.conf /etc/host.conf /etc/hosts /etc/magic /etc/nsswitch.conf /etc/resolv.conf /etc/rspamd /lib/x86_64-linux-gnu /proc/sys/kernel/random/uuid /usr/share/ca-certificates /usr/share/rspamd /var/lib/rspamd /usr/lib/rspamd /lib64 /proc
+#BindPaths=/run/clamav/clamd.ctl /var/lib/rspamd /var/log/rspamd /var/run/rspamd /run/rspamd /tmp/rspamd-controller.sock /dev/shm /run
+
+
+# Deny all CAP
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# System call filter
+SystemCallFilter=@system-service
+
+[Install]
+WantedBy=multi-user.target
+

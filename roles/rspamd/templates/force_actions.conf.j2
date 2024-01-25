@@ -1,0 +1,20 @@
+rules {
+
+  # For each condition we want to force an action on we define a rule
+  PHISHING {
+    action = "rewrite subject";
+    expression = "(R_PHISHING | PHISHING)";
+    subject = "*** PHISHING *** %s";
+
+    # message setting sets SMTP message returned by mailer
+    message = "Rejected due to suspicion of phishing";
+  }
+  MALWARE {
+    action = "rewrite subject";
+    expression = "(CLAM_VIRUS | FPROT_VIRUS)";
+    subject = "*** MALWARE *** %s";
+
+    # message setting sets SMTP message returned by mailer
+    message = "Rejected due to suspicion of virus";
+  }
+}
