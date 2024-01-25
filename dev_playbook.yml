@@ -17,6 +17,7 @@
     - mariadb
     - mailsystem_db
     - self_signed_certs
+    - clamav
     - rspamd
     - redis
     - postfix
