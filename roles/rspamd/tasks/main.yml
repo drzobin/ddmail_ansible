@@ -119,6 +119,50 @@
     src: etc_rspamd_local.d_dkim_signing.conf.j2
     dest: /etc/rspamd/local.d/arc.conf
 
+- name: Create/edit rspamd configuration file for antivirus clamav /etc/rspamd/local.d/antivirus.conf.
+  ansible.builtin.template:
+    src: antivirus.conf.j2
+    dest: /etc/rspamd/local.d/antivirus.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
+- name: Create/edit rspamd configuration file for phishing roles/rspamd/templates/phishing.conf.
+  ansible.builtin.template:
+    src: phishing.conf.j2
+    dest: /etc/rspamd/local.d/phishing.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
+- name: Create/edit rspamd configuration file for antivirus /etc/rspamd/local.d/antivirus.conf.
+  ansible.builtin.template:
+    src: antivirus.conf.j2
+    dest: /etc/rspamd/local.d/antivirus.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
+- name: Create/edit rspamd configuration file for force actions /etc/rspamd/local.d/force_actions.conf.
+  ansible.builtin.template:
+    src: force_actions.conf.j2
+    dest: /etc/rspamd/local.d/force_actions.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
+- name: Create/edit rspamd configuration file for systemd /lib/systemd/system/rspamd.service.
+  ansible.builtin.template:
+    src: rspamd.service.j2
+    dest: /lib/systemd/system/rspamd.service
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
 - name: Restart rspamd service
   ansible.builtin.service:
     name: rspamd
