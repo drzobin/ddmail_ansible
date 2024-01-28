@@ -2,7 +2,7 @@
 #extended_spam_headers = true;
 
 # Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
-use = ["x-spamd-bar", "authentication-results", "x-spam-status", "spam-header"];
+use = ["x-spamd-bar", "authentication-results", "x-spam-status"];
 
 # List of routines to be enabled for authenticated users (default empty). See also skip_authenticated.
 authenticated_headers = ["authentication-results"];
@@ -17,10 +17,6 @@ routines {
   }
   x-spamd-result {
     header = 'X-Spamd-Result';
-    remove = 0;
-  }
-  spam-header {
-    header = "X-Spam";
     remove = 0;
   }
   authentication-results {
