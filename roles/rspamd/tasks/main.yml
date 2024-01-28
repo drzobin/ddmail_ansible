@@ -60,6 +60,14 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
+- name: Create/edit rspamd configuration file /etc/rspamd/local.d/actions.conf.j2
+  ansible.builtin.template:
+    src: actions.conf.j2
+    dest: /etc/rspamd/local.d/actions.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
 - name: Create/edit rspamd configuration file /etc/rspamd/local.d/milter_headers.conf
   ansible.builtin.template:
     src: milter_headers.conf.j2
