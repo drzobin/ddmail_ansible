@@ -1,10 +1,5 @@
 rules {
   # For each condition we want to force an action on we define a rule
-  SPAM {
-    action = "rewrite subject";
-    score = 1.0;
-    subject = "*** SPAM *** %s";
-  }
   PHISHING {
     action = "rewrite subject";
     expression = "(R_PHISHING | PHISHING)";
