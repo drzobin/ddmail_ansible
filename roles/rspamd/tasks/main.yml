@@ -113,11 +113,14 @@
   ansible.builtin.template:
     src: dkim_signing.conf.j2
     dest: /etc/rspamd/local.d/dkim_signing.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
 
-- name: Create/edit rspamd configuration file for antivirus clamav /etc/rspamd/local.d/antivirus.conf.
+- name: Create/edit rspamd configuration file for redis /etc/rspamd/local.d/redis.conf.
   ansible.builtin.template:
-    src: antivirus.conf.j2
-    dest: /etc/rspamd/local.d/antivirus.conf
+    src: redis.conf.j2
+    dest: /etc/rspamd/local.d/redis.conf
     owner: root
     group: root
     mode: "u=rwx,g=r,o=r"
