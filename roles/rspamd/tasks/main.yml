@@ -114,10 +114,10 @@
     src: etc_rspamd_local.d_dkim_signing.conf.j2
     dest: /etc/rspamd/local.d/dkim_signing.conf
 
-- name: Create/edit rspamd configuration file for arc /etc/rspamd/local.d/arc.conf.
-  ansible.builtin.template:
-    src: etc_rspamd_local.d_dkim_signing.conf.j2
-    dest: /etc/rspamd/local.d/arc.conf
+      #- name: Create/edit rspamd configuration file for arc /etc/rspamd/local.d/arc.conf.
+      #  ansible.builtin.template:
+      #    src: etc_rspamd_local.d_dkim_signing.conf.j2
+      #    dest: /etc/rspamd/local.d/arc.conf
 
 - name: Create/edit rspamd configuration file for antivirus clamav /etc/rspamd/local.d/antivirus.conf.
   ansible.builtin.template:
