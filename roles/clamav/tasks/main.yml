@@ -14,6 +14,12 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
+- name: Aappending the group clamav to the user _rspamd
+  ansible.builtin.user:
+    name: _rspamd
+    groups: clamav
+    append: yes
+
 - name: Restart clamav-daemon service
   ansible.builtin.service:
     name: clamav-daemon
