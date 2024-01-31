@@ -10,4 +10,9 @@ rules {
     expression = "(CLAM_VIRUS | FPROT_VIRUS)";
     subject = "*** MALWARE *** %s";
   }
+   RISKY_OFFICE_MACRO{
+    action = "rewrite subject";
+    expression = '^OLETOOLS.*$';
+    subject = "*** RISKY OFFICE MACRO *** %s";
+  }
 }
