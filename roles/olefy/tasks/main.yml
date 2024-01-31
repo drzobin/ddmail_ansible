@@ -1,0 +1,80 @@
+---
+- name: Install packages needed for olefy
+  ansible.builtin.apt:
+    pkg:
+      - python3-pip
+      - python3-venv
+      - libmagic-dev
+    state: latest
+
+- name: Stat /opt/olefy folder
+  ansible.builtin.stat:
+    path: /opt/olefy_venv
+  register: olefy_venv
+
+- name: Move /opt/olefy_venv folder
+  ansible.builtin.command: mv /opt/olefy_venv /opt/olefy_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: olefy_venv.stat.exists
+
+- name: Create olefy python env.
+  ansible.builtin.command: python3 -m venv /opt/olefy_venv
+
+- name: Add the group "{{ olefy_runas_group }}"
+  ansible.builtin.group:
+    name: "{{ olefy_runas_group }}"
+    state: present
+
+- name: Add the user "{{ olefy_runas_user }}"
+  ansible.builtin.user:
+    name: "{{ olefy_runas_user }}"
+    shell: /sbin/nologin
+    create_home: false
+    group: "{{ olefy_runas_group }}"
+    state: present
+
+- name: Clone olefy repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/HeinleinSupport/olefy.git
+    dest: /opt/olefy_venv/olefy
+
+- name: Install olefy requirenments with pip.
+  ansible.builtin.pip:
+    requirements: /opt/olefy_venv/olefy/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/olefy_venv
+
+- name: Set user and group ownership of /opt/olefy_venv
+  ansible.builtin.file:
+    state: directory
+    path: /opt/olefy_venv
+    recurse: true
+    owner: "{{ olefy_venv_user_owner }}"
+    group: "{{ olefy_venv_group_owner }}"
+
+- name: Create/edit olefy config file /opt/olefy_venv/olefy/olefy.conf
+  ansible.builtin.template:
+    src: olefy.conf.j2
+    dest: /opt/olefy_venv/olefy/olefy.conf
+    owner: "{{ olefy_venv_user_owner }}"
+    group: "{{ olefy_venv_group_owner }}"
+    mode: "u=rw,g=r,o=r"
+
+- name: Create/edit olefy service configuration file /etc/systemd/system/olefy.service
+  ansible.builtin.template:
+    src: systemd_service.j2
+    dest: /etc/systemd/system/olefy.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: env == "prod"
+
+- name: Restart olefy service
+  ansible.builtin.service:
+    name: olefy
+    state: restarted
+    enabled: true
