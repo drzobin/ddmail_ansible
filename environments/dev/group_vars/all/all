@@ -130,6 +130,15 @@ ddmail_dmcp_keyhandler_prod_password_hash: "{{ vault_ddmail_dmcp_keyhandler_prod
 ddmail_dmcp_keyhandler_test_password_hash: "{{ vault_ddmail_dmcp_keyhandler_test_password_hash }}"
 ddmail_dmcp_keyhandler_dev_password_hash: "{{ vault_ddmail_dmcp_keyhandler_dev_password_hash }}"
 
+# olefy
+olefy_runas_user: olefy
+olefy_runas_group: olefy
+olefy_venv_user_owner: root
+olefy_venv_group_owner: root
+olefy_listen_ip: 127.0.0.1
+olefy_listen_port: 10050
+olefy_olevba_path: /opt/olefy_venv/bin/olevba
+
 # ddmail_backup
 ddmail_backup_folders_to_backup: /var/mail /var/lib/rspamd/dkim/
 
