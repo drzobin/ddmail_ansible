@@ -18,7 +18,7 @@
     filename: rspamd
     update_cache: true
 
-- name: Add rspamdi src apt repository.
+- name: Add rspamd src apt repository.
   ansible.builtin.apt_repository:
     repo: "deb-src [arch=amd64] https://rspamd.com/apt-stable/ bookworm main"
     state: present
@@ -145,6 +145,14 @@
   ansible.builtin.template:
     src: antivirus.conf.j2
     dest: /etc/rspamd/local.d/antivirus.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
+- name: Create/edit rspamd configuration file for olefy /etc/rspamd/local.d/external_services.conf.
+  ansible.builtin.template:
+    src: external_services.conf.j2
+    dest: /etc/rspamd/local.d/external_services.conf
     owner: root
     group: root
     mode: "u=rwx,g=r,o=r"
