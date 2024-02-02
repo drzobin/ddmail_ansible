@@ -189,6 +189,14 @@
     group: root
     mode: "u=rwx,g=r,o=r"
 
+- name: Create/edit rspamd configuration file for rbl /etc/rspamd/local.d/rbl.conf.
+  ansible.builtin.template:
+    src: rbl.conf.j2
+    dest: /etc/rspamd/local.d/rbl.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
 - name: Create/edit rspamd configuration file for systemd /lib/systemd/system/rspamd.service.
   ansible.builtin.template:
     src: rspamd.service.j2
