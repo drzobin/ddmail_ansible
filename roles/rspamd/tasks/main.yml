@@ -157,6 +157,14 @@
     group: root
     mode: "u=rwx,g=r,o=r"
 
+- name: Create/edit rspamd configuration file for olefy /etc/rspamd/local.d/external_services_group.conf.
+  ansible.builtin.template:
+    src: external_services_group.conf.j2
+    dest: /etc/rspamd/local.d/external_services_group.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
 - name: Create/edit rspamd configuration file for force actions /etc/rspamd/local.d/force_actions.conf.
   ansible.builtin.template:
     src: force_actions.conf.j2
