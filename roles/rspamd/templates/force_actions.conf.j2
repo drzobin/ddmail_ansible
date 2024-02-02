@@ -2,7 +2,7 @@ rules {
   # For each condition we want to force an action on we define a rule
   PHISHING {
     action = "rewrite subject";
-    expression = "(R_PHISHING | PHISHING)";
+    expression = "PHISHING";
     subject = "*** PHISHING *** %s";
   }
   MALWARE {
