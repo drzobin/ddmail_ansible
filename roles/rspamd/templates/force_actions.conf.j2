@@ -7,7 +7,7 @@ rules {
   }
   MALWARE {
     action = "rewrite subject";
-    expression = "(CLAM_VIRUS | FPROT_VIRUS)";
+    expression = "CLAM_VIRUS";
     subject = "*** MALWARE *** %s";
   }
   MACRO {
