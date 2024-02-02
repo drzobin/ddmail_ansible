@@ -2,7 +2,7 @@
 #extended_spam_headers = true;
 
 # Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
-use = ["x-spamd-bar", "authentication-results", "x-spam-status"];
+use = ["x-spamd-bar", "authentication-results", "x-spam-status", "x-mx"];
 
 # List of routines to be enabled for authenticated users (default empty). See also skip_authenticated.
 authenticated_headers = ["authentication-results"];
@@ -58,3 +58,37 @@ routines {
     remove = 0;
   }
 }
+
+custom {
+  x-mx = <<EOD
+  return function(task, common_meta)
+    -- parameters are task and metadata from previous functions
+
+    if task:has_symbol('MX_INVALID') then
+      return nil, -- no error
+      {['X-MX'] = 'INVALID'}, -- set extra header
+      {['X-MX'] = 0}, -- remove foreign X-Foo headers
+      {} -- metadata to return to other functions
+    end
+    if task:has_symbol('MX_MISSING') then
+      return nil, -- no error
+      {['X-MX'] = 'MISSING'}, -- set extra header
+      {['X-MX'] = 0}, -- remove foreign X-Foo headers
+      {} -- metadata to return to other functions
+    end
+    if task:has_symbol('MX_GOOD') then
+      return nil, -- no error
+      {['X-MX'] = 'GOOD'}, -- set extra header
+      {['X-MX'] = 0}, -- remove foreign X-Foo headers
+      {} -- metadata to return to other functions
+    end
+
+    return nil, -- no error
+    {}, -- need to fill the parameter
+    {['X-MX'] = 0}, -- remove foreign X-Foo headers
+    {} -- metadata to return to other functions
+
+  end
+EOD;
+}
+
