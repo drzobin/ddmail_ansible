@@ -12,7 +12,8 @@ rules {
   }
   MACRO {
     action = "rewrite subject";
-    expression = '^OLETOOLS.*$';
+    expression = "OLETOOLS";
     subject = "*** RISKY OFFICE MACRO *** %s";
+    honor_action = ["rewrite subject"];
   }
 }
