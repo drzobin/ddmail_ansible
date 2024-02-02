@@ -1,14 +1,12 @@
 # Reject when reaching this score.
-reject = 20;
+reject = null;
+
+# Rewrite the subject when reaching this score.
+rewrite_subject = 5.0;
+subject = "*** SPAM *** %s"
 
 # Add header "X-Spam" when reaching this score.
-add_header = 6.0;
+add_header = 4.0;
 
 # Apply greylisting when reaching this score (will emit "soft reject action").
 greylist = 4.0;
-
-# Rewrite the subject when reaching this score.
-rewrite_subject = 2.0;
-
-# Set rewrite subject to this value (%s is replaced by the original subject).
-subject = "*** SPAM *** %s"
