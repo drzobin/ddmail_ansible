@@ -7,4 +7,5 @@
       - apt-transport-https
       - wget
       - sysstat
+      - htop
     state: latest
