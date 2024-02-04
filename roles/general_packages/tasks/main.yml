@@ -6,4 +6,5 @@
       - git
       - apt-transport-https
       - wget
+      - sysstat
     state: latest
