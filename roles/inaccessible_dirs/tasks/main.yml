@@ -1,0 +1,206 @@
+---
+- name: Ensure group vmail exists with correct gid.
+  ansible.builtin.group:
+    name: vmail
+    state: present
+    gid: 5000
+
+- name: Add the user vmail.
+  ansible.builtin.user:
+    name: vmail
+    shell: /sbin/nologin
+    comment: vmail
+    uid: 5000
+    group: vmail
+    home: /var/vmail
+    create_home: false
+
+- name: Create folder to /var/mail
+  ansible.builtin.file:
+    path: /var/mail
+    state: directory
+    owner: root
+    group: vmail
+    mode: "u=rwx,g=rwxs,o="
+
+- name: Create folder /etc/postfix
+  ansible.builtin.file:
+    path: /etc/postfix
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Create folder /etc/dovecot
+  ansible.builtin.file:
+    path: /etc/dovecot
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Create folder /etc/mysql
+  ansible.builtin.file:
+    path: /etc/mysql
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Ensure group mysql exists.
+  ansible.builtin.group:
+    name: mysql
+    state: present
+
+- name: Add the user mysql.
+  ansible.builtin.user:
+    name: mysql
+    shell: /bin/false
+    group: mysql
+    home: /nonexistent
+    create_home: false
+    state: present
+
+- name: Create folder /var/lib/mysql
+  ansible.builtin.file:
+    path: /var/lib/mysql/
+    state: directory
+    owner: mysql
+    group: mysql
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Create folder /etc/i2pd
+  ansible.builtin.file:
+    path: /etc/i2pd
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Ensure group i2pd exists.
+  ansible.builtin.group:
+    name: i2pd
+    state: present
+
+- name: Add the user i2pd.
+  ansible.builtin.user:
+    name: i2pd
+    shell: /usr/sbin/nologin
+    group: i2pd
+    home: /var/lib/i2pd
+    create_home: false
+    state: present
+
+- name: Create folder /var/lib/i2pd
+  ansible.builtin.file:
+    path: /var/lib/i2pd
+    state: directory
+    owner: i2pd
+    group: i2pd
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Create folder /etc/tor
+  ansible.builtin.file:
+    path: /etc/tor
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Ensure group debian-tor exists.
+  ansible.builtin.group:
+    name: debian-tor
+    state: present
+
+- name: Add the user debian-tor.
+  ansible.builtin.user:
+    name: debian-tor
+    shell: /bin/false
+    group: debian-tor
+    home: /var/lib/tor
+    create_home: false
+    state: present
+
+- name: Create folder /var/lib/tor
+  ansible.builtin.file:
+    path: /var/lib/tor
+    state: directory
+    owner: debian-tor 
+    group: debian-tor
+    mode: "u=rwx,g=S,o="
+
+- name: Ensure group redis exists.
+  ansible.builtin.group:
+    name: redis
+    state: present
+
+- name: Add the user redis.
+  ansible.builtin.user:
+    name: redis
+    shell: /usr/sbin/nologin
+    group: redis
+    home: /var/lib/redis
+    create_home: false
+    state: present
+
+- name: Create folder /etc/redis
+  ansible.builtin.file:
+    path: /etc/redis
+    state: directory
+    owner: redis
+    group: redis
+    mode: "u=rwx,g=rws,o="
+
+- name: Create folder /var/lib/redis
+  ansible.builtin.file:
+    path: /var/lib/redis
+    state: directory
+    owner: redis
+    group: redis
+    mode: "u=rwx,g=rx,o="
+
+- name: Create folder /etc/rspamd
+  ansible.builtin.file:
+    path: /etc/rspamd
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Create folder /etc/clamav
+  ansible.builtin.file:
+    path: /etc/clamav
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Ensure group clamav exists.
+  ansible.builtin.group:
+    name: clamav
+    state: present
+
+- name: Add the user clamav.
+  ansible.builtin.user:
+    name: clamav
+    shell: /bin/false
+    group: clamav
+    home: /var/lib/clamav
+    create_home: false
+    state: present
+
+- name: Create folder /var/run/clamav
+  ansible.builtin.file:
+    path: /var/run/clamav
+    state: directory
+    owner: clamav
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Create folder /var/lib/clamav
+  ansible.builtin.file:
+    path: /var/lib/clamav
+    state: directory
+    owner: clamav
+    group: clamav
+    mode: "u=rwx,g=rx,o=rx"
