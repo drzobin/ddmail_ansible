@@ -47,8 +47,13 @@ dovecot_ssl_cert: "<{{ self_signed_certs_cert_dev_ddmail_local }}"
 dovecot_ssl_key: "<{{ self_signed_certs_privkey_dev_ddmail_local }}"
 
 # rspamd
+rspamd_redis_servers: "{{ redis_bind }}"
+rspamd_redis_password: "{{ redis_requirepass }}"
 
 # redis
+redis_bind: 127.0.0.1
+redis_port: 6379
+redis_requirepass: "{{ vault_redis_requirepass }}"
 
 # sshd
 sshd_port: "{{ vault_sshd_port }}"
