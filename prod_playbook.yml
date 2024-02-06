@@ -10,6 +10,7 @@
     - apache2
     - general_packages
     - disable_ipv6
+    - inaccessible_dirs
     - nftables
     - sshd
     - rsyslog
