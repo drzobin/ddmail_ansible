@@ -19,15 +19,66 @@ Restart=always
 RestartSec=3
 RuntimeMaxSec=4h
 
-NoNewPrivileges=true
-PrivateDevices=true
-PrivateTmp=true
-PrivateUsers=true
-ProtectControlGroups=true
-ProtectHome=true
-ProtectKernelModules=true
-ProtectKernelTunables=true
+# Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
+NoNewPrivileges=yes
+
+# Use dedicated /tmp
+PrivateTmp=yes
+
+# Hide user homes
+ProtectHome=yes
+
+# Service may not create SUID/SGID files
+RestrictSUIDSGID=yes
+
+# Service may not create writable and executable memory mappings
+MemoryDenyWriteExecute=yes
+
+# Mount filesystem as read only
 ProtectSystem=strict
+
+# Disables modification of /proc and /sys
+ProtectKernelTunables=yes
+
+# Prohibits loading or unloading modules and masks /usr/lib/modules from the application
+ProtectKernelModules=yes
+
+# Takes a boolean argument. If true, access to the kernel log ring buffer will be denied.
+ProtectKernelLogs=yes
+
+# Linux Control Groups (cgroups) hierarchies accessible through /sys/fs/cgroup will be made read-only to all processes of the unit
+ProtectControlGroups=yes
+
+# Sets up a new /dev mount for the executed processes and only adds API pseudo devices such as /dev/null, /dev/zero or /dev/random
+PrivateDevices=yes
+
+# Only allows access to standard pseudo devices including /dev/null, /dev/zero, /dev/full, /dev/random, and /dev/urandom.
+DevicePolicy=closed
+
+# Restricts access to the socket system call
+RestrictAddressFamilies=AF_UNIX AF_INET AF_NETLINK
+
+# Attempts to enable realtime scheduling in a process of the unit are refused.
+RestrictRealtime=yes
+
+# Locks down the personality system call so that the kernel execution domain may not be changed from the default
+LockPersonality=yes
+
+# When set, sets up a new UTS namespace for the executed processes. In addition, changing hostname or domainname is prevented.
+ProtectHostname=yes
+
+# If true, sets up a new user namespace for the executed processes and configures a minimal user and group mapping, that maps the "root" user and group as well as the unit's own user and group to themselves and everything else to the "nobody" user and group. 
+PrivateUsers=true
+
+# Dirs that is inaccessible
+InaccessibleDirectories=/var/mail /root /home /etc/postfix /etc/dovecot /etc/mysql /var/lib/mysql /etc/i2pd /var/lib/i2pd /etc/tor /var/lib/tor /etc/redis /var/lib/redis /etc/rspamd /etc/clamav /var/run/clamav /var/lib/clamav
+
+# CAP filter whitelist
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_SETUID CAP_SETGID CAP_CHOWN 
+AmbientCapabilities=
+
+# System call filter whitelist @system-service deny all other, for more information regaring what system calls that is included run: systemd-analyze syscall-filter
+SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
