@@ -199,7 +199,7 @@
 
 - name: Create/edit rspamd configuration file for systemd /lib/systemd/system/rspamd.service.
   ansible.builtin.template:
-    src: rspamd.service.j2
+    src: systemd.service.j2
     dest: /lib/systemd/system/rspamd.service
     owner: root
     group: root
