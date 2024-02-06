@@ -1,11 +1,11 @@
 ---
-- name: Ensure group vmail exists with correct gid.
+- name: Ensure group vmail exists
   ansible.builtin.group:
     name: vmail
     state: present
     gid: 5000
 
-- name: Add the user vmail.
+- name: Add the user vmail
   ansible.builtin.user:
     name: vmail
     shell: /sbin/nologin
@@ -30,6 +30,15 @@
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
+
+- name: Create folder /etc/letsencrypt
+  ansible.builtin.file:
+    path: /etc/letsencrypt
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
 
 - name: Create folder /etc/dovecot
   ansible.builtin.file:
@@ -127,7 +136,7 @@
     state: directory
     owner: debian-tor 
     group: debian-tor
-    mode: "u=rwx,g=S,o="
+    mode: "u=rwx,g=s,o="
 
 - name: Ensure group redis exists.
   ansible.builtin.group:
@@ -166,6 +175,28 @@
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
+
+- name: Ensure group _rspamd exists.
+  ansible.builtin.group:
+    name: _rspamd
+    state: present
+
+- name: Add the user _rspamd
+  ansible.builtin.user:
+    name: _rspamd
+    shell: /usr/sbin/nologin
+    group: _rspamd
+    home: /var/lib/rspamd
+    create_home: false
+    state: present
+
+- name: Create folder /var/lib/rspamd
+  ansible.builtin.file:
+    path: /var/lib/rspamd
+    state: directory
+    owner: _rspamd
+    group: _rspamd
+    mode: "u=rwx,g=rx,o="
 
 - name: Create folder /etc/clamav
   ansible.builtin.file:
