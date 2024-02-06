@@ -41,8 +41,13 @@ dovecot_ssl_cert: </etc/letsencrypt/live/mail.ddmail.se/cert.pem
 dovecot_ssl_key: </etc/letsencrypt/live/mail.ddmail.se/privkey.pem
 
 # rspamd
+rspamd_redis_servers: "{{ redis_bind }}"
+rspamd_redis_password: "{{ redis_requirepass }}"
 
 # redis
+redis_bind: 127.0.0.1
+redis_port: 6379
+redis_requirepass: "{{ vault_redis_requirepass }}"
 
 # sshd
 sshd_port: "{{ vault_sshd_port }}"
