@@ -14,6 +14,9 @@ vault_mail_prod_db_user_rw_password: change_me
 vault_mail_test_db_user_rw_password: change_me
 vault_mail_dev_db_user_rw_password: change_me
 
+# redis
+vault_redis_requirepass: change_me
+
 # ddmail_webapp
 vault_ddmail_webapp_runas_user: user
 vault_ddmail_webapp_venv_user_owner: user
