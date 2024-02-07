@@ -197,6 +197,14 @@
     group: root
     mode: "u=rwx,g=r,o=r"
 
+- name: Create/edit rspamd configuration file for apparmor profile /etc/apparmor.d/usr.bin.rspamd
+  ansible.builtin.template:
+    src: apparmor_profile.j2
+    dest: /etc/apparmor.d/usr.bin.rspamd
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
 - name: Create/edit rspamd configuration file for systemd /lib/systemd/system/rspamd.service.
   ansible.builtin.template:
     src: systemd.service.j2
@@ -205,9 +213,18 @@
     group: root
     mode: "u=rwx,g=r,o=r"
 
+- name: Set rspamd appormor profile to enforce.
+  ansible.builtin.command: /usr/sbin/aa-enforce /etc/apparmor.d/usr.bin.rspamd
+
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
+
+- name: Restart apparmor service
+  ansible.builtin.service:
+    name: apparmor
+    state: restarted
+    enabled: true
 
 - name: Restart rspamd service
   ansible.builtin.service:
