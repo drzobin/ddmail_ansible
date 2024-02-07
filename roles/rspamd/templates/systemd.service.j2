@@ -64,18 +64,15 @@ InaccessibleDirectories=/var/mail /opt /root /home /etc/postfix /etc/dovecot /et
 # Dirs that is read and writable
 ReadWriteDirectories=/run/clamav/clamd.ctl /var/lib/rspamd /var/log/rspamd /var/run/rspamd /run/rspamd
 
-# Create a filesystem jail with namespace
-#TemporaryFileSystem=/:ro
-#BindReadOnlyPaths=/usr/bin /etc/gai.conf /etc/host.conf /etc/hosts /etc/magic /etc/nsswitch.conf /etc/resolv.conf /etc/rspamd /lib/x86_64-linux-gnu /proc/sys/kernel/random/uuid /usr/share/ca-certificates /usr/share/rspamd /var/lib/rspamd /usr/lib/rspamd /lib64 /proc
-#BindPaths=/run/clamav/clamd.ctl /var/lib/rspamd /var/log/rspamd /var/run/rspamd /run/rspamd /tmp/rspamd-controller.sock /dev/shm /run
-
-
 # Deny all CAP
 CapabilityBoundingSet=
 AmbientCapabilities=
 
 # System call filter
 SystemCallFilter=@system-service
+
+# Apparmor profile
+#AppArmorProfile=usr.bin.rspamd
 
 [Install]
 WantedBy=multi-user.target
