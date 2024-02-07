@@ -7,7 +7,6 @@
   become_flags: '-'
 
   roles:
-    - apache2
     - general_packages
     - disable_ipv6
     - inaccessible_dirs
@@ -30,6 +29,7 @@
     - ddmail_webapp
     - ddmail_email_remover
     - ddmail_dmcp_keyhandler
+    - apache2
     - tor_onion_service
     - i2pd
     - ddmail_backup
