@@ -8,4 +8,6 @@
       - wget
       - sysstat
       - htop
+      - apparmor-utils
+      - auditd
     state: latest
