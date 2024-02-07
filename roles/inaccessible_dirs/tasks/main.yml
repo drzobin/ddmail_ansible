@@ -158,7 +158,7 @@
     state: directory
     owner: redis
     group: redis
-    mode: "u=rwx,g=rws,o="
+    mode: "u=rwx,g=rwxs,o="
 
 - name: Create folder /var/lib/redis
   ansible.builtin.file:
