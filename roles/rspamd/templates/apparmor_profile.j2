@@ -1,0 +1,29 @@
+abi <abi/3.0>,
+
+include <tunables/global>
+
+/usr/bin/rspamd flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice>
+  include <abstractions/openssl>
+
+  /etc/gai.conf r,
+  /etc/host.conf r,
+  /etc/hosts r,
+  /etc/magic r,
+  /etc/nsswitch.conf r,
+  /etc/resolv.conf r,
+  /etc/rspamd/** r,
+  /sys/kernel/mm/transparent_hugepage/enabled r,
+  /usr/bin/rspamd mr,
+  /usr/share/rspamd/** r,
+  /var/lib/rspamd/** r,
+  /run/clamav/clamd.ctl rw,
+  /usr/share/ca-certificates/** r,
+  /{var/,}run/rspamd/* rwk,
+  owner /var/lib/rspamd/ r,
+  owner /var/lib/rspamd/** rwk,
+  owner /var/log/rspamd/rspamd.log w,
+
+}
+
