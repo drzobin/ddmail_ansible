@@ -34,7 +34,8 @@ smtpd_helo_required=yes
 smtpd_tls_cert_file = {{ postfix_smtpd_tls_cert_file }}
 smtpd_tls_key_file = {{ postfix_smtpd_tls_key_file }}
 
-smtp_tls_security_level = may
+# Is not needed beacuse of dane
+#smtp_tls_security_level = may
 smtpd_tls_security_level = may
 
 smtpd_use_tls = yes
