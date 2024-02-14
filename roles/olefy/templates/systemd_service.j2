@@ -35,7 +35,7 @@ RestrictSUIDSGID=yes
 MemoryDenyWriteExecute=yes
 
 # Mount filesystem as read only
-ProtectSystem=strict
+#ProtectSystem=strict
 
 # Disables modification of /proc and /sys
 ProtectKernelTunables=yes
@@ -71,7 +71,13 @@ ProtectHostname=yes
 PrivateUsers=true
 
 # Dirs that is inaccessible
-InaccessibleDirectories=/var/mail /root /home /etc/postfix /etc/dovecot /etc/mysql /var/lib/mysql /etc/i2pd /var/lib/i2pd /etc/tor /var/lib/tor /etc/redis /var/lib/redis /etc/rspamd /var/lib/rspamd /etc/clamav /var/run/clamav /var/lib/clamav /etc/ssl /etc/letsencrypt
+#InaccessibleDirectories=/var/mail /root /home /etc/postfix /etc/dovecot /etc/mysql /var/lib/mysql /etc/i2pd /var/lib/i2pd /etc/tor /var/lib/tor /etc/redis /var/lib/redis /etc/rspamd /var/lib/rspamd /etc/clamav /var/run/clamav /var/lib/clamav /etc/ssl /etc/letsencrypt
+
+# Create a filesystem jail with namespace
+TemporaryFileSystem=/:ro
+BindReadOnlyPaths=/opt/olefy_venv /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /bin/kill /usr/share/misc/magic /usr/share/misc/>
+#BindPaths=/tmp
+
 
 # CAP filter whitelist
 CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_SETUID CAP_SETGID CAP_CHOWN 
