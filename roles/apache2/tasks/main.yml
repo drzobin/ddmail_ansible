@@ -5,6 +5,7 @@
       - apache2
       - apache2-utils
       - libapache2-mod-evasive
+      - libapache2-mod-security2
     state: latest
 
 - name: Enable apache2 mod proxy
@@ -23,6 +24,9 @@
 
 - name: Enable apache2 mod headers
   ansible.builtin.command: /usr/sbin/a2enmod headers
+
+- name: Enable apache2 mod security2 (mod-security2)
+  ansible.builtin.command: /usr/sbin/a2enmod security2
 
 - name: Add privacy friendly logging in /etc/apache2/conf-available/privacy_log.conf
   ansible.builtin.template:
@@ -60,6 +64,57 @@
     group: root
     mode: "u=rw,g=r,o=r"
   when: env == "prod"
+
+- name: Create/edit apache2 config file /etc/modsecurity/modsecurity.conf
+  ansible.builtin.template:
+    src: modsecurity.conf.j2
+    dest: /etc/modsecurity/modsecurity.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Create/edit apache2 config file /etc/apache2/mods-available/security2.conf
+  ansible.builtin.template:
+    src: security2.conf.j2
+    dest: /etc/apache2/mods-available/security2.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Download OWASP crs rules https://github.com/coreruleset/coreruleset/archive/refs/tags/v4.0.0.zip
+  ansible.builtin.get_url:
+    url: https://github.com/coreruleset/coreruleset/archive/refs/tags/v4.0.0.zip
+    dest: /root/v4.0.0.zip
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o="
+
+- name: Unarchive OWASP crs rules.
+  ansible.builtin.unarchive:
+    src: /root/v4.0.0.zip
+    dest: /root/
+    remote_src: yes
+
+- name: Delete old OWASP csr rules folder /etc/apache2/modsecurity-crs
+  ansible.builtin.file:
+    state: absent
+    path: /etc/apache2/modsecurity-crs
+
+- name: Move OWASP crs rules to correct location.
+  command: /usr/bin/mv /root/coreruleset-4.0.0 /etc/apache2/modsecurity-crs
+
+- name: Create/edit apache2 config file /etc/apache2/modsecurity-crs/crs-setup.conf
+  ansible.builtin.template:
+    src: crs-setup.conf.j2
+    dest: /etc/apache2/modsecurity-crs/crs-setup.conf 
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Delete OWASP csr zip file.
+  ansible.builtin.file:
+    state: absent
+    path: /root/v4.0.0.zip
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf (prod)
   ansible.builtin.template:
