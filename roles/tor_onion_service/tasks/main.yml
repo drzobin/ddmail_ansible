@@ -53,15 +53,6 @@
     group: debian-tor
     mode: "u=rwx,g=,o="
 
-- name: Create/edit apache2 config file /etc/apache2/sites-available/002-ddmail-tor-onion-service.conf
-  template: src=etc_apache2_sites-available_002-ddmail-tor-onion-service.conf.j2 dest=/etc/apache2/sites-available/002-ddmail-tor-onion-service.conf
-
-- name: Enable apache2 site 002-ddmail-tor-onion-service.conf
-  ansible.builtin.command: /usr/sbin/a2ensite 002-ddmail-tor-onion-service.conf
-
-- name: Restart apache2 service
-  service: name=apache2 state=restarted enabled=yes
-
 - name: Restart tor service
   service: name=tor state=restarted enabled=yes
 
