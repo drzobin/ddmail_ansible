@@ -6,6 +6,7 @@
       - apache2-utils
       - libapache2-mod-evasive
       - libapache2-mod-security2
+      - unzip
     state: latest
 
 - name: Enable apache2 mod proxy
@@ -154,6 +155,19 @@
 
 - name: Enable apache2 site 001-default-ssl.conf
   ansible.builtin.command: /usr/sbin/a2ensite 001-default-ssl.conf
+  when: env == "prod"
+
+- name: Create/edit apache2 config file /etc/apache2/sites-available/002-darknet.conf
+  template: 
+    src: 002-darknet.conf.j2 
+    dest: /etc/apache2/sites-available/002-darknet.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  when: env == "prod"
+
+- name: Enable apache2 site 002-darknet.conf
+  ansible.builtin.command: /usr/sbin/a2ensite 002-darknet.conf
   when: env == "prod"
 
 - name: Reload systemd
