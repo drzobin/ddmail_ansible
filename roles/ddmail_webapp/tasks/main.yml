@@ -188,6 +188,18 @@
     - tor_hostname.stat.exists
     - env == "prod"
 
+- name: Stat i2p b32 address file
+  ansible.builtin.stat:
+    path: /var/lib/i2pd/ddmail_key.dat
+    register: i2p_hostname
+  when: env == "prod"
+
+- name: Set i2p b32 address for ddmail_webapp
+  ansible.builtin.shell: echo "$(head -c 391 /var/lib/i2pd/ddmail_key.dat | sha256sum | cut -f1 -d\  | xxd -r -p | base32 | tr '[:upper:]' '[:lower:]' | sed -r 's/=//g').b32.i2p" > /opt/ddmail_webapp_venv/ddmail/ddmail/templates/i2p_hostname
+  when:
+    - i2p_hostname.stat.exists
+    - env == "prod"
+
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
