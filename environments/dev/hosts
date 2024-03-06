@@ -1,3 +1,3 @@
 [mail_server]
-192.168.56.102 hostname=dev.ddmail.local ansible_ssh_user='{{ vault_ansible_ssh_user }}' ansible_become_pass='{{ vault_ansible_become_pass }}'
+192.168.56.102 hostname=dev1 fqdn=dev1.ddmail.local ansible_ssh_user='{{ vault_ansible_ssh_user }}' ansible_become_pass='{{ vault_ansible_become_pass }}'
 
