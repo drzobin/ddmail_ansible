@@ -1,0 +1,22 @@
+;
+$TTL    604800
+@       IN      SOA     ddmail.internal. root.ddmail.internal. (
+                             14         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+;
+@               IN      NS      ddmail.internal.
+
+;
+@               IN      A       127.0.0.1
+
+;
+dev1		IN      MX      10              dev1.ddmail.internal.
+dev2		IN      MX      10              dev2.ddmail.internal.
+
+;
+dev1            IN      A       {{ hostvars['dev1']['ansible_host'] }}
+dev2            IN      A       {{ hostvars['dev2']['ansible_host'] }}

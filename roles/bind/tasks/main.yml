@@ -1,0 +1,52 @@
+---
+- name: Install bind9 packages.
+  ansible.builtin.apt:
+    pkg:
+      - bind9
+    state: latest
+
+- name: Create/edit bind9 configuration file /etc/default/named
+  ansible.builtin.template:
+    src: named.j2
+    dest: /etc/default/named
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Create/edit bind9 configuration file /etc/bind/named.conf.options
+  ansible.builtin.template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+    owner: root
+    group: bind
+    mode: "u=rw,g=r,o=r"
+
+- name: Create/edit bind9 configuration file /etc/bind/named.conf.local
+  ansible.builtin.template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    owner: root
+    group: bind
+    mode: "u=rw,g=r,o=r"
+
+- name: Create folder /etc/bind/zones for storing own zones in.
+  ansible.builtin.file:
+    path: /etc/bind/zones
+    state: directory
+    owner: root
+    group: bind
+    mode: "u=rwx,g=rx,o=r"
+
+- name: Create/edit bind9 configuration file /etc/bind/zones/db.ddmail.internal
+  ansible.builtin.template:
+    src: db.ddmail.internal.j2
+    dest: /etc/bind/zones/db.ddmail.internal
+    owner: root
+    group: bind
+    mode: "u=rw,g=r,o=r"
+
+- name: Restart bind9 service
+  ansible.builtin.service:
+    name: bind9
+    state: restarted
+    enabled: true
