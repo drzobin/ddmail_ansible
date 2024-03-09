@@ -179,6 +179,7 @@
 - name: Ensure group _rspamd exists.
   ansible.builtin.group:
     name: _rspamd
+    system: true
     state: present
 
 - name: Add the user _rspamd
@@ -187,6 +188,7 @@
     shell: /usr/sbin/nologin
     group: _rspamd
     home: /var/lib/rspamd
+    system: true
     create_home: false
     state: present
 
