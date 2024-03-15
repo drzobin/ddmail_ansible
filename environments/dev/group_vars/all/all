@@ -22,6 +22,11 @@ mail_test_db_user_r_password: "{{ vault_mail_test_db_user_r_password  }}"
 mail_test_db_user_rw: mail_test_rw
 mail_test_db_user_rw_password: "{{ vault_mail_test_db_user_rw_password }}"
 
+# mailsystem_db
+mailsystem_db_dev_user_password_hash: '{{ vault_mailsystem_db_dev_user_password_hash }}'
+mailsystem_db_dev_user_keyfile_hash: '{{ vault_mailsystem_db_dev_user_file_hash }}'
+mailsystem_db_dev_email_hash: '{{ vault_mailsystem_db_dev_email_hash }}'
+
 # self_signed_certs
 self_signed_certs_folder: "/etc/self_signed_certs/{{ hostvars[inventory_hostname]['fqdn'] }}"
 self_signed_certs_cert: '{{ self_signed_certs_folder }}/cert.pem'
