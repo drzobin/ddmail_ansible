@@ -21,3 +21,9 @@ ansible-playbook dev_playbook.yml -i environments/dev/ --ask-vault-pass --key-fi
 ansible-vault create vault.yml
 ansible-vault view vault.yml
 ansible-vault edit vault.yml
+
+#
+#
+# Set up SSH agent to avoid retyping passwords
+ssh-agent bash
+ssh-add ~/.ssh/[key file]
