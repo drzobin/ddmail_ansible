@@ -93,14 +93,6 @@
   register: global_domains
   when: env == "dev"
 
-- name: Output domains
-  ansible.builtin.debug:
-    msg: "{{ global_domains.query_result }}"
-
-- name: Output domains
-  ansible.builtin.debug:
-    msg: "{{ hostvars[inventory_hostname]['fqdn'] }}"
-
 - name: Insert domain to global_domains
   community.mysql.mysql_query:
     login_db: "{{ mail_db_name }}"
@@ -178,14 +170,6 @@
   register: emails
   when: 
     - env == "dev"
-
-- name: Output global_domains
-  ansible.builtin.debug:
-    msg: "{{ global_domain.query_result }}"
-
-- name: Output account
-  ansible.builtin.debug:
-    msg: "{{ account.query_result }}"
 
 - name: Insert dev email to emails
   community.mysql.mysql_query:
