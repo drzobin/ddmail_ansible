@@ -83,3 +83,116 @@
     login_password: "{{ mail_test_db_user_rw_password }}"
     state: import
     target: /root/create_tables.sql
+
+- name: Select domain from global_domains
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT domain from global_domains WHERE domain LIKE "{{ hostvars[inventory_hostname]['fqdn'] }}"
+  register: global_domains
+  when: env == "dev"
+
+- name: Output domains
+  ansible.builtin.debug:
+    msg: "{{ global_domains.query_result }}"
+
+- name: Output domains
+  ansible.builtin.debug:
+    msg: "{{ hostvars[inventory_hostname]['fqdn'] }}"
+
+- name: Insert domain to global_domains
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO global_domains (domain, is_enabled) VALUES ("{{ hostvars[inventory_hostname]['fqdn'] }}", 1)
+  when:
+    - env == "dev"
+    - global_domains.query_result[0][0]["domain"] is not defined
+
+- name: Select id for domain in global_domains
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT id from global_domains WHERE domain LIKE "{{ hostvars[inventory_hostname]['fqdn'] }}"
+  register: global_domain
+  when: env == "dev"
+
+- name: Select account from accounts
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT account from accounts WHERE account LIKE "dev"
+  register: accounts
+  when: env == "dev"
+
+- name: Insert dev account in accounts
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO accounts (account, payment_token, is_enabled, is_gratis, created) VALUES ("dev","A3F3G4F3D2G5", 1, 1, "{{ "%Y-%m-%d %H:%M:%S"|strftime }}")
+  when:
+    - env == "dev"
+    - accounts.query_result[0][0]["account"] is not defined
+
+- name: Select user from users
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT account_id from users WHERE user LIKE "dev"
+  register: users
+  when: env == "dev"
+
+- name: Select account id from accounts
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT id from accounts WHERE account LIKE "dev"
+  register: account
+  when: 
+    - env == "dev"
+      #- users.query_result[0][0]["account_id"] is not defined
+
+- name: Insert DEV user to users
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO users (account_id,user,password_hash,password_key_hash) VALUES ("{{ account.query_result[0][0]["id"] }}","DEV","{{ mailsystem_db_dev_user_password_hash }}","{{ mailsystem_db_dev_user_keyfile_hash }}")
+  when:
+    - env == "dev"
+    - users.query_result[0][0]["account_id"] is not defined
+
+- name: Select email from emails
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT email from emails WHERE email LIKE "dev@{{ hostvars[inventory_hostname]['fqdn'] }}"
+  register: emails
+  when: 
+    - env == "dev"
+
+- name: Output global_domains
+  ansible.builtin.debug:
+    msg: "{{ global_domain.query_result }}"
+
+- name: Output account
+  ansible.builtin.debug:
+    msg: "{{ account.query_result }}"
+
+- name: Insert dev email to emails
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO emails (account_id,global_domain_id, email, password_hash) VALUES ("{{ account.query_result[0][0]["id"] }}","{{ global_domain.query_result[0][0]["id"] }}","dev@{{ hostvars[inventory_hostname]['fqdn'] }}","{{ mailsystem_db_dev_email_hash }}")
+  when:
+    - env == "dev"
+    - emails.query_result[0][0]["email"] is not defined
