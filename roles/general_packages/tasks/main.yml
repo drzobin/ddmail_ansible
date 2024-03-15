@@ -10,4 +10,6 @@
       - htop
       - apparmor-utils
       - auditd
+      - dnsutils
+      - telnet
     state: latest
