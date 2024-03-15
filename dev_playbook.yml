@@ -11,10 +11,11 @@
     - disable_ipv6
     - nftables
     - inaccessible_dirs
+    - bind
+    - set_nameserver
     - sshd
     - rsyslog
     - unattended-upgrades
-    - unbound
     - mariadb
     - mailsystem_db
     - self_signed_certs
