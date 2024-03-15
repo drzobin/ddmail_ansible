@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     pkg:
       - mariadb-server
+      - python3-pymysql
     state: latest
 
 - name: Set mariadb root user password and host
