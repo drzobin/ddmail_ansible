@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS emails (
 	account_id int NOT NULL,
 	account_domain_id int NULL,
 	global_domain_id int NULL,
+	openpgp_key_id int NULL,
 	email varchar(191) NOT NULL UNIQUE,
 	password_hash varchar(2096) NOT NULL,
 	storage_space_mb int NOT NULL DEFAULT 0,
@@ -74,7 +75,20 @@ CREATE TABLE IF NOT EXISTS emails (
 	FOREIGN KEY (global_domain_id) REFERENCES global_domains(id)
     		ON DELETE RESTRICT
 		ON UPDATE CASCADE,
+	FOREIGN KEY (openpgp_key_id) REFERENCES openpgp_keys(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
 	PRIMARY KEY (id) );
+
+CREATE TABLE IF NOT EXISTS openpgp_keys (
+	id int NOT NULL UNIQUE AUTO_INCREMENT,
+	account_id int NOT NULL,
+	fingerprint varchar(40) UNIQUE NOT NULL,
+	expire DATETIME NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id)
+        ON DELETE RESTRICT
+	ON UPDATE CASCADE,
+    PRIMARY KEY (id) );
 
 CREATE TABLE IF NOT EXISTS aliases (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
