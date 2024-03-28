@@ -4,7 +4,7 @@
   become: true
   become_user: root
   become_method: ansible.builtin.su
-  become_flags: '-'
+  become_flags: "-"
 
   roles:
     - general_packages
