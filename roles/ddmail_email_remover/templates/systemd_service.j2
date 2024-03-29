@@ -45,6 +45,10 @@ RestartSec=10s
 # System call filter
 #SystemCallFilter=@system-service
 
+# Only allow network traffic on loopback.
+IPAddressDeny=any
+IPAddressAllow=127.0.0.0/8
+
 [Install]
 WantedBy=multi-user.target
 
