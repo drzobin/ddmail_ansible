@@ -139,6 +139,24 @@ ddmail_dmcp_keyhandler_prod_password_hash: "{{ vault_ddmail_dmcp_keyhandler_prod
 ddmail_dmcp_keyhandler_test_password_hash: "{{ vault_ddmail_dmcp_keyhandler_test_password_hash }}"
 ddmail_dmcp_keyhandler_dev_password_hash: "{{ vault_ddmail_dmcp_keyhandler_dev_password_hash }}"
 
+# ddmail_openpgp_keyhandler
+ddmail_openpgp_keyhandler_runas_user: "{{ vault_ddmail_openpgp_keyhandler_runas_user }}"
+ddmail_openpgp_keyhandler_runas_group: "{{ vault_ddmail_openpgp_keyhandler_runas_user }}"
+ddmail_openpgp_keyhandler_venv_user_owner: "{{ vault_ddmail_openpgp_keyhandler_venv_user_owner }}"
+ddmail_openpgp_keyhandler_venv_group_owner: "{{ vault_ddmail_openpgp_keyhandler_venv_group_owner }}"
+ddmail_openpgp_keyhandler_prod_secret_key: "{{ vault_ddmail_openpgp_keyhandler_prod_secret_key }}"
+ddmail_openpgp_keyhandler_test_secret_key: "{{ vault_ddmail_openpgp_keyhandler_test_secret_key }}"
+ddmail_openpgp_keyhandler_dev_secret_key: "{{ vault_ddmail_openpgp_keyhandler_dev_secret_key }}"
+ddmail_openpgp_keyhandler_prod_password: "{{ vault_ddmail_openpgp_keyhandler_prod_password }}"
+ddmail_openpgp_keyhandler_test_password: "{{ vault_ddmail_openpgp_keyhandler_test_password }}"
+ddmail_openpgp_keyhandler_dev_password: "{{ vault_ddmail_openpgp_keyhandler_dev_password }}"
+ddmail_openpgp_keyhandler_prod_password_hash: "{{ vault_ddmail_openpgp_keyhandler_prod_password_hash }}"
+ddmail_openpgp_keyhandler_test_password_hash: "{{ vault_ddmail_openpgp_keyhandler_test_password_hash }}"
+ddmail_openpgp_keyhandler_dev_password_hash: "{{ vault_ddmail_openpgp_keyhandler_dev_password_hash }}"
+ddmail_openpgp_keyhandler_prod_gnupg_home: /opt/gnupg_home
+ddmail_openpgp_keyhandler_test_gnupg_home: /opt/gnupg_home
+ddmail_openpgp_keyhandler_dev_gnupg_home: /home/dev
+
 # olefy
 olefy_runas_user: olefy
 olefy_runas_group: olefy
