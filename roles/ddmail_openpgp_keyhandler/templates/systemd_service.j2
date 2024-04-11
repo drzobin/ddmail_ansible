@@ -1,0 +1,54 @@
+[Unit]
+Description=Gunicorn instance to serve ddmail_openpgp_keyhandler
+After=network.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Environment="MODE=PRODUCTION"
+User={{ ddmail_openpgp_keyhandler_runas_user }}
+Group={{ ddmail_openpgp_keyhandler_runas_group }}
+WorkingDirectory=/opt/ddmail_openpgp_keyhandler_venv/
+Environment="PATH=/opt/ddmail_openpgp_keyhandler_venv/bin/"
+ExecStart=/opt/ddmail_openpgp_keyhandler_venv/bin/gunicorn -b 127.0.0.1:8003 --log-file /var/log/gunicorn/ddmail_openpgp_keyhandler.log --workers 2 "openpgp_keyhandler:create_app()" 
+RuntimeDirectory=ddmail_openpgp_keyhandler
+Restart=on-failure
+RestartSec=10s
+
+# Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
+#NoNewPrivileges=yes
+
+# Use dedicated /tmp
+#PrivateTmp=yes
+
+# Hide user homes
+#ProtectHome=yes
+
+# Service may not create SUID/SGID files
+#RestrictSUIDSGID=yes
+
+# Service may not create writable and executable memory mappings
+#MemoryDenyWriteExecute=yes
+
+# Service may only use loopback network interface
+#PrivateNetwork=yes
+
+# Create a filesystem jail with namespace
+#TemporaryFileSystem=/:ro
+#BindReadOnlyPaths=/opt/ddmail_dmcp_keyhandler_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/doas /usr/bin/doveadm /usr/lib/dovecot /etc/dovecot
+#BindPaths=/var/log/gunicorn/ddmail_dmcp_keyhandler.log
+
+# Deny all CAP
+#CapabilityBoundingSet=
+#AmbientCapabilities=
+
+# System call filter
+#SystemCallFilter=@system-service
+
+# Only allow network traffic on loopback.
+IPAddressDeny=any
+IPAddressAllow=127.0.0.0/8
+
+[Install]
+WantedBy=multi-user.target
+
