@@ -14,5 +14,16 @@
     group: 'root'
     mode: "u=rwx,g=rx,o=rx"
 
+- name: Stat "{{ self_signed_certs_key }}"
+  ansible.builtin.stat:
+    path: "{{ self_signed_certs_key }}"
+  register: self_signed_cert_key
+
+- name: Stat "{{ self_signed_certs_cert }}"
+  ansible.builtin.stat:
+    path: "{{ self_signed_certs_cert }}"
+  register: self_signed_cert_cert
+
 - name: Create self signed cert for dev.ddmail.local
   ansible.builtin.command: openssl req -x509 -newkey rsa:4096 -keyout "{{ self_signed_certs_key }}" -out "{{ self_signed_certs_cert }}" -sha256 -days 365 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN={{ hostvars[inventory_hostname]['fqdn'] }}"
+  when: not self_signed_cert_key.stat.exists and not self_signed_cert_cert.stat.exists
