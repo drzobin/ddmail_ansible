@@ -38,9 +38,9 @@ smtps     inet  n       -       -       -       -       smtpd
   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
   -o milter_macro_daemon_name=ORIGINATING
 #
-# Used for tor onion service
+# Used for tor onion and i2p service
 127.0.0.1:10025      inet  n       -       -       -       -       smtpd
-  -o syslog_name=postfix/smtpd/tor_onion_service
+  -o syslog_name=postfix/smtpd/tor_i2p_service
   -o smtpd_use_tls=no
   -o smtpd_tls_auth_only=no
   -o smtpd_sasl_auth_enable=yes
@@ -50,6 +50,21 @@ smtps     inet  n       -       -       -       -       smtpd
   -o smtpd_sasl_tls_security_options=noanonymous
   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
   -o milter_macro_daemon_name=ORIGINATING
+#
+# Used for ddmail openpgp encryptor
+openpgp_encryptor    unix    -   n   n   -   -   pipe
+  flags= user={{ ddmail_openpgp_encryptor_runas_user }} argv=/opt/ddmail_openpgp_encryptor_venv/bin/python /opt/ddmail_openpgp_encryptor_venv/ddmail_openpgp_encryptor/openpgp_encryptor.py --config-file /opt/ddmail_openpgp_encryptor_venv/ddmail_openpgp_encryptor/config.ini --email-from ${sender} --email-to ${recipient}
+#
+127.0.0.1:10028 inet    n   -   n   -   10  smtpd
+  -o content_filter=
+  -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks
+  -o smtpd_helo_restrictions=
+  -o smtpd_client_restrictions=
+  -o smtpd_sender_restrictions=
+  -o smtpd_recipient_restrictions=permit_mynetworks,reject
+  -o mynetworks=127.0.0.0/8
+  -o smtpd_authorized_xforward_hosts=127.0.0.0/8
+#
 #smtps     inet  n       -       y       -       -       smtpd
 #  -o syslog_name=postfix/smtps
 #  -o smtpd_tls_wrappermode=yes
