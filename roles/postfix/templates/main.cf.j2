@@ -22,7 +22,8 @@ readme_directory = no
 
 # See http://www.postfix.org/COMPATIBILITY_README.html -- default to 2 on
 # fresh installs.
-compatibility_level = 2
+compatibility_level = 3.6
+#compatibility_level = 2
 
 # Disable vrfy
 disable_vrfy_command=yes
@@ -120,6 +121,9 @@ milter_default_action = accept
 
 # Send mail to rspamd.
 smtpd_milters = inet:localhost:11332
+
+# Send email to ddmail content filter openpgp encryptor
+content_filter = openpgp_encryptor
 
 # Sending mail to rspamd and opendkim
 #smtpd_milters = inet:localhost:11332, inet:localhost:12301
