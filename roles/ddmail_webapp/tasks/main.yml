@@ -186,7 +186,7 @@
     mode: "u=rw,g=r,o=r"
   when:
     - env == "prod"
-    - tor_hostname.stat.exists)
+    - tor_hostname.stat.exists
 
 - name: Stat i2p b32 address file
   ansible.builtin.stat:
