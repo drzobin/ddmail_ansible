@@ -1,0 +1,10 @@
+[DEFAULT]
+gnupg_home = {{ ddmail_openpgp_encryptor_keyrings_folder }}
+
+[mariadb]
+host = 127.0.0.1
+port = 3306
+db = {{ ddmail_openpgp_encryptor_mail_db }} 
+user = {{ ddmail_openpgp_encryptor_mail_db_user }}
+password = {{ ddmail_openpgp_encryptor_mail_db_user_password }}
+
