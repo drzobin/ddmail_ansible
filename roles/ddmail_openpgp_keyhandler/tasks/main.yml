@@ -69,7 +69,7 @@
 
 - name: Install requirenments with pip.
   ansible.builtin.pip:
-    requirements: /opt/ddmail_openpgp_keyhandler_venv/dmcp_openpgp/requirements.txt
+    requirements: /opt/ddmail_openpgp_keyhandler_venv/openpgp_keyhandler/requirements.txt
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_openpgp_keyhandler_venv
@@ -168,6 +168,32 @@
     group: '{{ ddmail_openpgp_keyhandler_runas_user }}'
     mode: u=rw,g=r,o=
   when: env == "dev"
+
+- name: Add keyring/gnupg home folder for prod.
+  ansible.builtin.file:
+    path: "{{ ddmail_openpgp_keyhandler_prod_gnupg_home }}"
+    state: directory
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
+    mode: "u=rwx,g=rx,o="
+  when: env == "prod"
+
+- name: Add keyring/gnupg home folder for dev.
+  ansible.builtin.file:
+    path: "{{ ddmail_openpgp_keyhandler_dev_gnupg_home }}"
+    state: directory
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
+    mode: "u=rwx,g=rx,o="
+  when: env == "dev"
+
+- name: Add keyring/gnupg home folder for test.
+  ansible.builtin.file:
+    path: "{{ ddmail_openpgp_keyhandler_test_gnupg_home }}"
+    state: directory
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
+    mode: "u=rwx,g=rx,o="
 
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_openpgp_keyhandler kill
