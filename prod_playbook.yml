@@ -29,6 +29,8 @@
     - ddmail_webapp
     - ddmail_email_remover
     - ddmail_dmcp_keyhandler
+    - ddmail_openpgp_keyhandler
+    - ddmail_openpgp_encryptor
     - apache2
     - tor_onion_service
     - i2pd
