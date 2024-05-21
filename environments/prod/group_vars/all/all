@@ -151,8 +151,8 @@ ddmail_openpgp_keyhandler_dev_gnupg_home: "{{ openpgp_keyrings_folder }}"
 # ddmail_openpgp_encryptor
 ddmail_openpgp_encryptor_venv_user_owner: root
 ddmail_openpgp_encryptor_venv_group_owner: root
-ddmail_openpgp_encryptor_runas_user: openpgp-encryptor
-ddmail_openpgp_encryptor_runas_group: openpgp-encryptor
+ddmail_openpgp_encryptor_runas_user: openpgp-keyhandler
+ddmail_openpgp_encryptor_runas_group: openpgp-keyhandler
 ddmail_openpgp_encryptor_keyrings_folder: "{{ openpgp_keyrings_folder }}"
 ddmail_openpgp_encryptor_mail_db: "{{ mail_db_name }}"
 ddmail_openpgp_encryptor_mail_db_user: "{{ mail_db_user_r }}"
