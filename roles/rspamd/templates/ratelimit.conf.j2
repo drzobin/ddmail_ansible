@@ -1,3 +1,8 @@
 rates {
-	user = [1/1min];
+        user = {
+                bucket = {
+                        burst = 0;
+                        rate = "1 / 1m";
+                }
+        }
 }
