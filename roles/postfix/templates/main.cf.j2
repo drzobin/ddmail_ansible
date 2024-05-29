@@ -125,6 +125,10 @@ smtpd_milters = inet:localhost:11332
 # Send email to ddmail content filter openpgp encryptor
 content_filter = openpgp_encryptor
 
+# ratelimit
+default_destination_rate_delay: 1
+default_destination_recipient_limit: 25
+
 # Sending mail to rspamd and opendkim
 #smtpd_milters = inet:localhost:11332, inet:localhost:12301
 #non_smtpd_milters = inet:localhost:11332, inet:localhost:12301
