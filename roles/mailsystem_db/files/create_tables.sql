@@ -9,10 +9,10 @@ CREATE TABLE IF NOT EXISTS accounts (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account varchar(100) NOT NULL UNIQUE,
 	payment_token varchar(12) NOT NULL UNIQUE,
-	assets_in_sek int NOT NULL DEFAULT 0,
+	funds_in_sek int NOT NULL DEFAULT 0,
 	is_enabled boolean NOT NULL DEFAULT  0,
 	is_gratis boolean NOT NULL DEFAULT  0,
-	total_storage_space_mb int NOT NULL DEFAULT 0,
+	total_storage_space_g int NOT NULL DEFAULT 1,
 	created DATETIME NOT NULL,
 	last_time_disabled DATETIME DEFAULT NULL,
 	PRIMARY KEY (id) );
