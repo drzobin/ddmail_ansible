@@ -1,4 +1,4 @@
 [mail_server]
-dev1 ansible_host=192.168.56.102 hostname=dev1 fqdn=dev1.ddmail.internal ansible_ssh_user='{{ vault_ansible_ssh_user }}' ansible_become_pass='{{ vault_ansible_become_pass }}'
-dev2 ansible_host=192.168.56.103 hostname=dev2 fqdn=dev2.ddmail.internal ansible_ssh_user='{{ vault_ansible_ssh_user }}' ansible_become_pass='{{ vault_ansible_become_pass }}'
+dev1 ansible_host=192.168.56.101 hostname=dev1 fqdn=dev1.ddmail.internal ansible_ssh_user='{{ vault_ansible_ssh_user }}' ansible_become_pass='{{ vault_ansible_become_pass }}'
+dev2 ansible_host=192.168.56.102 hostname=dev2 fqdn=dev2.ddmail.internal ansible_ssh_user='{{ vault_ansible_ssh_user }}' ansible_become_pass='{{ vault_ansible_become_pass }}'
 
