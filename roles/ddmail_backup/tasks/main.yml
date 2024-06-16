@@ -62,10 +62,3 @@
     minute: "0"
     hour: "5"
     job: "python3 /root/ddmail_backup/take_backup.py /root/ddmail_backup/config.ini > /dev/null 2>&1"
-
-- name: Ensure ddmail_backup clear_backups.py runs at 5 every day.
-  ansible.builtin.cron:
-    name: "Celar backups"
-    minute: "0"
-    hour: "6"
-    job: "python3 /root/ddmail_backup/clear_backups.py /root/ddmail_backup/config.ini > /dev/null 2>&1"
