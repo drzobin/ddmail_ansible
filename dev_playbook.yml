@@ -1,6 +1,6 @@
 ---
-- name: Setting up mail server
-  hosts: mail_server
+- name: Setting up primary server for ddmail system in dev.
+  hosts: primary_srv
   become: true
   become_user: root
   become_method: ansible.builtin.su
