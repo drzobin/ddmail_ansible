@@ -1,3 +1,5 @@
-[mail_server]
+[primary_srv]
 185.157.222.46 hostname=srv01 ansible_ssh_user='{{ vault_srv01_ansible_ssh_user }}' ansible_become_pass='{{ vault_srv01_ansible_become_pass }}'
 
+[secondary_srv]
+158.174.211.145 hostname=srv03 ansible_ssh_user='{{ vault_srv03_ansible_ssh_user }}' ansible_become_pass='{{ vault_srv03_ansible_become_pass }}'
