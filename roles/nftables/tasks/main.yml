@@ -5,13 +5,23 @@
       - nftables
     state: latest
 
-- name: Create/edit nftables configuration file /etc/nftables.conf
+- name: Create/edit nftables configuration file /etc/nftables.conf for primary servers
   ansible.builtin.template:
-    src: nftables.conf.j2
+    src: primary_srv_nftables.conf.j2
     dest: /etc/nftables.conf
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
+  when: group_names[0] == "primary_srv"
+
+- name: Create/edit nftables configuration file /etc/nftables.conf for secondary servers
+  ansible.builtin.template:
+    src: secondary_srv_nftables.conf.j2
+    dest: /etc/nftables.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when: group_names[0] == "secondary_srv"
 
 - name: Restart nftables service
   ansible.builtin.service:
