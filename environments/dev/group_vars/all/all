@@ -91,7 +91,7 @@ ddmail_webapp_prod_dkim_record: "\"v=DKIM1; k=rsa;  \\\\009p=MIIBIjANBgkqhkiG9w0
 ddmail_webapp_prod_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_prod_payment_mail_name: "{{ vault_ddmail_webapp_prod_payment_mail_name }}"
 ddmail_webapp_prod_payment_mail_address: "{{ vault_ddmail_webapp_prod_payment_mail_address }}"
-ddmail_webapp_prod_payment_mail_postcode: "{{ vailt_ddmail_webapp_prod_payment_mail_postcode }}"
+ddmail_webapp_prod_payment_mail_postcode: "{{ vault_ddmail_webapp_prod_payment_mail_postcode }}"
 ddmail_webapp_prod_payment_mail_country: "{{ vault_ddmail_webapp_prod_payment_mail_country }}"
 ddmail_webapp_test_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_test_wtf_csrf_secret_key }}"
 ddmail_webapp_test_secret_key: "{{ vault_ddmail_webapp_test_secret_key }}"
@@ -103,7 +103,7 @@ ddmail_webapp_test_dkim_record: "\"v=DKIM1; k=rsa;  \\\\009p=MIIBIjANBgkqhkiG9w0
 ddmail_webapp_test_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_test_payment_mail_name: "{{ vault_ddmail_webapp_test_payment_mail_name }}"
 ddmail_webapp_test_payment_mail_address: "{{ vault_ddmail_webapp_test_payment_mail_address }}"
-ddmail_webapp_test_payment_mail_postcode: "{{ vailt_ddmail_webapp_test_payment_mail_postcode }}"
+ddmail_webapp_test_payment_mail_postcode: "{{ vault_ddmail_webapp_test_payment_mail_postcode }}"
 ddmail_webapp_test_payment_mail_country: "{{ vault_ddmail_webapp_test_payment_mail_country }}"
 ddmail_webapp_dev_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_dev_wtf_csrf_secret_key }}"
 ddmail_webapp_dev_secret_key: "{{ vault_ddmail_webapp_dev_secret_key }}"
@@ -115,7 +115,7 @@ ddmail_webapp_dev_dkim_record: "\"v=DKIM1; k=rsa;  \\\\009p=MIIBIjANBgkqhkiG9w0B
 ddmail_webapp_dev_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_dev_payment_mail_name: "{{ vault_ddmail_webapp_dev_payment_mail_name }}"
 ddmail_webapp_dev_payment_mail_address: "{{ vault_ddmail_webapp_dev_payment_mail_address }}"
-ddmail_webapp_dev_payment_mail_postcode: "{{ vailt_ddmail_webapp_dev_payment_mail_postcode }}"
+ddmail_webapp_dev_payment_mail_postcode: "{{ vault_ddmail_webapp_dev_payment_mail_postcode }}"
 ddmail_webapp_dev_payment_mail_country: "{{ vault_ddmail_webapp_dev_payment_mail_country }}"
 
 
