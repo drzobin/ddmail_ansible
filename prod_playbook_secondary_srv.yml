@@ -1,0 +1,20 @@
+---
+- name: Setting up secondary server for ddmail system in prod.
+  hosts: secondary_srv
+  become: true
+  become_user: root
+  become_method: ansible.builtin.su
+  become_flags: "-"
+
+  roles:
+    - general_packages
+    - disable_ipv6
+    - nftables
+    - sshd
+    - rsyslog
+    - unattended-upgrades
+    - unbound
+    - set_nameserver
+    #- certbot
+    #- caddy
+    #- ddmail_backup_receiver
