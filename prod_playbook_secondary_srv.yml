@@ -15,6 +15,5 @@
     - unattended-upgrades
     - unbound
     - set_nameserver
-    #- certbot
-    #- caddy
-    #- ddmail_backup_receiver
+    - caddy
+    - ddmail_backup_receiver
