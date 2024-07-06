@@ -61,4 +61,4 @@
     name: "Take backups"
     minute: "0"
     hour: "5"
-    job: "python3 /root/ddmail_backup/take_backup.py /root/ddmail_backup/config.ini > /dev/null 2>&1"
+    job: "python3 /root/ddmail_backup/take_backup.py --config-file /root/ddmail_backup/config.ini > /dev/null 2>&1"
