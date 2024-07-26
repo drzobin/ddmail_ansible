@@ -170,6 +170,21 @@ ddmail_openpgp_encryptor_mail_db: "{{ mail_db_name }}"
 ddmail_openpgp_encryptor_mail_db_user: "{{ mail_db_user_r }}"
 ddmail_openpgp_encryptor_mail_db_user_password: "{{ mail_db_user_r_password }}"
 
+# ddmail_backup_receiver
+ddmail_backup_receiver_venv_user_owner: root
+ddmail_backup_receiver_venv_group_owner: root
+ddmail_backup_receiver_runas_user: backup-receiver
+ddmail_backup_receiver_runas_group: backup-receiver
+ddmail_backup_receiver_prod_secret_key: "{{ vault_ddmail_backup_receiver_prod_secret_key }}"
+ddmail_backup_receiver_test_secret_key: "{{ vault_ddmail_backup_receiver_test_secret_key }}"
+ddmail_backup_receiver_dev_secret_key: "{{ vault_ddmail_backup_receiver_test_secret_key }}"
+ddmail_backup_receiver_prod_password: "{{ vault_ddmail_backup_receiver_prod_password }}"
+ddmail_backup_receiver_test_password: "{{ vault_ddmail_backup_receiver_test_password }}"
+ddmail_backup_receiver_dev_password: "{{ vault_ddmail_backup_receiver_test_password }}"
+ddmail_backup_receiver_prod_password_hash: "{{ vault_ddmail_backup_receiver_prod_password_hash }}"
+ddmail_backup_receiver_test_password_hash: "{{ vault_ddmail_backup_receiver_test_password_hash }}"
+ddmail_backup_receiver_dev_password_hash: "{{ vault_ddmail_backup_receiver_test_password_hash }}"
+
 # olefy
 olefy_runas_user: olefy
 olefy_runas_group: olefy
