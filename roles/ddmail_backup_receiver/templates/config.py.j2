@@ -1,0 +1,12 @@
+class Prod():
+    SECRET_KEY = '{{ ddmail_backup_receiver_prod_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_backup_receiver_prod_password_hash }}'
+    UPLOAD_FOLDER = 'backups'
+class Test():
+    SECRET_KEY = '{{ ddmail_backup_receiver_test_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_backup_receiver_test_password_hash }}'
+    UPLOAD_FOLDER = 'backups'
+class Dev():
+    SECRET_KEY = '{{ ddmail_backup_receiver_dev_secret_key }}'
+    PASSWORD_HASH = '{{ ddmail_backup_receiver_dev_password_hash }}'
+    UPLOAD_FOLDER = 'backups'

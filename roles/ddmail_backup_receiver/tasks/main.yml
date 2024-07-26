@@ -1,0 +1,196 @@
+---
+- name: Install packages needed for ddmail backup receiver
+  ansible.builtin.apt:
+    pkg:
+      - python3-pip
+      - build-essential
+      - libssl-dev
+      - libffi-dev
+      - python3-dev
+      - python3-venv
+    state: latest
+
+- name: Install screen in dev
+  ansible.builtin.apt:
+    pkg:
+      - screen
+    state: latest
+  when: env == "dev"
+
+- name: Stat /opt/ddmail_backup_receiver_venv folder
+  ansible.builtin.stat:
+    path: /opt/ddmail_backup_receiver_venv
+  register: ddmail_backup_receiver_venv
+
+- name: Move /opt/ddmail_backup_receiver_venv folder
+  ansible.builtin.command: mv /opt/ddmail_backup_receiver_venv /opt/ddmail_backup_receiver_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: ddmail_backup_receiver_venv.stat.exists
+
+- name: Create ddmail_backup_receiver python env.
+  ansible.builtin.command: python3 -m venv /opt/ddmail_backup_receiver_venv
+
+- name: Add the group "{{ ddmail_backup_receiver_runas_group }}"
+  ansible.builtin.group:
+    name: "{{ ddmail_backup_receiver_runas_group }}"
+    state: present
+  when: env == "prod"
+
+- name: Add the user "{{ ddmail_backup_receiver_runas_user }}"
+  ansible.builtin.user:
+    name: "{{ ddmail_backup_receiver_runas_user }}"
+    shell: /sbin/nologin
+    create_home: false
+    group: "{{ ddmail_backup_receiver_runas_group }}"
+    state: present
+  when: env == "prod"
+
+- name: Clone ddmail_backup_receiver repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_backup_receiver.git
+    dest: /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver
+
+- name: Stat ddmail_backup_receiver folder
+  ansible.builtin.stat:
+    path: /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver
+  register: ddmail_backup_receiver
+
+- name: Move backup_receiver from ddmail_backup_receiver
+  ansible.builtin.command: mv /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver /opt/ddmail_backup_receiver_venv/
+  when:
+    - ddmail_backup_receiver.stat.exists
+    - env == "prod"
+
+- name: Remove ddmail_backup_receiver folder
+  ansible.builtin.command: rm -rf /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver
+  when:
+    - ddmail_backup_receiver.stat.exists
+    - env == "prod"
+
+- name: Install requirenments with pip.
+  ansible.builtin.pip:
+    requirements: /opt/ddmail_backup_receiver_venv/backup_receiver/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_backup_receiver_venv
+  when: env == "prod"
+
+- name: Install requirenments with pip.
+  ansible.builtin.pip:
+    requirements: /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_backup_receiver_venv
+  when: env == "dev"
+
+- name: Set user and group ownership of /opt/ddmail_backup_receiver_venv
+  ansible.builtin.file:
+    state: directory
+    recurse: true
+    owner: "{{ ddmail_backup_receiver_venv_user_owner }}"
+    group: "{{ ddmail_backup_receiver_venv_group_owner }}"
+    path: /opt/ddmail_backup_receiver_venv
+
+- name: Set git remote for ddmail_backup_receiver
+  ansible.builtin.shell: cd /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver; git remote set-url origin git@github.com:drzobin/ddmail_backup_receiver.git
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_backup_receiver_runas_user }}"
+  when: env == "dev"
+
+- name: Create/edit ddmail_backup_receiver config file /opt/ddmail_backup_receiver_venv/backup_receiver/config.py
+  ansible.builtin.template:
+    src: config.py.j2
+    dest: /opt/ddmail_backup_receiver_venv/backup_receiver/config.py
+    owner: '{{ ddmail_backup_receiver_runas_user }}'
+    group: '{{ ddmail_backup_receiver_runas_group }}'
+    mode: "u=rw,g=r,o="
+  when: env == "prod"
+
+- name: Create/edit ddmail_backup_receiver config file /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver/config.py
+  ansible.builtin.template:
+    src: config.py.j2
+    dest: /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver/config.py
+    owner: "{{ ddmail_backup_receiver_venv_user_owner }}"
+    group: "{{ ddmail_backup_receiver_venv_group_owner }}"
+    mode: "u=rw,g=r,o=r"
+  when: env == "dev"
+
+- name: Install ddmail_backup_receiver webapp with pip
+  ansible.builtin.pip:
+    name: /opt/ddmail_backup_receiver_venv/backup_receiver
+    extra_args: -e
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_backup_receiver_venv
+  when: env == "prod"
+
+- name: Create/edit ddmail_backup_receiver gunicorne service configuration file /etc/systemd/system/ddmail_backup_receiver.service
+  ansible.builtin.template:
+    src: systemd_service.j2
+    dest: /etc/systemd/system/ddmail_backup_receiver.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  when: env == "prod"
+
+- name: Add logdir for gunicorn.
+  ansible.builtin.file:
+    path: /var/log/gunicorn
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when: env == "prod"
+
+- name: Add logfile for ddmail_backup_receiver gunicorn.
+  ansible.builtin.file:
+    path: /var/log/gunicorn/ddmail_backup_receiver.log
+    state: touch
+    owner: '{{ ddmail_backup_receiver_runas_user }}'
+    group: '{{ ddmail_backup_receiver_runas_group }}'
+    mode: u=rw,g=r,o=
+  when: env == "prod"
+
+- name: Add logfile for ddmail_backup_receiver.
+  ansible.builtin.file:
+    path: /var/log/ddmail_backup_receiver.log
+    state: touch
+    owner: '{{ ddmail_backup_receiver_runas_user }}'
+    group: '{{ ddmail_backup_receiver_runas_group }}'
+    mode: u=rw,g=r,o=
+  when: env == "prod"
+
+- name: Add logfile for ddmail_backup_receiver.
+  ansible.builtin.file:
+    path: /var/log/ddmail_backup_receiver.log
+    state: touch
+    owner: '{{ ddmail_backup_receiver_runas_user }}'
+    group: '{{ ddmail_backup_receiver_runas_user }}'
+    mode: u=rw,g=r,o=
+  when: env == "dev"
+
+- name: Kill development server in screen.
+  ansible.builtin.command: screen -X -S ddmail_backup_receiver kill
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_backup_receiver_runas_user }}"
+  ignore_errors: true
+  when: env == "dev"
+
+- name: Start development server in screen.
+  ansible.builtin.command: screen -S ddmail_backup_receiver -d -m bash -c "sleep 5; source /opt/ddmail_backup_receiver_venv/bin/activate; cd /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver; export MODE=DEVELOPMENT; flask --app backup_receiver:create_app run --host=127.0.0.1 --port 8004 --debug; /bin/bash"
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_backup_receiver_runas_user }}"
+  when: env == "dev"
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: env == "prod"
+
+- name: Restart ddmail_backup_receiver gunicorn service
+  ansible.builtin.service:
+    name: ddmail_backup_receiver
+    state: restarted
+    enabled: true
+  when: env == "prod"
