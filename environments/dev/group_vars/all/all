@@ -206,6 +206,8 @@ olefy_olevba_path: /opt/olefy_venv/bin/olevba
 
 # ddmail_backup
 ddmail_backup_folders_to_backup: /var/mail /var/lib/rspamd/dkim/
+ddmail_backup_backup_receiver_url: http://127.0.0.1:8004/receive_backup
+ddmail_backup_backup_receiver_password: "{{ ddmail_backup_receiver_dev_password }}"
 
 # github
 github_ssh_privkey: "{{ vault_github_ssh_privkey }}" 
