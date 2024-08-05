@@ -168,6 +168,15 @@
     mode: u=rw,g=r,o=
   when: env == "dev"
 
+- name: Set password used during unittesting.
+  ansible.builtin.template:
+    src: password_for_testing.j2
+    dest: /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver/tests/PASSWORD
+    owner: '{{ ddmail_backup_receiver_runas_user }}'
+    group: '{{ ddmail_backup_receiver_runas_user }}'
+    mode: "u=rw,g=,o="
+  when: env == "dev"
+
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_backup_receiver kill
   become: true
