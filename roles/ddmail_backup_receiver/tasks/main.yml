@@ -168,6 +168,24 @@
     mode: u=rw,g=r,o=
   when: env == "dev"
 
+- name: Add backup dir
+  ansible.builtin.file:
+    path: /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver/backups/
+    state: directory
+    owner: '{{ ddmail_backup_receiver_runas_user }}'
+    group: '{{ ddmail_backup_receiver_runas_user }}'
+    mode: "u=rwx,g=rx,o="
+  when: env == "dev"
+
+- name: Add backup dir
+  ansible.builtin.file:
+    path: /opt/ddmail_backup_receiver_venv/backup_receiver/backups/
+    state: directory
+    owner: '{{ ddmail_backup_receiver_runas_user }}'
+    group: '{{ ddmail_backup_receiver_runas_user }}'
+    mode: "u=rwx,g=rx,o="
+  when: env == "prod"
+
 - name: Set password used during unittesting.
   ansible.builtin.template:
     src: password_for_testing.j2
