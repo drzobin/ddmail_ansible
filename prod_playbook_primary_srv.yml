@@ -34,4 +34,4 @@
     - apache2
     - tor_onion_service
     - i2pd
-    - ddmail_backup
+    - ddmail_backup_taker
