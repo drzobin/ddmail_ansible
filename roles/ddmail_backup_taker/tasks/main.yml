@@ -4,38 +4,49 @@
     pkg:
       - python3
       - tar
+      - gpg
     state: latest
 
-- name: Stat /root/ddmail_backup folder
+- name: Stat /root/ddmail_backup_taker folder
   ansible.builtin.stat:
-    path: /root/ddmail_backup
-  register: ddmail_backup
+    path: /root/ddmail_backup_taker
+  register: ddmail_backup_taker
 
-- name: Move /root/ddmail_backup folder
-  ansible.builtin.command: mv /root/ddmail_backup /root/ddmail_backup_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
-  when: ddmail_backup.stat.exists
+- name: Move /root/ddmail_backup_taker folder
+  ansible.builtin.command: mv /root/ddmail_backup_taker /root/ddmail_backup_taker_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: ddmail_backup_taker.stat.exists
 
-- name: Clone ddmail_backup repo with separate git directory
+- name: Clone ddmail_backup_taker repo with separate git directory
   ansible.builtin.git:
-    repo: https://github.com/drzobin/ddmail_backup.git
-    dest: /root/ddmail_backup
+    repo: https://github.com/drzobin/ddmail_backup_taker.git
+    dest: /root/ddmail_backup_taker
 
-- name: Set user and group ownership of /root/ddmail_backup
+- name: Create ddmail_backup_taker python env.
+  ansible.builtin.command: python3 -m venv /root/ddmail_backup_taker/backup_taker/venv
+
+- name: Install requirenments with pip.
+  ansible.builtin.pip:
+    requirements: /root/ddmail_backup_taker/backup_taker/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /root/ddmail_backup_taker/backup_taker/venv
+
+- name: Set user and group ownership of /root/ddmail_backup_taker
   ansible.builtin.file:
     state: directory
     recurse: true
     owner: root
     group: root
-    path: /root/ddmail_backup
+    path: /root/ddmail_backup_taker
 
-- name: Set git remote for ddmail_backup
-  ansible.builtin.shell: cd /root/ddmail_backup; git remote set-url origin git@github.com:drzobin/ddmail_backup.git
+- name: Set git remote for ddmail_backup_taker
+  ansible.builtin.shell: cd /root/ddmail_backup_taker; git remote set-url origin git@github.com:drzobin/ddmail_backup_taker.git
   when: env == "dev"
 
-- name: Create/edit ddmail_backup config file /root/ddmail_backup/config.ini
+- name: Create/edit ddmail_backup config file /root/ddmail_backup_taker/backup_taker/config.ini
   ansible.builtin.template:
     src: config.ini.j2
-    dest: /root/ddmail_backup/config.ini
+    dest: /root/ddmail_backup_taker/backup_taker/config.ini
     owner: root
     group: root
     mode: "u=rw,g=,o="
@@ -56,9 +67,9 @@
     group: root
     mode: "u=rwx,g=,o="
 
-- name: Ensure ddmail_backup take_backups.py runs at 5 every day.
+- name: Ensure ddmail_backup_taker runs at 5 every day.
   ansible.builtin.cron:
     name: "Take backups"
     minute: "0"
     hour: "5"
-    job: "python3 /root/ddmail_backup/take_backup.py --config-file /root/ddmail_backup/config.ini > /dev/null 2>&1"
+    job: "/root/ddmail_backup_taker/backup_taker/venv/bin/python3 /root/ddmail_backup_taker/backup_taker/backup_taker/take_backup.py --config-file /root/ddmail_backup_taker/backup_taker/config.ini > /dev/null 2>&1"
