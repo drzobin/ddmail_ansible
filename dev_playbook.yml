@@ -32,6 +32,6 @@
     - ddmail_dmcp_keyhandler
     - ddmail_openpgp_keyhandler
     - ddmail_openpgp_encryptor
-    - ddmail_backup
+    - ddmail_backup_taker
     - ddmail_backup_receiver
     - github
