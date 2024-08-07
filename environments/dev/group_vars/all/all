@@ -118,8 +118,6 @@ ddmail_webapp_dev_payment_mail_address: "{{ vault_ddmail_webapp_dev_payment_mail
 ddmail_webapp_dev_payment_mail_postcode: "{{ vault_ddmail_webapp_dev_payment_mail_postcode }}"
 ddmail_webapp_dev_payment_mail_country: "{{ vault_ddmail_webapp_dev_payment_mail_country }}"
 
-
-
 # ddmail_email_remover
 ddmail_email_remover_runas_user: "{{ vault_ddmail_email_remover_runas_user }}"
 ddmail_email_remover_runas_group: "{{ vault_ddmail_email_remover_runas_user }}"
@@ -204,10 +202,11 @@ olefy_listen_ip: 127.0.0.1
 olefy_listen_port: 10050
 olefy_olevba_path: /opt/olefy_venv/bin/olevba
 
-# ddmail_backup
-ddmail_backup_folders_to_backup: /var/mail /var/lib/rspamd/dkim/
-ddmail_backup_backup_receiver_url: http://127.0.0.1:8004/receive_backup
-ddmail_backup_backup_receiver_password: "{{ ddmail_backup_receiver_dev_password }}"
+# ddmail_backup_taker
+ddmail_backup_taker_folders_to_backup: /var/mail /var/lib/rspamd/dkim/ {{ openpgp_keyrings_folder }}
+ddmail_backup_taker_backup_receiver_url: http://127.0.0.1:8004/receive_backup
+ddmail_backup_taker_backup_receiver_password: "{{ ddmail_backup_receiver_dev_password }}"
+ddmail_backup_taker_pubkey_fingerprint: "{{ vault_ddmail_backup_taker_pubkey_fingerprint }}"
 
 # github
 github_ssh_privkey: "{{ vault_github_ssh_privkey }}" 
