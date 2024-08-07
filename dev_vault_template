@@ -74,6 +74,9 @@ vault_ddmail_dmcp_keyhandler_dev_secret_key: change_me
 vault_ddmail_dmcp_keyhandler_dev_password: change_me
 vault_ddmail_dmcp_keyhandler_dev_password_hash: change_me
 
+# ddmail_backup_taker
+vault_ddmail_backup_taker_pubkey_fingerprint: change_me
+
 # ddmail_backup_receiver
 vault_ddmail_backup_receiver_prod_secret_key: change_me
 vault_ddmail_backup_receiver_test_secret_key: change_me
