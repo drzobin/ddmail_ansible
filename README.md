@@ -22,6 +22,8 @@ ansible-vault edit environments/dev/group_vars/all/vault<br>
 ansible-playbook dev_playbook.yml -i environments/dev/ --ask-vault-pass --key-file [key file]
 
 ## Installation and setup for prod
+DDMail is designed to be run on two separate servers in different datacenters. Both servers need seperate public ipv4 addresses that is reachable from internet. The primary server runs all the services and the secondary server stores backups, handle monitoring and alerting.
+
 export EDITOR=[your editor of choise]<br>
 
 [your editor of choise] environments/prod/hosts<br>
