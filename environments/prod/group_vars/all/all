@@ -206,3 +206,6 @@ tor_postfix_hidden_service_map: 127.0.0.1:10025
 # ddmail_backup
 ddmail_backup_folders_to_backup: /var/mail /var/lib/rspamd/dkim /var/lib/i2pd /etc/i2pd /var/lib/tor /etc/tor /etc/letsencrypt
 
+# Caddy
+caddy_domain_name: secondary.ddmail.se
+caddy_reverse_proxy: 8004
