@@ -16,6 +16,7 @@
     - sshd
     - rsyslog
     - unattended-upgrades
+    - sysstat
     - mariadb
     - mailsystem_db
     - self_signed_certs
