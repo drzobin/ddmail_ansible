@@ -16,6 +16,7 @@
     - unattended-upgrades
     - unbound
     - set_nameserver
+    - sysstat
     - certbot
     - mariadb
     - mailsystem_db
