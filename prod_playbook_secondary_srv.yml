@@ -15,5 +15,6 @@
     - unattended-upgrades
     - unbound
     - set_nameserver
+    - sysstat
     - ddmail_backup_receiver
     - caddy
