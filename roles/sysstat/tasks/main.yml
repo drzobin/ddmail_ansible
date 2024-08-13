@@ -1,0 +1,20 @@
+---
+- name: Install dep package.
+  ansible.builtin.apt:
+    pkg:
+      - sysstat
+    state: latest
+
+- name: Create/edit sysstat configuration file /etc/default/sysstat
+  ansible.builtin.template:
+    src: sysstat.j2
+    dest: /etc/default/sysstat
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Restart sysstat service
+  ansible.builtin.service:
+    name: sysstat
+    state: restarted
+    enabled: true
