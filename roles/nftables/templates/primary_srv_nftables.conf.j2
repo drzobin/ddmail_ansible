@@ -14,6 +14,9 @@ table inet filter {
 		tcp dport 80 accept
 		tcp dport 443 accept
 		tcp dport 993 accept
+                udp dport {{ nebula_listen_port }} accept
+		iifname "nebula1" tcp dport {{ sshd_port }} accept
+		iifname "nebula1" ip protocol icmp accept
 	}
 	chain forward {
 		type filter hook forward priority 0; policy drop;
