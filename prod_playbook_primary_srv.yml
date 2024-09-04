@@ -11,6 +11,7 @@
     - disable_ipv6
     - inaccessible_dirs
     - nftables
+    - nebula
     - sshd
     - rsyslog
     - unattended-upgrades
