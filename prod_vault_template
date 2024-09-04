@@ -72,6 +72,7 @@ vault_ddmail_dmcp_keyhandler_dev_password_hash: change_me
 
 # ddmail_backup_taker
 vault_ddmail_backup_taker_pubkey_fingerprint: change_me
+vault_ddmail_backup_taker_pubkey:"-----BEGIN PGP PUBLIC KEY BLOCK-----\n[gpg pubkey data\n more gpg pubkey data]\n-----END PGP PUBLIC KEY BLOCK-----\n"
 
 # ddmail_backup_receiver
 vault_ddmail_backup_receiver_prod_secret_key: change_me
