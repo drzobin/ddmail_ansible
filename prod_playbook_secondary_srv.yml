@@ -10,6 +10,7 @@
     - general_packages
     - disable_ipv6
     - nftables
+    - nebula
     - sshd
     - rsyslog
     - unattended-upgrades
