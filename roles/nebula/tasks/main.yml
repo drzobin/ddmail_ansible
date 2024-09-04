@@ -1,0 +1,44 @@
+---
+- name: Install nebula packages.
+  ansible.builtin.apt:
+    pkg:
+      - nebula
+    state: latest
+
+- name: Create/edit nebula configuration file /etc/nebula/ddmail.yaml
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: /etc/nebula/ddmail.yaml
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Add nebula ca /etc/nebula/ca.crt
+  ansible.builtin.copy: 
+    content: "{{ nebula_ca }}" 
+    dest: /etc/nebula/ca.crt
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+
+- name: Add nebula host cert /etc/nebula/host.crt
+  ansible.builtin.copy: 
+    content: "{{ hostvars[inventory_hostname]['nebula_host_cert'] }}"
+    dest: /etc/nebula/host.crt
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+
+- name: Add nebula host key /etc/nebula/host.key
+  ansible.builtin.copy: 
+    content: "{{ hostvars[inventory_hostname]['nebula_host_key'] }}"
+    dest: /etc/nebula/host.key
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+
+- name: Restart nebula service
+  ansible.builtin.service:
+    name: nebula@ddmail
+    state: restarted
+    enabled: true
