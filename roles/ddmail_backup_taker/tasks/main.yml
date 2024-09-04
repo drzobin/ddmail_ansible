@@ -7,6 +7,17 @@
       - gpg
     state: latest
 
+- name: Add gpg public key for root used during encryption of backups
+  ansible.builtin.copy: 
+    content: "{{ ddmail_backup_taker_pubkey }}"
+    dest: /root/ddmail_backups_pubkey.txt
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+
+- name: Import gpg pubkey used for encrypting backups.
+  ansible.builtin.command: gpg --import /root/ddmail_backups_pubkey.txt
+
 - name: Stat /root/ddmail_backup_taker folder
   ansible.builtin.stat:
     path: /root/ddmail_backup_taker
