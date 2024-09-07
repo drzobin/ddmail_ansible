@@ -1,5 +1,5 @@
 [primary_srv]
-srv01 ansible_host=185.157.222.46 hostname=srv01 ansible_ssh_user='{{ vault_srv01_ansible_ssh_user }}' ansible_become_pass='{{ vault_srv01_ansible_become_pass }}' nebula_host_cert='{{ vault_nebula_srv01_cert}}' nebula_host_key='{{ vault_nebula_srv01_key}}' nebula_ip=10.42.42.1
+srv01 ansible_host='{{ nebula_ip }}' external_ip=185.157.222.46 hostname=srv01 ansible_ssh_user='{{ vault_srv01_ansible_ssh_user }}' ansible_become_pass='{{ vault_srv01_ansible_become_pass }}' nebula_host_cert='{{ vault_nebula_srv01_cert}}' nebula_host_key='{{ vault_nebula_srv01_key}}' nebula_ip=10.42.42.1
 
 [secondary_srv]
-srv03 ansible_host=158.174.211.145 hostname=srv03 ansible_ssh_user='{{ vault_srv03_ansible_ssh_user }}' ansible_become_pass='{{ vault_srv03_ansible_become_pass }}' nebula_host_cert='{{ vault_nebula_srv03_cert}}' nebula_host_key='{{ vault_nebula_srv03_key}}' nebula_ip=10.42.42.3
+srv03 ansible_host='{{ nebula_ip }}' external_ip=158.174.211.145 hostname=srv03 ansible_ssh_user='{{ vault_srv03_ansible_ssh_user }}' ansible_become_pass='{{ vault_srv03_ansible_become_pass }}' nebula_host_cert='{{ vault_nebula_srv03_cert}}' nebula_host_key='{{ vault_nebula_srv03_key}}' nebula_ip=10.42.42.3
