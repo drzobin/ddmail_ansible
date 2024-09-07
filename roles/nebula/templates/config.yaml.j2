@@ -19,8 +19,8 @@ pki:
 #   "{nebula ip}": ["{routable ip/dns name}:{routable port}"]
 # Example, if your lighthouse has the nebula IP of 192.168.100.1 and has the real ip address of 100.64.22.11 and runs on port 4242:
 static_host_map:
-  "{{ hostvars['srv01']['nebula_ip'] }}": ["{{ hostvars['srv01']['ansible_host'] }}:{{ nebula_listen_port }}"]
-  "{{ hostvars['srv03']['nebula_ip'] }}": ["{{ hostvars['srv03']['ansible_host'] }}:{{ nebula_listen_port }}"]
+  "{{ hostvars['srv01']['nebula_ip'] }}": ["{{ hostvars['srv01']['external_ip'] }}:{{ nebula_listen_port }}"]
+  "{{ hostvars['srv03']['nebula_ip'] }}": ["{{ hostvars['srv03']['external_ip'] }}:{{ nebula_listen_port }}"]
 
 # The static_map config stanza can be used to configure how the static_host_map behaves.
 #static_map:
