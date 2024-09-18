@@ -24,9 +24,6 @@ vault_mailsystem_db_dev_email_hash: change_me_to_argon2_hash
 vault_redis_requirepass: change_me
 
 # ddmail_webapp
-vault_ddmail_webapp_runas_user: user
-vault_ddmail_webapp_venv_user_owner: user
-vault_ddmail_webapp_venv_group_owner: user
 vault_ddmail_webapp_prod_wtf_csrf_secret_key: change_me
 vault_ddmail_webapp_prod_secret_key: change_me
 vault_ddmail_webapp_prod_payment_mail_name: change_me
@@ -47,9 +44,6 @@ vault_ddmail_webapp_dev_payment_mail_postcode: change_me
 vault_ddmail_webapp_dev_payment_mail_country: change_me
 
 # ddmail_email_remover
-vault_ddmail_email_remover_runas_user: user
-vault_ddmail_email_remover_venv_user_owner: user
-vault_ddmail_email_remover_venv_group_owner: user
 vault_ddmail_email_remover_prod_secret_key: change_me
 vault_ddmail_email_remover_prod_password: change_me
 vault_ddmail_email_remover_prod_password_hash: change_me
@@ -61,9 +55,6 @@ vault_ddmail_email_remover_dev_password: change_me
 vault_ddmail_email_remover_dev_password_hash: change_me
 
 # ddmail_dmcp_keyhandler
-vault_ddmail_dmcp_keyhandler_runas_user: user
-vault_ddmail_dmcp_keyhandler_venv_user_owner: user
-vault_ddmail_dmcp_keyhandler_venv_group_owner: user
 vault_ddmail_dmcp_keyhandler_prod_secret_key: change_me
 vault_ddmail_dmcp_keyhandler_prod_password: change_me
 vault_ddmail_dmcp_keyhandler_prod_password_hash: change_me
