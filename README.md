@@ -35,6 +35,10 @@ Add the following to your local /etc/hosts<br>
 `cd ddmail_ansible`<br>
 `pip install -r install ansible`
 
+### Set up SSH agent to avoid retyping passwords
+`ssh-agent bash`<br>
+`ssh-add ~/.ssh/[key file]`
+
 ### Run ansible
 `export EDITOR=[your editor of choise]`<br>
 
