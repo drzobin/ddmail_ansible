@@ -31,9 +31,9 @@ Add the following to your local /etc/hosts<br>
 `source [ansible venv path]/bin/activate`
 
 ### Get ansible code
-`git clone https://github.com/drzobin/ddmail_ansible
-cd ddmail_ansible
-pip install -r install ansible`
+`git clone https://github.com/drzobin/ddmail_ansible`<br>
+`cd ddmail_ansible`<br>
+`pip install -r install ansible`
 
 ### Run ansbile
 `export EDITOR=[your editor of choise]`<br>
