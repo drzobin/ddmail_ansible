@@ -35,7 +35,7 @@ Add the following to your local /etc/hosts<br>
 `cd ddmail_ansible`<br>
 `pip install -r install ansible`
 
-### Run ansbile
+### Run ansible
 `export EDITOR=[your editor of choise]`<br>
 
 `[your editor of choise] environments/dev/hosts`<br>
@@ -50,15 +50,15 @@ Add the following to your local /etc/hosts<br>
 ## Installation and setup for prod
 DDMail is designed to be run on two separate servers in different datacenters. Both servers need seperate public ipv4 addresses that is reachable from internet. The primary server runs all the services and the secondary server stores backups, handle monitoring and alerting.
 
-export EDITOR=[your editor of choise]<br>
+`export EDITOR=[your editor of choise]`<br>
 
-[your editor of choise] environments/prod/hosts<br>
-[edit file to match your prod env]<br>
-cp prod_vault_template environments/prod/group_vars/all/vault<br>
-ansible-vault encrypt environments/prod/group_vars/all/vault<br>
-ansible-vault edit environments/prod/group_vars/all/vault<br>
-[edit vault file to match your prod env]<br>
+`[your editor of choise] environments/prod/hosts`<br>
+`[edit file to match your prod env]`<br>
+`cp prod_vault_template environments/prod/group_vars/all/vault`<br>
+`ansible-vault encrypt environments/prod/group_vars/all/vault`<br>
+`ansible-vault edit environments/prod/group_vars/all/vault`<br>
+`[edit vault file to match your prod env]`<br>
 <br>
-ansible-playbook prod_playbook_primary_srv.yml -i environments/prod/ --ask-vault-pass --key-file [ssh key file]
+`ansible-playbook prod_playbook_primary_srv.yml -i environments/prod/ --ask-vault-pass --key-file [ssh key file]`
 <br>
-ansible-playbook prod_playbook_secondary_srv.yml -i environments/prod/ --ask-vault-pass --key-file [ssh key file]
+`ansible-playbook prod_playbook_secondary_srv.yml -i environments/prod/ --ask-vault-pass --key-file [ssh key file]`
