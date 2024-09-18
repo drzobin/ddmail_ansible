@@ -21,7 +21,7 @@ dev2.ddmail.internal<br>
 local user: dev<br>
 host only network ip: 192.168.56.102<br>
 
-### Add dev vms domainsnamns to hosts file
+### Add dev vm domainnames to hosts file
 Add the following to your local /etc/hosts<br>
 `192.168.56.101	dev1.ddmail.internal`<br>
 `192.168.56.102	dev2.ddmail.internal`
