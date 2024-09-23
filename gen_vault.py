@@ -3,7 +3,9 @@ import argparse
 import os
 import string
 import secrets
+import sys
 from argon2 import PasswordHasher
+
 
 def gen_hash(string):
     """Generate argon2i hash from string."""
@@ -12,14 +14,18 @@ def gen_hash(string):
 
     return argon2i_hash
 
+
 def gen_pass(length):
-    """Generate a password with digit, upparcase letters and lowercase letters."""
+    """Generate a password."""
     alphabet = string.ascii_letters + string.digits
     while True:
         password = ''.join(secrets.choice(alphabet) for i in range(length))
-        if (any(c.islower() for c in password) and any(c.isupper() for c in password) and sum(c.isdigit() for c in password) >= 3):
+        if (any(c.islower() for c in password) and
+            any(c.isupper() for c in password) and
+            sum(c.isdigit() for c in password) >= 3):
             break
     return password
+
 
 def gen_key(length):
     """Generate a key in byte from"""
@@ -27,11 +33,15 @@ def gen_key(length):
 
     return key
 
+
 if __name__ == "__main__":
     """Main function """
 
     # Get arguments from args.
-    parser = argparse.ArgumentParser(description="Generate ansible vault file from template file")
+    parser = argparse.ArgumentParser(
+            description="Generate ansible vault file from template file"
+            )
+
     parser.add_argument(
             '--template-file',
             type=str,
@@ -57,7 +67,7 @@ if __name__ == "__main__":
     lines = f.readlines()
     f.close()
 
-    # Open output file for writing 
+    # Open output file for writing
     f = open(args.output_file, "a")
 
     # Parse template file line by line.
