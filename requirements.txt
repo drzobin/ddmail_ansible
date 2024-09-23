@@ -39,3 +39,4 @@ urllib3
 wcmatch
 yamllint
 argon2_cffi
+flake8
