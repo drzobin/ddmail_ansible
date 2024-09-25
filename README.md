@@ -39,16 +39,17 @@ Add the following to your local /etc/hosts<br>
 `ssh-agent bash`<br>
 `ssh-add ~/.ssh/[key file]`
 
-### Run ansible to setup development vms
-`export EDITOR=[your editor of choise]`<br>
+### Generate vault file
+`python gen_vault.py --template-file dev_vault_template --output-file environments/dev/group_vars/all/vault --backup-taker-pubkey [OpenPGP armored pub key to use for encrypting backups] --backup-taker-pubkey-fingerprint [Fingeprint of OpenPGP pub key used for encrypting backups] --github-ssh-pubkey [Developers github ssh pub key] --github-ssh-privkey [Developers github ssh private key]` 
 
-`[your editor of choise] environments/dev/hosts`<br>
-`[edit file to match your dev env]`<br>
-`cp dev_vault_template environments/dev/group_vars/all/vault`<br>
-`ansible-vault encrypt environments/dev/group_vars/all/vault`<br>
+### Encrypt ansible vault file
+`ansible-vault encrypt environments/dev/group_vars/all/vault`
+
+### Edit vault file
+`export EDITOR=[your editor of choise]`<br>
 `ansible-vault edit environments/dev/group_vars/all/vault`<br>
-`[edit vault file to match your dev env]`<br>
-<br>
+
+### Run ansible to setup development vms
 `ansible-playbook dev_playbook.yml -i environments/dev/ --ask-vault-pass --key-file [ssh key file]`
 
 ### Login to your local ddmail development system
