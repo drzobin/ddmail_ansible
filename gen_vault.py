@@ -170,12 +170,22 @@ if __name__ == "__main__":
             f.write(data)
             save = None
         elif "vault_github_ssh_pubkey" in line and args.github_ssh_pubkey is not None:
+            # Check that file exsist and is a file.
+            if os.path.isfile(args.github_ssh_pubkey) is False:
+                print("Error: Github ssh pubkey file can not be found")
+                sys.exit(1)
+
             pub_key_data = parse_key(args.github_ssh_pubkey)
 
             data = "vault_github_ssh_pubkey: " + pub_key_data + "\n"
             f.write(data)
             save = None
         elif "vault_github_ssh_privkey" in line and args.github_ssh_privkey is not None:
+            # Check that file exsist and is a file.
+            if os.path.isfile(args.github_ssh_privkey) is False:
+                print("Error: Github ssh privkey file can not be found")
+                sys.exit(1)
+
             priv_key_data = parse_key(args.github_ssh_privkey)
 
             data = "vault_github_ssh_privkey: " + priv_key_data + "\n"
