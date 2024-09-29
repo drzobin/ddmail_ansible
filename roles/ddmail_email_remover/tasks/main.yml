@@ -169,7 +169,15 @@
   when: env == "dev"
 
 - name: Kill development server in screen.
-  ansible.builtin.command: screen -X -S ddmail_email_remover kill
+  ansible.builtin.command: screen -X -S ddmail_email_remover quit
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_email_remover_runas_user }}"
+  ignore_errors: true
+  when: env == "dev"
+
+- name: Kill development server in screen.
+  ansible.builtin.command: screen -X -S ddmail_dmcp_keyhandler quit
   become: true
   become_method: su
   become_user: "{{ ddmail_email_remover_runas_user }}"
