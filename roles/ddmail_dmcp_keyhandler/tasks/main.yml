@@ -169,11 +169,18 @@
   when: env == "dev"
 
 - name: Kill development server in screen.
-  ansible.builtin.command: screen -X -S ddmail_dmcp_keyhandler kill
+  ansible.builtin.command: screen -X -S ddmail_dmcp_keyhandler quit
   become: true
   become_method: su
   become_user: "{{ ddmail_dmcp_keyhandler_runas_user }}"
   ignore_errors: true
+  when: env == "dev"
+
+- name: Wipe dead screen.
+  ansible.builtin.command: screen -wipe
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_dmcp_keyhandler_runas_user }}"
   when: env == "dev"
 
 - name: Start development server in screen.
