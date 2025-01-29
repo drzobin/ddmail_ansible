@@ -33,7 +33,7 @@ Add the following to your local /etc/hosts<br>
 ### Get ddmail ansible code
 `git clone https://github.com/drzobin/ddmail_ansible`<br>
 `cd ddmail_ansible`<br>
-`pip install -r install ansible`
+`pip install -r requirements.txt`
 
 ### Set up SSH agent to avoid retyping passwords
 `ssh-agent bash`<br>
