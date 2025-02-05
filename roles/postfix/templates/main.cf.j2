@@ -125,8 +125,9 @@ milter_default_action = accept
 # Send mail to rspamd.
 smtpd_milters = inet:localhost:11332
 
-# Send email to ddmail content filter openpgp encryptor
-content_filter = openpgp_encryptor
+# Send mail to ddmail content filter openpgp encryptor
+content_filter = scan:[127.0.0.1]:8005
+
 
 # ratelimit
 default_destination_rate_delay = 1
