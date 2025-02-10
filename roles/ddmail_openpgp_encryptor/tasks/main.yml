@@ -81,6 +81,27 @@
     group: '{{ ddmail_openpgp_encryptor_runas_group }}'
     mode: u=rw,g=r,o=
 
+- name: Create/edit ddmail_openpgp_encryptor service configuration file /etc/systemd/system/ddmail_openpgp_encryptor.service
+  ansible.builtin.template:
+    src: systemd_service.j2
+    dest: /etc/systemd/system/ddmail_openpgp_encryptor.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  when: env == "prod"
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: env == "prod"
+
+- name: Restart ddmail_openpgp_encryptor service
+  ansible.builtin.service:
+    name: ddmail_openpgp_encryptor
+    state: restarted
+    enabled: true
+  when: env == "prod"
+
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_openpgp_encryptor kill
   become: true
