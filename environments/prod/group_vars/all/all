@@ -38,7 +38,7 @@ postfix_smtpd_tls_cert_file: /etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
 postfix_smtpd_tls_key_file: /etc/letsencrypt/live/mail.ddmail.se/privkey.pem
 
 # dovecot
-dovecot_ssl_cert: </etc/letsencrypt/live/mail.ddmail.se/cert.pem
+dovecot_ssl_cert: </etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
 dovecot_ssl_key: </etc/letsencrypt/live/mail.ddmail.se/privkey.pem
 
 # rspamd
