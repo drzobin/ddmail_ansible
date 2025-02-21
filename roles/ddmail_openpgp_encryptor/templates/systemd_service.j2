@@ -10,7 +10,7 @@ User={{ ddmail_openpgp_encryptor_runas_user }}
 Group={{ ddmail_openpgp_encryptor_runas_group }}
 WorkingDirectory=/opt/ddmail_openpgp_encryptor/
 Environment="PATH=/opt/ddmail_openpgp_encryptor/openpgp_encryptor/venv/bin/"
-ExecStart=/opt/ddmail_openpgp_encryptor/openpgp_encryptor/venv/bin/python /opt/ddmail_openpgp_encryptor/openpgp_encryptor/openpgpencryptor/openpgp_encryptor.py --config-file /opt/ddmail_openpgp_encryptor/openpgp_encryptor/config.ini
+ExecStart=/opt/ddmail_openpgp_encryptor/openpgp_encryptor/venv/bin/python /opt/ddmail_openpgp_encryptor/openpgp_encryptor/openpgp_encryptor/openpgp_encryptor.py --config-file /opt/ddmail_openpgp_encryptor/openpgp_encryptor/config.ini
 RuntimeDirectory=ddmail_openpgp_encryptor
 Restart=on-failure
 RestartSec=10s
