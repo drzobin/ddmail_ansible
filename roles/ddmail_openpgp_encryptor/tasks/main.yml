@@ -49,7 +49,7 @@
 
 - name: Create /opt/ddmail_openpgp_encryptor/config if it does not exist
   ansible.builtin.file:
-    path: /etc/ddmail_openpgp_encryptor/config
+    path: /opt/ddmail_openpgp_encryptor/config
     state: directory
     mode: '0750'
 
@@ -59,7 +59,7 @@
 - name: Install ddmail_openpgp_encryptor and its dev requirenments with pip.
   ansible.builtin.pip:
     name: .[dev]
-    path: /opt/ddmail_openpgp_encryptor
+    chdir: /opt/ddmail_openpgp_encryptor
     extra_args: -e
     virtualenv_python: python3
     virtualenv: /opt/ddmail_openpgp_encryptor/venv
@@ -90,7 +90,7 @@
 - name: Create/edit ddmail_openpgp_encryptor config file /opt/ddmail_openpgp_encryptor/config/config.ini
   ansible.builtin.template:
     src: config.ini.j2
-    dest: /opt/ddmail_openpgp_encryptor/openpgp_encryptor/config/config.ini
+    dest: /opt/ddmail_openpgp_encryptor/config/config.ini
     owner: '{{ ddmail_openpgp_encryptor_runas_user }}'
     group: '{{ ddmail_openpgp_encryptor_runas_group }}'
     mode: "u=rw,g=r,o="
