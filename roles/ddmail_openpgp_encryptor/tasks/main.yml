@@ -45,13 +45,17 @@
   ansible.builtin.file:
     path: /etc/ddmail_openpgp_encryptor
     state: directory
-    mode: '0750'
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create /opt/ddmail_openpgp_encryptor/config if it does not exist
   ansible.builtin.file:
     path: /opt/ddmail_openpgp_encryptor/config
     state: directory
-    mode: '0750'
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create ddmail_openpgp_encryptor python env.
   ansible.builtin.command: python3 -m venv /opt/ddmail_openpgp_encryptor/venv
