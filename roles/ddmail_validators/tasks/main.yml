@@ -1,0 +1,65 @@
+---
+- name: Install packages needed for ddmail_validators
+  ansible.builtin.apt:
+    pkg:
+      - python3-pip
+      - build-essential
+      - libssl-dev
+      - libffi-dev
+      - python3-dev
+      - python3-venv
+    state: latest
+  when: env == "dev"
+
+- name: Install screen in dev
+  ansible.builtin.apt:
+    pkg:
+      - screen
+    state: latest
+  when: env == "dev"
+
+- name: Stat /opt/ddmail_validators folder
+  ansible.builtin.stat:
+    path: /opt/ddmail_validators
+  register: ddmail_validators
+  when: env == "dev"
+
+- name: Move /opt/ddmail_validators folder
+  ansible.builtin.command: mv /opt/ddmail_validators /opt/ddmail_validators{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: ddmail_validators.stat.exists
+  when: env == "dev"
+
+- name: Clone ddmail_validators repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_validators.git
+    dest: /opt/ddmail_validators/venv/
+  when: env == "dev"
+
+- name: Create ddmail_validators/venv python env.
+  ansible.builtin.command: python3 -m venv /opt/ddmail_validators/venv
+  when: env == "dev"
+
+- name: Install ddmail_validators and its dev requirenments with pip.
+  ansible.builtin.pip:
+    name: .[dev]
+    chdir: /opt/ddmail_validators
+    extra_args: -e
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_validators/venv
+  when: env == "dev"
+
+- name: Set user and group ownership of /opt/ddmail_validators
+  ansible.builtin.file:
+    state: directory
+    recurse: true
+    owner: "{{ ddmail_validators_user_owner }}"
+    group: "{{ ddmail_validators_group_owner }}"
+    path: /opt/ddmail_validators
+  when: env == "dev"
+
+- name: Set git remote for ddmail_validators
+  ansible.builtin.shell: cd /opt/ddmail_validators; git remote set-url origin git@github.com:drzobin/ddmail_validators.git
+  become: true
+  become_method: su
+  become_user: "{{ ddmail_validators_runas_user }}"
+  when: env == "dev"
