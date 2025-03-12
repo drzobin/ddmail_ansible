@@ -8,42 +8,42 @@ StartLimitBurst=5
 Environment="MODE=PRODUCTION"
 User={{ ddmail_openpgp_keyhandler_runas_user }}
 Group={{ ddmail_openpgp_keyhandler_runas_group }}
-WorkingDirectory=/opt/ddmail_openpgp_keyhandler_venv/
-Environment="PATH=/opt/ddmail_openpgp_keyhandler_venv/bin/"
-ExecStart=/opt/ddmail_openpgp_keyhandler_venv/bin/gunicorn -b 127.0.0.1:8003 --log-file /var/log/gunicorn/ddmail_openpgp_keyhandler.log --workers 2 "openpgp_keyhandler:create_app()" 
+WorkingDirectory=/opt/ddmail_openpgp_keyhandler/
+Environment="PATH=/opt/ddmail_openpgp_keyhandler/venv/bin/"
+ExecStart=/opt/ddmail_openpgp_keyhandler/venv/bin/gunicorn -b 127.0.0.1:8003 --log-file /var/log/gunicorn/ddmail_openpgp_keyhandler.log --workers 2 "ddmail_openpgp_keyhandler:create_app(config_file = \"/opt/ddmail_openpgp_keyhandler/config/config.toml\")" 
 RuntimeDirectory=ddmail_openpgp_keyhandler
 Restart=on-failure
 RestartSec=10s
 
 # Prevent acquiring new privileges. Warning: breaks execution of SUID binaries
-#NoNewPrivileges=yes
+NoNewPrivileges=yes
 
 # Use dedicated /tmp
-#PrivateTmp=yes
+PrivateTmp=yes
 
 # Hide user homes
-#ProtectHome=yes
+ProtectHome=yes
 
 # Service may not create SUID/SGID files
-#RestrictSUIDSGID=yes
+RestrictSUIDSGID=yes
 
 # Service may not create writable and executable memory mappings
-#MemoryDenyWriteExecute=yes
+MemoryDenyWriteExecute=yes
 
 # Service may only use loopback network interface
 #PrivateNetwork=yes
 
 # Create a filesystem jail with namespace
 #TemporaryFileSystem=/:ro
-#BindReadOnlyPaths=/opt/ddmail_dmcp_keyhandler_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/doas /usr/bin/doveadm /usr/lib/dovecot /etc/dovecot
-#BindPaths=/var/log/gunicorn/ddmail_dmcp_keyhandler.log
+BindReadOnlyPaths=/opt/ddmail_openpgp_keyhandler /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/gpg
+BindPaths=/var/log/gunicorn/ddmail_openpgp_keyhandler.log /var/log/ddmail_openpgp_keyhandler.log {{ openpgp_keyrings_folder }}
 
 # Deny all CAP
-#CapabilityBoundingSet=
-#AmbientCapabilities=
+CapabilityBoundingSet=
+AmbientCapabilities=
 
 # System call filter
-#SystemCallFilter=@system-service
+SystemCallFilter=@system-service
 
 # Only allow network traffic on loopback.
 IPAddressDeny=any
