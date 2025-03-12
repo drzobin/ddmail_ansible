@@ -1,0 +1,5 @@
+#!/bin/bash
+source /opt/ddmail_openpgp_keyhandler/venv/bin/activate
+cd /opt/ddmail_openpgp_keyhandler 
+export MODE=DEVELOPMENT
+flask --app ddmail_openpgp_keyhandler:create_app\(config_file=\"/opt/ddmail_openpgp_keyhandler/config/config.toml\"\) run --host=127.0.0.1 --port 8003 --debug
