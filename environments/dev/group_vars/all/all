@@ -78,9 +78,10 @@ apache2_port80_server_name: ddmaildev
 apache2_port80_server_alias: www.ddmaildev.se
 
 # ddmail_webapp
-ddmail_webapp_runas_user: dev
 ddmail_webapp_venv_user_owner: dev
 ddmail_webapp_venv_group_owner: dev
+ddmail_webapp_runas_user: dev
+ddmail_webapp_runas_group: dev
 ddmail_webapp_prod_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_prod_wtf_csrf_secret_key }}"
 ddmail_webapp_prod_secret_key: "{{ vault_ddmail_webapp_prod_secret_key }}"
 ddmail_webapp_prod_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_prod_db_user_rw_password }}@localhost/mail'
@@ -119,11 +120,11 @@ ddmail_webapp_dev_payment_mail_postcode: "{{ vault_ddmail_webapp_dev_payment_mai
 ddmail_webapp_dev_payment_mail_country: "{{ vault_ddmail_webapp_dev_payment_mail_country }}"
 
 # ddmail_email_remover
+ddmail_email_remover_venv_user_owner: dev
+ddmail_email_remover_venv_group_owner: dev
 ddmail_email_remover_runas_user: dev
 ddmail_email_remover_runas_group: dev
 ddmail_email_remover_doas_user: dev
-ddmail_email_remover_venv_user_owner: dev
-ddmail_email_remover_venv_group_owner: dev
 ddmail_email_remover_prod_secret_key: "{{ vault_ddmail_email_remover_prod_secret_key }}"
 ddmail_email_remover_test_secret_key: "{{ vault_ddmail_email_remover_test_secret_key }}"
 ddmail_email_remover_dev_secret_key: "{{ vault_ddmail_email_remover_dev_secret_key }}"
@@ -135,11 +136,11 @@ ddmail_email_remover_test_password_hash: "{{ vault_ddmail_email_remover_test_pas
 ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_password_hash }}"
 
 # ddmail_dmcp_keyhandler
+ddmail_dmcp_keyhandler_venv_user_owner: dev
+ddmail_dmcp_keyhandler_venv_group_owner: dev
 ddmail_dmcp_keyhandler_runas_user: dev
 ddmail_dmcp_keyhandler_runas_group: dev
 ddmail_dmcp_keyhandler_doas_user: dev
-ddmail_dmcp_keyhandler_venv_user_owner: dev
-ddmail_dmcp_keyhandler_venv_group_owner: dev
 ddmail_dmcp_keyhandler_prod_secret_key: "{{ vault_ddmail_dmcp_keyhandler_prod_secret_key }}"
 ddmail_dmcp_keyhandler_test_secret_key: "{{ vault_ddmail_dmcp_keyhandler_test_secret_key }}"
 ddmail_dmcp_keyhandler_dev_secret_key: "{{ vault_ddmail_dmcp_keyhandler_dev_secret_key }}"
@@ -151,10 +152,10 @@ ddmail_dmcp_keyhandler_test_password_hash: "{{ vault_ddmail_dmcp_keyhandler_test
 ddmail_dmcp_keyhandler_dev_password_hash: "{{ vault_ddmail_dmcp_keyhandler_dev_password_hash }}"
 
 # ddmail_openpgp_keyhandler
+ddmail_openpgp_keyhandler_user_owner: dev
+ddmail_openpgp_keyhandler_group_owner: dev
 ddmail_openpgp_keyhandler_runas_user: dev
 ddmail_openpgp_keyhandler_runas_group: dev
-ddmail_openpgp_keyhandler_venv_user_owner: dev
-ddmail_openpgp_keyhandler_venv_group_owner: dev
 ddmail_openpgp_keyhandler_prod_secret_key: "{{ vault_ddmail_openpgp_keyhandler_prod_secret_key }}"
 ddmail_openpgp_keyhandler_test_secret_key: "{{ vault_ddmail_openpgp_keyhandler_test_secret_key }}"
 ddmail_openpgp_keyhandler_dev_secret_key: "{{ vault_ddmail_openpgp_keyhandler_dev_secret_key }}"
@@ -165,14 +166,14 @@ ddmail_openpgp_keyhandler_prod_password_hash: "{{ vault_ddmail_openpgp_keyhandle
 ddmail_openpgp_keyhandler_test_password_hash: "{{ vault_ddmail_openpgp_keyhandler_test_password_hash }}"
 ddmail_openpgp_keyhandler_dev_password_hash: "{{ vault_ddmail_openpgp_keyhandler_dev_password_hash }}"
 ddmail_openpgp_keyhandler_prod_gnupg_home: "{{ openpgp_keyrings_folder }}"
-ddmail_openpgp_keyhandler_test_gnupg_home: "{{ openpgp_keyrings_folder }}"
+ddmail_openpgp_keyhandler_test_gnupg_home: /tmp
 ddmail_openpgp_keyhandler_dev_gnupg_home: "{{ openpgp_keyrings_folder }}"
 
 # ddmail_openpgp_encryptor
+ddmail_openpgp_encryptor_user_owner: dev
+ddmail_openpgp_encryptor_group_owner: dev
 ddmail_openpgp_encryptor_runas_user: dev
 ddmail_openpgp_encryptor_runas_group: dev
-ddmail_openpgp_encryptor_venv_user_owner: dev
-ddmail_openpgp_encryptor_venv_group_owner: dev
 ddmail_openpgp_encryptor_keyrings_folder: "{{ openpgp_keyrings_folder }}"
 ddmail_openpgp_encryptor_mail_db: "{{ mail_db_name }}"
 ddmail_openpgp_encryptor_mail_db_user: "{{ mail_db_user_r }}"
@@ -192,6 +193,12 @@ ddmail_backup_receiver_dev_password: "{{ vault_ddmail_backup_receiver_dev_passwo
 ddmail_backup_receiver_prod_password_hash: "{{ vault_ddmail_backup_receiver_prod_password_hash }}"
 ddmail_backup_receiver_test_password_hash: "{{ vault_ddmail_backup_receiver_test_password_hash }}"
 ddmail_backup_receiver_dev_password_hash: "{{ vault_ddmail_backup_receiver_dev_password_hash }}"
+
+# ddmail_validators
+ddmail_validators_user_owner: dev
+ddmail_validators_group_owner: dev
+ddmail_validators_runas_user: dev
+ddmail_validators_runas_group: dev
 
 # olefy
 olefy_runas_user: olefy
