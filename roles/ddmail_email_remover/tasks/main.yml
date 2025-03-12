@@ -17,17 +17,32 @@
     state: latest
   when: env == "dev"
 
-- name: Stat /opt/ddmail_email_remover_venv folder
+- name: Stat /opt/ddmail_email_remover folder
   ansible.builtin.stat:
-    path: /opt/ddmail_email_remover_venv
-  register: ddmail_email_remover_venv
+    path: /opt/ddmail_email_remover
+  register: ddmail_email_remover
 
-- name: Move /opt/ddmail_email_remover_venv folder
-  ansible.builtin.command: mv /opt/ddmail_email_remover_venv /opt/ddmail_email_remover_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
-  when: ddmail_email_remover_venv.stat.exists
+- name: Move /opt/ddmail_email_remover folder
+  ansible.builtin.command: mv /opt/ddmail_email_remover /opt/ddmail_email_remover_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: ddmail_email_remover.stat.exists
+
+- name: Clone ddmail_email_remover repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_email_remover.git
+    dest: /opt/ddmail_email_remover_venv/ddmail_email_remover
+  when: env == "dev"
+
+- name: Create /opt/ddmail_email_remover if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_email_remover
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when: env == "prod"
 
 - name: Create ddmail_email_remover python env.
-  ansible.builtin.command: python3 -m venv /opt/ddmail_email_remover_venv
+  ansible.builtin.command: python3 -m venv /opt/ddmail_email_remover/venv
 
 - name: Add the group "{{ ddmail_email_remover_runas_group }}"
   ansible.builtin.group:
@@ -44,27 +59,6 @@
     state: present
   when: env == "prod"
 
-- name: Clone ddmail_email_remover repo with separate git directory
-  ansible.builtin.git:
-    repo: https://github.com/drzobin/ddmail_email_remover.git
-    dest: /opt/ddmail_email_remover_venv/ddmail_email_remover
-
-- name: Stat ddmail_email_remover folder
-  ansible.builtin.stat:
-    path: /opt/ddmail_email_remover_venv/ddmail_email_remover
-  register: ddmail_email_remover
-
-- name: Move email_remover from ddmail_email_remover
-  ansible.builtin.command: mv /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover /opt/ddmail_email_remover_venv/
-  when:
-    - ddmail_email_remover.stat.exists
-    - env == "prod"
-
-- name: Remove ddmail_email_remover folder
-  ansible.builtin.command: rm -rf /opt/ddmail_email_remover_venv/ddmail_email_remover
-  when:
-    - ddmail_email_remover.stat.exists
-    - env == "prod"
 
 - name: Install requirenments with pip.
   ansible.builtin.pip:
@@ -74,54 +68,55 @@
     virtualenv: /opt/ddmail_email_remover_venv
   when: env == "prod"
 
-- name: Install requirenments with pip.
+- name: Install ddmail_email_remover and requirenments with pip.
   ansible.builtin.pip:
-    requirements: /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover/requirements.txt
+    name: ddmail-email-remover
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/ddmail_email_remover_venv
+    virtualenv: /opt/ddmail_email_remover/venv
+  when: env == "prod"
+
+- name: Install requirenments for development with pip.
+  ansible.builtin.pip:
+    name: .[dev]
+    chdir: /opt/ddmail_email_remover
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/ddmail_email_remover/venv
   when: env == "dev"
 
-- name: Set user and group ownership of /opt/ddmail_email_remover_venv
+- name: Set user and group ownership of /opt/ddmail_email_remover
   ansible.builtin.file:
     state: directory
     recurse: true
-    owner: "{{ ddmail_email_remover_venv_user_owner }}"
-    group: "{{ ddmail_email_remover_venv_group_owner }}"
-    path: /opt/ddmail_email_remover_venv
+    owner: "{{ ddmail_email_remover_user_owner }}"
+    group: "{{ ddmail_email_remover_group_owner }}"
+    path: /opt/ddmail_email_remover
 
 - name: Set git remote for ddmail_email_remover
-  ansible.builtin.shell: cd /opt/ddmail_email_remover_venv/ddmail_email_remover; git remote set-url origin git@github.com:drzobin/ddmail_email_remover.git
+  ansible.builtin.shell: cd /opt/ddmail_email_remover; git remote set-url origin git@github.com:drzobin/ddmail_email_remover.git
   become: true
   become_method: su
   become_user: "{{ ddmail_email_remover_runas_user }}"
   when: env == "dev"
 
-- name: Create/edit ddmail_email_remover config file /opt/ddmail_email_remover_venv/email_remover/config.py
+- name: Create /opt/ddmail_email_remover/config if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_email_remover/config
+    state: directory
+    owner: '{{ ddmail_email_remover_runas_user }}'
+    group: '{{ ddmail_email_remover_runas_group }}'
+    mode: "u=rwx,g=rx,o="
+
+
+- name: Create/edit ddmail_email_remover config file /opt/ddmail_email_remover/config/config.py
   ansible.builtin.template:
-    src: opt_ddmail_email_remover_venv_email_remover_config.py.j2
-    dest: /opt/ddmail_email_remover_venv/email_remover/config.py
+    src: config.toml.j2
+    dest: /opt/ddmail_email_remover/config/config.toml
     owner: '{{ ddmail_email_remover_runas_user }}'
     group: '{{ ddmail_email_remover_runas_group }}'
     mode: "u=rw,g=r,o="
-  when: env == "prod"
 
-- name: Create/edit ddmail_email_remover config file /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover/config.py
-  ansible.builtin.template:
-    src: opt_ddmail_email_remover_venv_email_remover_config.py.j2
-    dest: /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover/config.py
-    owner: "{{ ddmail_email_remover_venv_user_owner }}"
-    group: "{{ ddmail_email_remover_venv_group_owner }}"
-    mode: "u=rw,g=r,o=r"
-  when: env == "dev"
-
-- name: Install ddmail_email_remover webapp with pip
-  ansible.builtin.pip:
-    name: /opt/ddmail_email_remover_venv/email_remover
-    extra_args: -e
-    virtualenv_python: python3
-    virtualenv: /opt/ddmail_email_remover_venv
-  when: env == "prod"
 
 - name: Create/edit ddmail_email_remover gunicorne service configuration file /etc/systemd/system/ddmail_email_remover.service
   ansible.builtin.template:
