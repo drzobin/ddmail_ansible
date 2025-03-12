@@ -1,14 +1,14 @@
-class Prod():
+[PRODUCTION]
     SECRET_KEY = '{{ ddmail_email_remover_prod_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_email_remover_prod_password_hash }}'
     EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
 
-class Test():
+[TESTING]
     SECRET_KEY = '{{ ddmail_email_remover_test_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_email_remover_test_password_hash }}'
-    EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
+    EMAIL_ACCOUNT_PATH = '/tmp/ddmail_email_remover_test/vhosts/'
 
-class Dev():
+[DEVELOPMENT]
     SECRET_KEY = '{{ ddmail_email_remover_dev_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_email_remover_dev_password_hash }}'
     EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
