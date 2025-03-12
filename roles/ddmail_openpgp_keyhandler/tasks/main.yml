@@ -18,17 +18,32 @@
     state: latest
   when: env == "dev"
 
-- name: Stat /opt/ddmail_openpgp_keyhandler_venv folder
+- name: Stat /opt/ddmail_openpgp_keyhandler folder
   ansible.builtin.stat:
-    path: /opt/ddmail_openpgp_keyhandler_venv
-  register: ddmail_openpgp_keyhandler_venv
+    path: /opt/ddmail_openpgp_keyhandler
+  register: ddmail_openpgp_keyhandler
 
-- name: Move /opt/ddmail_openpgp_keyhandler_venv folder
-  ansible.builtin.command: mv /opt/ddmail_openpgp_keyhandler_venv /opt/ddmail_openpgp_keyhandler_venv_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
-  when: ddmail_openpgp_keyhandler_venv.stat.exists
+- name: Move /opt/ddmail_openpgp_keyhandler folder
+  ansible.builtin.command: mv /opt/ddmail_openpgp_keyhandler /opt/ddmail_openpgp_keyhandler_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: ddmail_openpgp_keyhandler.stat.exists
+
+- name: Clone ddmail_openpgp_keyhandler repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_openpgp_keyhandler.git
+    dest: /opt/ddmail_openpgp_keyhandler
+  when: env == "dev"
+
+- name: Create /opt/ddmail_openpgp_keyhandler if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_openpgp_keyhandler
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when: env == "prod"
 
 - name: Create ddmail_openpgp_keyhandler python env.
-  ansible.builtin.command: python3 -m venv /opt/ddmail_openpgp_keyhandler_venv
+  ansible.builtin.command: python3 -m venv /opt/ddmail_openpgp_keyhandler/venv
 
 - name: Add the group "{{ ddmail_openpgp_keyhandler_runas_group }}"
   ansible.builtin.group:
@@ -45,84 +60,53 @@
     state: present
   when: env == "prod"
 
-- name: Clone ddmail_openpgp_keyhandler repo with separate git directory
-  ansible.builtin.git:
-    repo: https://github.com/drzobin/ddmail_openpgp_keyhandler.git
-    dest: /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler
-
-- name: Stat ddmail_openpgp_keyhandler folder
-  ansible.builtin.stat:
-    path: /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler
-  register: ddmail_openpgp_keyhandler
-
-- name: Move openpgp_keyhandler from ddmail_openpgp_keyhandler
-  ansible.builtin.command: mv /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler/openpgp_keyhandler /opt/ddmail_openpgp_keyhandler_venv/
-  when:
-    - ddmail_openpgp_keyhandler.stat.exists
-    - env == "prod"
-
-- name: Remove ddmail_openpgp_keyhandler folder
-  ansible.builtin.command: rm -rf /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler
-  when:
-    - ddmail_openpgp_keyhandler.stat.exists
-    - env == "prod"
-
-- name: Install requirenments with pip.
+- name: Install ddmail_openpgp_keyhandler and requirenments with pip.
   ansible.builtin.pip:
-    requirements: /opt/ddmail_openpgp_keyhandler_venv/openpgp_keyhandler/requirements.txt
+    name: ddmail-openpgp-keyhandler
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/ddmail_openpgp_keyhandler_venv
+    virtualenv: /opt/ddmail_openpgp_keyhandler/venv
   when: env == "prod"
 
-- name: Install requirenments with pip.
+- name: Install requirenments for development with pip.
   ansible.builtin.pip:
-    requirements: /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler/openpgp_keyhandler/requirements.txt
+    name: .[dev]
+    chdir: /opt/ddmail_openpgp_keyhandler
     state: latest
     virtualenv_python: python3
-    virtualenv: /opt/ddmail_openpgp_keyhandler_venv
+    virtualenv: /opt/ddmail_openpgp_keyhandler/venv
   when: env == "dev"
 
-- name: Set user and group ownership of /opt/ddmail_openpgp_keyhandler_venv
+- name: Set user and group ownership of /opt/ddmail_openpgp_keyhandler
   ansible.builtin.file:
     state: directory
     recurse: true
-    owner: "{{ ddmail_openpgp_keyhandler_venv_user_owner }}"
-    group: "{{ ddmail_openpgp_keyhandler_venv_group_owner }}"
-    path: /opt/ddmail_openpgp_keyhandler_venv
+    owner: "{{ ddmail_openpgp_keyhandler_user_owner }}"
+    group: "{{ ddmail_openpgp_keyhandler_group_owner }}"
+    path: /opt/ddmail_openpgp_keyhandler
 
 - name: Set git remote for ddmail_openpgp_keyhandler
-  ansible.builtin.shell: cd /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_openpgp_keyhandler.git
+  ansible.builtin.shell: cd /opt/ddmail_openpgp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_openpgp_keyhandler.git
   become: true
   become_method: su
   become_user: "{{ ddmail_openpgp_keyhandler_runas_user }}"
   when: env == "dev"
 
-- name: Create/edit ddmail_openpgp_keyhandler config file /opt/ddmail_openpgp_keyhandler_venv/openpgp_keyhandler/config.py
+- name: Create /opt/ddmail_openpgp_keyhandler/config if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_openpgp_keyhandler/config
+    state: directory
+    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
+    group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
+    mode: "u=rwx,g=rx,o="
+
+- name: Create/edit ddmail_openpgp_keyhandler config file /opt/ddmail_openpgp_keyhandler/config/config.toml
   ansible.builtin.template:
-    src: config.py.j2
-    dest: /opt/ddmail_openpgp_keyhandler_venv/openpgp_keyhandler/config.py
+    src: config.toml.j2
+    dest: /opt/ddmail_openpgp_keyhandler/config/config.toml
     owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
     group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
     mode: "u=rw,g=r,o="
-  when: env == "prod"
-
-- name: Create/edit ddmail_openpgp_keyhandler config file /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler/openpgp_keyhandler/config.py
-  ansible.builtin.template:
-    src: config.py.j2
-    dest: /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler/openpgp_keyhandler/config.py
-    owner: "{{ ddmail_openpgp_keyhandler_venv_user_owner }}"
-    group: "{{ ddmail_openpgp_keyhandler_venv_group_owner }}"
-    mode: "u=rw,g=r,o=r"
-  when: env == "dev"
-
-- name: Install ddmail_openpgp_keyhandler webapp with pip
-  ansible.builtin.pip:
-    name: /opt/ddmail_openpgp_keyhandler_venv/openpgp_keyhandler
-    extra_args: -e
-    virtualenv_python: python3
-    virtualenv: /opt/ddmail_openpgp_keyhandler_venv
-  when: env == "prod"
 
 - name: Create/edit ddmail_openpgp_keyhandler gunicorne service configuration file /etc/systemd/system/ddmail_openpgp_keyhandler.service
   ansible.builtin.template:
@@ -158,16 +142,6 @@
     owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
     group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
     mode: u=rw,g=r,o=
-  when: env == "prod"
-
-- name: Add logfile for ddmail_openpgp_keyhandler.
-  ansible.builtin.file:
-    path: /var/log/ddmail_openpgp_keyhandler.log
-    state: touch
-    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
-    group: '{{ ddmail_openpgp_keyhandler_runas_user }}'
-    mode: u=rw,g=r,o=
-  when: env == "dev"
 
 - name: Add keyring/gnupg home folder for prod.
   ansible.builtin.file:
@@ -210,8 +184,17 @@
   become_user: "{{ ddmail_openpgp_keyhandler_runas_user }}"
   when: env == "dev"
 
+- name: Create/edit ddmail_openpgp_keyhandler startup script for development
+  ansible.builtin.template:
+    src: run_dev.sh.j2
+    dest: /opt/ddmail_openpgp_keyhandler/run_dev.sh
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
+    mode: "u=rwx,g=r,o=r"
+  when: env == "dev"
+
 - name: Start development server in screen.
-  ansible.builtin.command: screen -S ddmail_openpgp_keyhandler -d -m bash -c "sleep 5; source /opt/ddmail_openpgp_keyhandler_venv/bin/activate; cd /opt/ddmail_openpgp_keyhandler_venv/ddmail_openpgp_keyhandler/openpgp_keyhandler; export MODE=DEVELOPMENT; flask --app openpgp_keyhandler:create_app run --host=127.0.0.1 --port 8003 --debug; /bin/bash"
+  ansible.builtin.command: screen -S ddmail_openpgp_keyhandler -d -m bash -c "sleep 5; source /opt/ddmail_openpgp_keyhandler/run_dev.sh; /bin/bash"
   become: true
   become_method: su
   become_user: "{{ ddmail_openpgp_keyhandler_runas_user }}"
