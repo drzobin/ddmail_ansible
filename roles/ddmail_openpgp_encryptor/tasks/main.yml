@@ -80,8 +80,8 @@
   ansible.builtin.file:
     state: directory
     recurse: true
-    owner: "{{ ddmail_openpgp_encryptor_venv_user_owner }}"
-    group: "{{ ddmail_openpgp_encryptor_venv_group_owner }}"
+    owner: "{{ ddmail_openpgp_encryptor_user_owner }}"
+    group: "{{ ddmail_openpgp_encryptor_group_owner }}"
     path: /opt/ddmail_openpgp_encryptor
 
 - name: Set git remote for ddmail_openpgp_encryptor
