@@ -143,8 +143,8 @@ ddmail_dmcp_keyhandler_test_password_hash: "{{ vault_ddmail_dmcp_keyhandler_test
 ddmail_dmcp_keyhandler_dev_password_hash: "{{ vault_ddmail_dmcp_keyhandler_dev_password_hash }}"
 
 # ddmail_openpgp_keyhandler
-ddmail_openpgp_keyhandler_venv_user_owner: root
-ddmail_openpgp_keyhandler_venv_group_owner: root
+ddmail_openpgp_keyhandler_user_owner: root
+ddmail_openpgp_keyhandler_group_owner: root
 ddmail_openpgp_keyhandler_runas_user: openpgp-keyhandler
 ddmail_openpgp_keyhandler_runas_group: openpgp-keyhandler
 ddmail_openpgp_keyhandler_prod_secret_key: "{{ vault_ddmail_openpgp_keyhandler_prod_secret_key }}"
@@ -157,12 +157,12 @@ ddmail_openpgp_keyhandler_prod_password_hash: "{{ vault_ddmail_openpgp_keyhandle
 ddmail_openpgp_keyhandler_test_password_hash: "{{ vault_ddmail_openpgp_keyhandler_test_password_hash }}"
 ddmail_openpgp_keyhandler_dev_password_hash: "{{ vault_ddmail_openpgp_keyhandler_dev_password_hash }}"
 ddmail_openpgp_keyhandler_prod_gnupg_home: "{{ openpgp_keyrings_folder }}"
-ddmail_openpgp_keyhandler_test_gnupg_home: "{{ openpgp_keyrings_folder }}"
+ddmail_openpgp_keyhandler_test_gnupg_home: /tmp
 ddmail_openpgp_keyhandler_dev_gnupg_home: "{{ openpgp_keyrings_folder }}"
 
 # ddmail_openpgp_encryptor
-ddmail_openpgp_encryptor_venv_user_owner: root
-ddmail_openpgp_encryptor_venv_group_owner: root
+ddmail_openpgp_encryptor_user_owner: root
+ddmail_openpgp_encryptor_group_owner: root
 ddmail_openpgp_encryptor_runas_user: openpgp-keyhandler
 ddmail_openpgp_encryptor_runas_group: openpgp-keyhandler
 ddmail_openpgp_encryptor_keyrings_folder: "{{ openpgp_keyrings_folder }}"
