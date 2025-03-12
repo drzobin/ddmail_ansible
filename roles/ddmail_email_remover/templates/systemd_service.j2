@@ -8,9 +8,9 @@ StartLimitBurst=5
 Environment="MODE=PRODUCTION"
 User={{ ddmail_email_remover_runas_user }}
 Group={{ ddmail_email_remover_runas_group }}
-WorkingDirectory=/opt/ddmail_email_remover_venv/
-Environment="PATH=/opt/ddmail_email_remover_venv/bin/"
-ExecStart=/opt/ddmail_email_remover_venv/bin/gunicorn -b 127.0.0.1:8001 --log-file /var/log/gunicorn/ddmail_email_remover.log --workers 2 "email_remover:create_app()" 
+WorkingDirectory=/opt/ddmail_email_remover/
+Environment="PATH=/opt/ddmail_email_remover/venv/bin/"
+ExecStart=/opt/ddmail_email_remover/venv/bin/gunicorn -b 127.0.0.1:8001 --log-file /var/log/gunicorn/ddmail_email_remover.log --workers 2 "ddmail_email_remover:create_app(config_file = \"/opt/ddmail_email_remover/config/config.toml\")" 
 RuntimeDirectory=ddmail_email_remover
 Restart=on-failure
 RestartSec=10s
