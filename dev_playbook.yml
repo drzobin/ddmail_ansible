@@ -35,4 +35,5 @@
     - ddmail_openpgp_encryptor
     - ddmail_backup_taker
     - ddmail_backup_receiver
+    - ddmail_validators
     - github
