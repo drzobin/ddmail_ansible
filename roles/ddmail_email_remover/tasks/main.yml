@@ -199,16 +199,6 @@
     daemon_reload: true
   when: env == "prod"
 
-- name: Restart ddmail_openpgp_keyhandler gunicorn service
-  ansible.builtin.service:
-    name: ddmail_openpgp_keyhandler
-    state: restarted
-
-- name: Reload systemd
-  ansible.builtin.systemd:
-    daemon_reload: true
-  when: env == "prod"
-
 - name: Restart ddmail_email_remover gunicorn service
   ansible.builtin.service:
     name: ddmail_email_remover
