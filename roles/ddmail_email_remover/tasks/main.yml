@@ -178,12 +178,31 @@
   become_user: "{{ ddmail_email_remover_runas_user }}"
   when: env == "dev"
 
+- name: Create/edit ddmail_email_remover startup script for development
+  ansible.builtin.template:
+    src: run_dev.sh.j2
+    dest: /opt/ddmail_email_remover/run_dev.sh
+    owner: "{{ ddmail_email_remover_runas_user }}"
+    group: "{{ ddmail_email_remover_runas_group }}"
+    mode: "u=rwx,g=r,o=r"
+  when: env == "dev"
+
 - name: Start development server in screen.
-  ansible.builtin.command: screen -S ddmail_email_remover -d -m bash -c "sleep 5; source /opt/ddmail_email_remover_venv/bin/activate; cd /opt/ddmail_email_remover_venv/ddmail_email_remover/email_remover; export MODE=DEVELOPMENT; flask --app email_remover:create_app run --host=127.0.0.1 --port 8001 --debug; /bin/bash"
+  ansible.builtin.command: screen -S ddmail_email_remover -d -m bash -c "sleep 5; source /opt/ddmail_email_remover/run_dev.sh; /bin/bash"
   become: true
   become_method: su
   become_user: "{{ ddmail_email_remover_runas_user }}"
   when: env == "dev"
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: env == "prod"
+
+- name: Restart ddmail_openpgp_keyhandler gunicorn service
+  ansible.builtin.service:
+    name: ddmail_openpgp_keyhandler
+    state: restarted
 
 - name: Reload systemd
   ansible.builtin.systemd:
