@@ -19,13 +19,14 @@
 
 - name: Move /opt/ddmail_validators folder
   ansible.builtin.command: mv /opt/ddmail_validators /opt/ddmail_validators{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
-  when: ddmail_validators.stat.exists
-  when: env == "dev"
+  when: 
+    - ddmail_validators.stat.exists
+    - env == "dev"
 
 - name: Clone ddmail_validators repo with separate git directory
   ansible.builtin.git:
     repo: https://github.com/drzobin/ddmail_validators.git
-    dest: /opt/ddmail_validators/venv/
+    dest: /opt/ddmail_validators
   when: env == "dev"
 
 - name: Create ddmail_validators/venv python env.
