@@ -120,8 +120,8 @@ ddmail_webapp_dev_payment_mail_postcode: "{{ vault_ddmail_webapp_dev_payment_mai
 ddmail_webapp_dev_payment_mail_country: "{{ vault_ddmail_webapp_dev_payment_mail_country }}"
 
 # ddmail_email_remover
-ddmail_email_remover_venv_user_owner: dev
-ddmail_email_remover_venv_group_owner: dev
+ddmail_email_remover_user_owner: dev
+ddmail_email_remover_group_owner: dev
 ddmail_email_remover_runas_user: dev
 ddmail_email_remover_runas_group: dev
 ddmail_email_remover_doas_user: dev
