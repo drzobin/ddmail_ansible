@@ -166,7 +166,7 @@ ddmail_openpgp_keyhandler_prod_password_hash: "{{ vault_ddmail_openpgp_keyhandle
 ddmail_openpgp_keyhandler_test_password_hash: "{{ vault_ddmail_openpgp_keyhandler_test_password_hash }}"
 ddmail_openpgp_keyhandler_dev_password_hash: "{{ vault_ddmail_openpgp_keyhandler_dev_password_hash }}"
 ddmail_openpgp_keyhandler_prod_gnupg_home: "{{ openpgp_keyrings_folder }}"
-ddmail_openpgp_keyhandler_test_gnupg_home: /tmp
+ddmail_openpgp_keyhandler_test_gnupg_home: /tmp/test_gnupg_home
 ddmail_openpgp_keyhandler_dev_gnupg_home: "{{ openpgp_keyrings_folder }}"
 
 # ddmail_openpgp_encryptor
