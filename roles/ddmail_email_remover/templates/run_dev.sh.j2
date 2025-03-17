@@ -1,5 +1,5 @@
 #!/bin/bash
 source /opt/ddmail_email_remover/venv/bin/activate
-cd /opt/ddmail_email_remover 
+cd /opt/ddmail_email_remover/ddmail_email_remover 
 export MODE=DEVELOPMENT
 flask --app ddmail_email_remover:create_app\(config_file=\"/opt/ddmail_email_remover/config/config.toml\"\) run --host=127.0.0.1 --port 8001 --debug
