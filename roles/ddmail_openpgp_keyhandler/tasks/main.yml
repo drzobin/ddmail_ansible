@@ -27,12 +27,6 @@
   ansible.builtin.command: mv /opt/ddmail_openpgp_keyhandler /opt/ddmail_openpgp_keyhandler_{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
   when: ddmail_openpgp_keyhandler.stat.exists
 
-- name: Clone ddmail_openpgp_keyhandler repo with separate git directory
-  ansible.builtin.git:
-    repo: https://github.com/drzobin/ddmail_openpgp_keyhandler.git
-    dest: /opt/ddmail_openpgp_keyhandler
-  when: env == "dev"
-
 - name: Create /opt/ddmail_openpgp_keyhandler if it does not exist
   ansible.builtin.file:
     path: /opt/ddmail_openpgp_keyhandler
@@ -41,6 +35,21 @@
     group: root
     mode: "u=rwx,g=rx,o=rx"
   when: env == "prod"
+
+- name: Create /opt/ddmail_openpgp_keyhandler if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_openpgp_keyhandler
+    state: directory
+    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
+    group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
+    mode: "u=rwx,g=rx,o=rx"
+  when: env == "dev"
+
+- name: Clone ddmail_openpgp_keyhandler repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_openpgp_keyhandler.git
+    dest: /opt/ddmail_openpgp_keyhandler/ddmail_openpgp_keyhandler
+  when: env == "dev"
 
 - name: Create ddmail_openpgp_keyhandler python env.
   ansible.builtin.command: python3 -m venv /opt/ddmail_openpgp_keyhandler/venv
@@ -71,7 +80,7 @@
 - name: Install requirenments for development with pip.
   ansible.builtin.pip:
     name: .[dev]
-    chdir: /opt/ddmail_openpgp_keyhandler
+    chdir: /opt/ddmail_openpgp_keyhandler/ddmail_openpgp_keyhandler
     state: latest
     virtualenv_python: python3
     virtualenv: /opt/ddmail_openpgp_keyhandler/venv
@@ -86,7 +95,7 @@
     path: /opt/ddmail_openpgp_keyhandler
 
 - name: Set git remote for ddmail_openpgp_keyhandler
-  ansible.builtin.shell: cd /opt/ddmail_openpgp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_openpgp_keyhandler.git
+  ansible.builtin.shell: cd /opt/ddmail_openpgp_keyhandler/ddmail_openpgp_keyhandler; git remote set-url origin git@github.com:drzobin/ddmail_openpgp_keyhandler.git
   become: true
   become_method: su
   become_user: "{{ ddmail_openpgp_keyhandler_runas_user }}"
