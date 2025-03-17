@@ -23,20 +23,29 @@
     - ddmail_validators.stat.exists
     - env == "dev"
 
-- name: Clone ddmail_validators repo with separate git directory
-  ansible.builtin.git:
-    repo: https://github.com/drzobin/ddmail_validators.git
-    dest: /opt/ddmail_validators
+- name: Create /opt/ddmail_validators if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_validators
+    state: directory
+    owner: '{{ ddmail_validators_runas_user }}'
+    group: '{{ ddmail_validators_runas_group }}'
+    mode: "u=rwx,g=rx,o=rx"
   when: env == "dev"
 
 - name: Create ddmail_validators/venv python env.
   ansible.builtin.command: python3 -m venv /opt/ddmail_validators/venv
   when: env == "dev"
 
+- name: Clone ddmail_validators repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_validators.git
+    dest: /opt/ddmail_validators/ddmail_validators
+  when: env == "dev"
+
 - name: Install ddmail_validators and its dev requirenments with pip.
   ansible.builtin.pip:
     name: .[dev]
-    chdir: /opt/ddmail_validators
+    chdir: /opt/ddmail_validators/ddmail_validators
     extra_args: -e
     virtualenv_python: python3
     virtualenv: /opt/ddmail_validators/venv
@@ -52,7 +61,7 @@
   when: env == "dev"
 
 - name: Set git remote for ddmail_validators
-  ansible.builtin.shell: cd /opt/ddmail_validators; git remote set-url origin git@github.com:drzobin/ddmail_validators.git
+  ansible.builtin.shell: cd /opt/ddmail_validators/ddmail_validators; git remote set-url origin git@github.com:drzobin/ddmail_validators.git
   become: true
   become_method: su
   become_user: "{{ ddmail_validators_runas_user }}"
