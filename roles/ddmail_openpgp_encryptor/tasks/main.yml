@@ -35,12 +35,6 @@
     state: present
   when: env == "prod"
 
-- name: Clone ddmail_openpgp_encryptor repo with separate git directory
-  ansible.builtin.git:
-    repo: https://github.com/drzobin/ddmail_openpgp_encryptor.git
-    dest: /opt/ddmail_openpgp_encryptor
-  when: env == "dev"
-
 - name: Create /opt/ddmail_openpgp_encryptor if it does not exist
   ansible.builtin.file:
     path: /etc/ddmail_openpgp_encryptor
@@ -48,6 +42,23 @@
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
+  when: env == "prod"
+
+- name: Create /opt/ddmail_openpgp_encryptor if it does not exist
+  ansible.builtin.file:
+    path: /etc/ddmail_openpgp_encryptor
+    state: directory
+    owner: '{{ ddmail_openpgp_encryptor_runas_user }}'
+    group: '{{ ddmail_openpgp_encryptor_runas_group }}'
+    mode: "u=rwx,g=rx,o=rx"
+  when: env == "dev"
+
+
+- name: Clone ddmail_openpgp_encryptor repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/drzobin/ddmail_openpgp_encryptor.git
+    dest: /opt/ddmail_openpgp_encryptor/ddmail_openpgp_encryptor
+  when: env == "dev"
 
 - name: Create /opt/ddmail_openpgp_encryptor/config if it does not exist
   ansible.builtin.file:
@@ -63,7 +74,7 @@
 - name: Install ddmail_openpgp_encryptor and its dev requirenments with pip.
   ansible.builtin.pip:
     name: .[dev]
-    chdir: /opt/ddmail_openpgp_encryptor
+    chdir: /opt/ddmail_openpgp_encryptor/ddmail_openpgp_encryptor
     extra_args: -e
     virtualenv_python: python3
     virtualenv: /opt/ddmail_openpgp_encryptor/venv
@@ -85,7 +96,7 @@
     path: /opt/ddmail_openpgp_encryptor
 
 - name: Set git remote for ddmail_openpgp_encryptor
-  ansible.builtin.shell: cd /opt/ddmail_openpgp_encryptor; git remote set-url origin git@github.com:drzobin/ddmail_openpgp_encryptor.git
+  ansible.builtin.shell: cd /opt/ddmail_openpgp_encryptor/ddmail_openpgp_encryptor; git remote set-url origin git@github.com:drzobin/ddmail_openpgp_encryptor.git
   become: true
   become_method: su
   become_user: "{{ ddmail_openpgp_encryptor_runas_user }}"
@@ -136,8 +147,17 @@
   ignore_errors: true
   when: env == "dev"
 
+- name: Create/edit ddmail_openpgp_encryptor startup script for development
+  ansible.builtin.template:
+    src: run_dev.sh.j2
+    dest: /opt/ddmail_openpgp_encryptor/run_dev.sh
+    owner: "{{ ddmail_openpgp_encryptor_runas_user }}"
+    group: "{{ ddmail_openpgp_encryptor_runas_group }}"
+    mode: "u=rwx,g=r,o=r"
+  when: env == "dev"
+
 - name: Start development server in screen.
-  ansible.builtin.command: screen -S ddmail_opengpg_encryptor -d -m bash -c "sleep 5; source /opt/ddmail_openpgp_encryptor/venv/bin/activate; cd /opt/ddmail_openpgp_encryptor; export MODE=DEVELOPMENT; ddmail_openpgp_encryptor --config-file config/config.ini"
+  ansible.builtin.command: screen -S ddmail_openpgp_encryptor -d -m bash -c "sleep 5; source /opt/ddmail_openpgp_encryptor/run_dev.sh; /bin/bash"
   become: true
   become_method: su
   become_user: "{{ ddmail_openpgp_encryptor_runas_user }}"
