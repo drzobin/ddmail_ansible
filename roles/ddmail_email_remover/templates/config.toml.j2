@@ -1,14 +1,17 @@
 [PRODUCTION]
     SECRET_KEY = '{{ ddmail_email_remover_prod_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_email_remover_prod_password_hash }}'
+    LOGFILE = '/var/log/ddmail_email_remover.log'
     EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
 
 [TESTING]
     SECRET_KEY = '{{ ddmail_email_remover_test_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_email_remover_test_password_hash }}'
+    LOGFILE = '/var/log/ddmail_email_remover.log'
     EMAIL_ACCOUNT_PATH = '/tmp/ddmail_email_remover_test/vhosts/'
 
 [DEVELOPMENT]
     SECRET_KEY = '{{ ddmail_email_remover_dev_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_email_remover_dev_password_hash }}'
+    LOGFILE = '/var/log/ddmail_email_remover.log'
     EMAIL_ACCOUNT_PATH = '/var/mail/vhosts/'
