@@ -1,5 +1,5 @@
 ---
-- name: Install packages needed for web application ddmail
+- name: Install packages needed for web application ddmail_email_remover
   ansible.builtin.apt:
     pkg:
       - python3-pip
@@ -153,16 +153,6 @@
     owner: '{{ ddmail_email_remover_runas_user }}'
     group: '{{ ddmail_email_remover_runas_group }}'
     mode: u=rw,g=r,o=
-  when: env == "prod"
-
-- name: Add logdir for ddmail_email_remover.
-  ansible.builtin.file:
-    path: /var/log/ddmail_email_remover.log
-    state: touch
-    owner: '{{ ddmail_email_remover_runas_user }}'
-    group: '{{ ddmail_email_remover_runas_group }}'
-    mode: u=rw,g=r,o=
-  when: env == "dev"
 
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_email_remover quit
