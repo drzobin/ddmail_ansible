@@ -69,6 +69,8 @@
   ansible.builtin.git:
     repo: https://github.com/drzobin/ddmail_webapp.git
     dest: /opt/ddmail_webapp/ddmail_webapp
+    single_branch: yes
+    version: dev
 
 - name: Install ddmail_webapp and requirenments with pip.
   ansible.builtin.pip:
@@ -144,7 +146,6 @@
     group: '{{ ddmail_webapp_runas_group }}'
     mode: u=rw,g=r,o=
 
-- name: Kill development server in screen.
 
 - name: Start development server in screen.
   ansible.builtin.command: screen -S ddmail_webapp -d -m bash -c "sleep 5; source /opt/ddmail_webapp/run_dev.sh; /bin/bash"
