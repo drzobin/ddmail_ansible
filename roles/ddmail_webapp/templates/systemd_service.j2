@@ -8,9 +8,9 @@ StartLimitBurst=5
 Environment="MODE=PRODUCTION"
 User={{ ddmail_webapp_runas_user }}
 Group={{ ddmail_webapp_runas_group }}
-WorkingDirectory=/opt/ddmail_webapp_venv/
-Environment="PATH=/opt/ddmail_webapp_venv/bin/"
-ExecStart=/opt/ddmail_webapp_venv/bin/gunicorn -b 127.0.0.1:8000 --log-file /var/log/gunicorn/ddmail_webapp.log --workers 2 "ddmail:create_app()" 
+WorkingDirectory=/opt/ddmail_webapp/
+Environment="PATH=/opt/ddmail_webapp/venv/bin/"
+ExecStart=/opt/ddmail_webapp/venv/bin/gunicorn -b 127.0.0.1:8000 --log-file /var/log/gunicorn/ddmail_webapp.log --workers 2 "ddmail:create_app(config_file = \"/opt/ddmail_webapp/config/config.toml\")" 
 RuntimeDirectory=ddmail_webapp
 Restart=on-failure
 RestartSec=10s
