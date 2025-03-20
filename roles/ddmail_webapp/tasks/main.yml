@@ -69,8 +69,6 @@
   ansible.builtin.git:
     repo: https://github.com/drzobin/ddmail_webapp.git
     dest: /opt/ddmail_webapp/ddmail_webapp
-    single_branch: yes
-    version: dev
 
 - name: Install ddmail_webapp and requirenments with pip.
   ansible.builtin.pip:
