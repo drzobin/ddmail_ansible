@@ -1,0 +1,5 @@
+#!/bin/bash
+source /opt/ddmail_webapp/venv/bin/activate
+cd /opt/ddmail_webapp/ddmail_webapp
+export MODE=DEVELOPMENT
+flask --app ddmail_webapp:create_app\(config_file=\"/opt/ddmail_webapp/config/config.toml\"\) run --host=127.0.0.1 --port 8000 --debug
