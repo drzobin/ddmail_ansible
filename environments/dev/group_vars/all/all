@@ -78,8 +78,8 @@ apache2_port80_server_name: ddmaildev
 apache2_port80_server_alias: www.ddmaildev.se
 
 # ddmail_webapp
-ddmail_webapp_venv_user_owner: dev
-ddmail_webapp_venv_group_owner: dev
+ddmail_webapp_user_owner: dev
+ddmail_webapp_group_owner: dev
 ddmail_webapp_runas_user: dev
 ddmail_webapp_runas_group: dev
 ddmail_webapp_prod_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_prod_wtf_csrf_secret_key }}"
