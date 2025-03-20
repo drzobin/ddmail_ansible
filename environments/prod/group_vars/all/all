@@ -69,8 +69,8 @@ apache2_port80_server_alias: ddmail.se
 apache2_darknet_listner: 127.0.0.1:8080
 
 # ddmail_webapp
-ddmail_webapp_venv_user_owner: root
-ddmail_webapp_venv_group_owner: root
+ddmail_webapp_user_owner: root
+ddmail_webapp_group_owner: root
 ddmail_webapp_runas_user: www-ddmail
 ddmail_webapp_runas_group: www-ddmail
 ddmail_webapp_prod_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_prod_wtf_csrf_secret_key }}"
