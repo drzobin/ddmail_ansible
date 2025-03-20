@@ -79,7 +79,7 @@ ddmail_webapp_prod_sqlalchemy_database_uri: 'mysql://mail_rw:{{ vault_mail_prod_
 ddmail_webapp_prod_mx_record_host: mail.ddmail.se.
 ddmail_webapp_prod_mx_record_priority: 10
 ddmail_webapp_prod_spf_record: "\"v=spf1 mx -all\""
-ddmail_webapp_prod_dkim_record: "\"v=DKIM1; k=rsa;  \\\\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\\\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
+ddmail_webapp_prod_dkim_record: "\"v=DKIM1; k=rsa;  \\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
 ddmail_webapp_prod_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_prod_payment_mail_name: "{{ vault_ddmail_webapp_prod_payment_mail_name }}"
 ddmail_webapp_prod_payment_mail_address: "{{ vault_ddmail_webapp_prod_payment_mail_address }}"
@@ -91,7 +91,7 @@ ddmail_webapp_test_sqlalchemy_database_uri: 'mysql://mail_test_rw:{{ vault_mail_
 ddmail_webapp_test_mx_record_host: mail.ddmail.se.
 ddmail_webapp_test_mx_record_priority: 10
 ddmail_webapp_test_spf_record: "\"v=spf1 mx -all\""
-ddmail_webapp_test_dkim_record: "\"v=DKIM1; k=rsa;  \\\\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\\\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
+ddmail_webapp_test_dkim_record: "\"v=DKIM1; k=rsa;  \\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
 ddmail_webapp_test_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_test_payment_mail_name: "{{ vault_ddmail_webapp_test_payment_mail_name }}"
 ddmail_webapp_test_payment_mail_address: "{{ vault_ddmail_webapp_test_payment_mail_address }}"
@@ -103,7 +103,7 @@ ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_dev_rw:{{ vault_mail_de
 ddmail_webapp_dev_mx_record_host: mail.ddmail.se.
 ddmail_webapp_dev_mx_record_priority: 10
 ddmail_webapp_dev_spf_record: "\"v=spf1 mx -all\""
-ddmail_webapp_dev_dkim_record: "\"v=DKIM1; k=rsa;  \\\\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\\\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
+ddmail_webapp_dev_dkim_record: "\"v=DKIM1; k=rsa;  \\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
 ddmail_webapp_dev_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_dev_payment_mail_name: "{{ vault_ddmail_webapp_dev_payment_mail_name }}"
 ddmail_webapp_dev_payment_mail_address: "{{ vault_ddmail_webapp_dev_payment_mail_address }}"
