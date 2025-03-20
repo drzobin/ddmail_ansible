@@ -1,8 +1,7 @@
-class Prod():
+[PRODUCTION]
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_prod_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_prod_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_prod_sqlalchemy_database_uri }}'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False 
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_prod_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
@@ -18,11 +17,12 @@ class Prod():
     SPF_RECORD = '{{ ddmail_webapp_prod_spf_record }}'
     DKIM_RECORD = '{{ ddmail_webapp_prod_dkim_record }}'
     DMARC_RECORD = '{{ ddmail_webapp_prod_dmarc_record }}'
-class Test():
+    LOGFILE = '/var/log/ddmail_webapp.log'
+
+[TESTING]
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_test_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_test_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_test_sqlalchemy_database_uri }}'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False 
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_test_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
@@ -38,11 +38,12 @@ class Test():
     SPF_RECORD = '{{ ddmail_webapp_test_spf_record }}'
     DKIM_RECORD = '{{ ddmail_webapp_test_dkim_record }}'
     DMARC_RECORD = '{{ ddmail_webapp_test_dmarc_record }}'
-class Dev():
+    LOGFILE = '/var/log/ddmail_webapp.log'
+
+[DEVELOPMENT]
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_dev_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_dev_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_dev_sqlalchemy_database_uri }}'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False 
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_dev_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
@@ -58,3 +59,4 @@ class Dev():
     SPF_RECORD = '{{ ddmail_webapp_dev_spf_record }}'
     DKIM_RECORD = '{{ ddmail_webapp_dev_dkim_record }}'
     DMARC_RECORD = '{{ ddmail_webapp_dev_dmarc_record }}'
+    LOGFILE = '/var/log/ddmail_webapp.log'
