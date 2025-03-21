@@ -85,6 +85,8 @@ ddmail_webapp_prod_payment_mail_name: "{{ vault_ddmail_webapp_prod_payment_mail_
 ddmail_webapp_prod_payment_mail_address: "{{ vault_ddmail_webapp_prod_payment_mail_address }}"
 ddmail_webapp_prod_payment_mail_postcode: "{{ vault_ddmail_webapp_prod_payment_mail_postcode }}"
 ddmail_webapp_prod_payment_mail_country: "{{ vault_ddmail_webapp_prod_payment_mail_country }}"
+ddmail_webapp_prod_i2p_address: lqvvhl4e5rtz75khof6iku5vbf7cgaghfoi36dbcyc2nlvdqm6ca.b32.i2p
+ddmail_webapp_prod_tor_address: ty6nw3vuckv4cwjwwljr32v2vv4btawi7oemx3ayivdknhcziaspwtad.onion
 ddmail_webapp_test_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_test_wtf_csrf_secret_key }}"
 ddmail_webapp_test_secret_key: "{{ vault_ddmail_webapp_test_secret_key }}"
 ddmail_webapp_test_sqlalchemy_database_uri: 'mysql://mail_test_rw:{{ vault_mail_test_db_user_rw_password }}@localhost/mail_test'
@@ -97,6 +99,8 @@ ddmail_webapp_test_payment_mail_name: "{{ vault_ddmail_webapp_test_payment_mail_
 ddmail_webapp_test_payment_mail_address: "{{ vault_ddmail_webapp_test_payment_mail_address }}"
 ddmail_webapp_test_payment_mail_postcode: "{{ vault_ddmail_webapp_test_payment_mail_postcode }}"
 ddmail_webapp_test_payment_mail_country: "{{ vault_ddmail_webapp_test_payment_mail_country }}"
+ddmail_webapp_test_i2p_address: i2p.test.address
+ddmail_webapp_test_tor_address: tor.test.address
 ddmail_webapp_dev_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_dev_wtf_csrf_secret_key }}"
 ddmail_webapp_dev_secret_key: "{{ vault_ddmail_webapp_dev_secret_key }}"
 ddmail_webapp_dev_sqlalchemy_database_uri: 'mysql://mail_dev_rw:{{ vault_mail_dev_db_user_rw_password }}@localhost/mail_dev'
@@ -109,6 +113,8 @@ ddmail_webapp_dev_payment_mail_name: "{{ vault_ddmail_webapp_dev_payment_mail_na
 ddmail_webapp_dev_payment_mail_address: "{{ vault_ddmail_webapp_dev_payment_mail_address }}"
 ddmail_webapp_dev_payment_mail_postcode: "{{ vault_ddmail_webapp_dev_payment_mail_postcode }}"
 ddmail_webapp_dev_payment_mail_country: "{{ vault_ddmail_webapp_dev_payment_mail_country }}"
+ddmail_webapp_dev_i2p_address: i2p.dev.address
+ddmail_webapp_dev_tor_address: tor.dev.address
 
 # ddmail_email_remover
 ddmail_email_remover_user_owner: root
