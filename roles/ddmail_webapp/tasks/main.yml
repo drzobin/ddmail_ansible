@@ -69,6 +69,7 @@
   ansible.builtin.git:
     repo: https://github.com/drzobin/ddmail_webapp.git
     dest: /opt/ddmail_webapp/ddmail_webapp
+  when: env == "dev"
 
 - name: Install ddmail_webapp and requirenments with pip.
   ansible.builtin.pip:
@@ -150,6 +151,7 @@
   become: true
   become_method: su
   become_user: "{{ ddmail_webapp_runas_user }}"
+  when: env == "dev"
 
 - name: Create/edit ddmail gunicorne service configuration file /etc/systemd/system/ddmail_webapp.service
   ansible.builtin.template:
