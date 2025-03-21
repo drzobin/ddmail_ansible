@@ -18,6 +18,7 @@
     DKIM_RECORD = '{{ ddmail_webapp_prod_dkim_record }}'
     DMARC_RECORD = '{{ ddmail_webapp_prod_dmarc_record }}'
     LOGFILE = '/var/log/ddmail_webapp.log'
+    LOGLEVEL = 'INFO'
 
 [TESTING]
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_test_wtf_csrf_secret_key }}'
@@ -39,6 +40,7 @@
     DKIM_RECORD = '{{ ddmail_webapp_test_dkim_record }}'
     DMARC_RECORD = '{{ ddmail_webapp_test_dmarc_record }}'
     LOGFILE = '/var/log/ddmail_webapp.log'
+    LOGLEVEL = 'DEBUG'
 
 [DEVELOPMENT]
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_dev_wtf_csrf_secret_key }}'
@@ -60,3 +62,4 @@
     DKIM_RECORD = '{{ ddmail_webapp_dev_dkim_record }}'
     DMARC_RECORD = '{{ ddmail_webapp_dev_dmarc_record }}'
     LOGFILE = '/var/log/ddmail_webapp.log'
+    LOGLEVEL = 'DEBUG'
