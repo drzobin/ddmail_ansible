@@ -90,10 +90,7 @@ ddmail_webapp_prod_mx_record_priority: 10
 ddmail_webapp_prod_spf_record: "\"v=spf1 mx -all\""
 ddmail_webapp_prod_dkim_record: "\"v=DKIM1; k=rsa;  \\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
 ddmail_webapp_prod_dmarc_record: "\"v=DMARC1; p=none\""
-ddmail_webapp_prod_payment_mail_name: "{{ vault_ddmail_webapp_prod_payment_mail_name }}"
-ddmail_webapp_prod_payment_mail_address: "{{ vault_ddmail_webapp_prod_payment_mail_address }}"
-ddmail_webapp_prod_payment_mail_postcode: "{{ vault_ddmail_webapp_prod_payment_mail_postcode }}"
-ddmail_webapp_prod_payment_mail_country: "{{ vault_ddmail_webapp_prod_payment_mail_country }}"
+ddmail_webapp_prod_payment_bankgiro: "{{ vault_ddmail_webapp_prod_payment_bankgiro }}"
 ddmail_webapp_prod_i2p_address: lqvvhl4e5rtz75khof6iku5vbf7cgaghfoi36dbcyc2nlvdqm6ca.b32.i2p
 ddmail_webapp_prod_tor_address: ty6nw3vuckv4cwjwwljr32v2vv4btawi7oemx3ayivdknhcziaspwtad.onion
 ddmail_webapp_test_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_test_wtf_csrf_secret_key }}"
@@ -104,10 +101,7 @@ ddmail_webapp_test_mx_record_priority: 10
 ddmail_webapp_test_spf_record: "\"v=spf1 mx -all\""
 ddmail_webapp_test_dkim_record: "\"v=DKIM1; k=rsa;  \\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
 ddmail_webapp_test_dmarc_record: "\"v=DMARC1; p=none\""
-ddmail_webapp_test_payment_mail_name: "{{ vault_ddmail_webapp_test_payment_mail_name }}"
-ddmail_webapp_test_payment_mail_address: "{{ vault_ddmail_webapp_test_payment_mail_address }}"
-ddmail_webapp_test_payment_mail_postcode: "{{ vault_ddmail_webapp_test_payment_mail_postcode }}"
-ddmail_webapp_test_payment_mail_country: "{{ vault_ddmail_webapp_test_payment_mail_country }}"
+ddmail_webapp_test_payment_bankgiro: "{{ vault_ddmail_webapp_test_payment_bankgiro }}"
 ddmail_webapp_test_i2p_address: i2p.test.address
 ddmail_webapp_test_tor_address: tor.test.address
 ddmail_webapp_dev_wtf_csrf_secret_key: "{{ vault_ddmail_webapp_dev_wtf_csrf_secret_key }}"
@@ -118,10 +112,7 @@ ddmail_webapp_dev_mx_record_priority: 10
 ddmail_webapp_dev_spf_record: "\"v=spf1 mx -all\""
 ddmail_webapp_dev_dkim_record: "\"v=DKIM1; k=rsa;  \\009p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxbFCUM83lUvHKku3mE/IOb2LArgPsjzhijO4pZfVLrLp7dv8RKDs4MmtFHrdWf4UibDFZtPm4IKcagDD3LlqgPSeewnfesI/kGCdz2SqPA/R5Cip5I1swtQ1lKa41eu6Rxym32fzCrRAhBfOZqM05BKPQQpxcSuyNmKOz+HGlGtkUMk5ebhWDtTsoc7ntw\" \"nhnAxaF+T61YQdYyCL \\009P7l6KRULaDJ3U7AkNAYrXpv0AdfjDVZp+GXu5fqTFTMi5pYGv1pj4621OSysDmjFlPksCgDouE11N+sJVCVPj//8gJCpzDv7y2kET9MIPmIlKGBTC1AQg5KWrbkeQPcEnzhRwIDAQAB\""
 ddmail_webapp_dev_dmarc_record: "\"v=DMARC1; p=none\""
-ddmail_webapp_dev_payment_mail_name: "{{ vault_ddmail_webapp_dev_payment_mail_name }}"
-ddmail_webapp_dev_payment_mail_address: "{{ vault_ddmail_webapp_dev_payment_mail_address }}"
-ddmail_webapp_dev_payment_mail_postcode: "{{ vault_ddmail_webapp_dev_payment_mail_postcode }}"
-ddmail_webapp_dev_payment_mail_country: "{{ vault_ddmail_webapp_dev_payment_mail_country }}"
+ddmail_webapp_dev_payment_bankgiro: "{{ vault_ddmail_webapp_dev_payment_bankgiro }}"
 ddmail_webapp_dev_i2p_address: i2p.dev.address
 ddmail_webapp_dev_tor_address: tor.dev.address
 
@@ -142,8 +133,8 @@ ddmail_email_remover_test_password_hash: "{{ vault_ddmail_email_remover_test_pas
 ddmail_email_remover_dev_password_hash: "{{ vault_ddmail_email_remover_dev_password_hash }}"
 
 # ddmail_dmcp_keyhandler
-ddmail_dmcp_keyhandler_venv_user_owner: dev
-ddmail_dmcp_keyhandler_venv_group_owner: dev
+ddmail_dmcp_keyhandler_user_owner: dev
+ddmail_dmcp_keyhandler_group_owner: dev
 ddmail_dmcp_keyhandler_runas_user: dev
 ddmail_dmcp_keyhandler_runas_group: dev
 ddmail_dmcp_keyhandler_doas_user: dev
