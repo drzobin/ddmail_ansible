@@ -1,0 +1,5 @@
+#!/bin/bash
+source /opt/ddmail_dmcp_keyhandler/venv/bin/activate
+cd /opt/ddmail_dmcp_keyhandler/ddmail_dmcp_keyhandler
+export MODE=DEVELOPMENT
+flask --app ddmail_dmcp_keyhandler:create_app\(config_file=\"/opt/ddmail_dmcp_keyhandler/config/config.toml\"\) run --host=127.0.0.1 --port 8002 --debug
