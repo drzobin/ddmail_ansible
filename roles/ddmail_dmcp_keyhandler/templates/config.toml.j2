@@ -1,14 +1,20 @@
-class Prod():
+[PRODUCTION]
     SECRET_KEY = '{{ ddmail_dmcp_keyhandler_prod_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_dmcp_keyhandler_prod_password_hash }}'
     DOVEADM_BIN = '/usr/bin/doveadm'
+    LOGFILE = '/var/log/ddmail_dmcp_keyhandler.log'
+    LOGLEVEL = 'INFO'
 
-class Test():
+[TESTING]
     SECRET_KEY = '{{ ddmail_dmcp_keyhandler_test_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_dmcp_keyhandler_test_password_hash }}'
     DOVEADM_BIN = '/usr/bin/doveadm'
+    LOGFILE = '/var/log/ddmail_dmcp_keyhandler.log'
+    LOGLEVEL = 'INFO'
 
-class Dev():
+[DEVELOPMENT]
     SECRET_KEY = '{{ ddmail_dmcp_keyhandler_dev_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_dmcp_keyhandler_dev_password_hash }}'
     DOVEADM_BIN = '/usr/bin/doveadm'
+    LOGFILE = '/var/log/ddmail_dmcp_keyhandler.log'
+    LOGLEVEL = 'INFO'
