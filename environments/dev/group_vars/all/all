@@ -177,8 +177,8 @@ ddmail_openpgp_encryptor_mail_db_user: "{{ mail_db_user_r }}"
 ddmail_openpgp_encryptor_mail_db_user_password: "{{ mail_db_user_r_password }}"
 
 # ddmail_backup_receiver
-ddmail_backup_receiver_venv_user_owner: dev
-ddmail_backup_receiver_venv_group_owner: dev
+ddmail_backup_receiver_user_owner: dev
+ddmail_backup_receiver_group_owner: dev
 ddmail_backup_receiver_runas_user: dev
 ddmail_backup_receiver_runas_group: dev
 ddmail_backup_receiver_prod_secret_key: "{{ vault_ddmail_backup_receiver_prod_secret_key }}"
