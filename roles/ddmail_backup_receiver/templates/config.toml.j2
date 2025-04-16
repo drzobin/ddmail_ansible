@@ -1,12 +1,18 @@
-class Prod():
+[PRODUCTION]
     SECRET_KEY = '{{ ddmail_backup_receiver_prod_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_backup_receiver_prod_password_hash }}'
-    UPLOAD_FOLDER = 'backups'
-class Test():
+    UPLOAD_FOLDER = '/opt/ddmail_backup_receiver/backups'
+    LOGLEVEL = 'INFO'
+    LOGFILE = '/var/log/ddmail_backup_receiver.log'
+[TESTING]
     SECRET_KEY = '{{ ddmail_backup_receiver_test_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_backup_receiver_test_password_hash }}'
-    UPLOAD_FOLDER = 'backups'
-class Dev():
+    UPLOAD_FOLDER = '/opt/ddmail_backup_receiver/backups'
+    LOGLEVEL = 'INFO'
+    LOGFILE = '/var/log/ddmail_backup_receiver.log'
+[DEVELOPMENT]
     SECRET_KEY = '{{ ddmail_backup_receiver_dev_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_backup_receiver_dev_password_hash }}'
-    UPLOAD_FOLDER = 'backups'
+    UPLOAD_FOLDER = '/opt/ddmail_backup_receiver/backups'
+    LOGLEVEL = 'DEBUG'
+    LOGFILE = '/var/log/ddmail_backup_receiver.log'
