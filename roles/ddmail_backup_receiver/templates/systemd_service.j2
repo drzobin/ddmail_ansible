@@ -8,9 +8,9 @@ StartLimitBurst=5
 Environment="MODE=PRODUCTION"
 User={{ ddmail_backup_receiver_runas_user }}
 Group={{ ddmail_backup_receiver_runas_group }}
-WorkingDirectory=/opt/ddmail_backup_receiver_venv/backup_receiver/
-Environment="PATH=/opt/ddmail_backup_receiver_venv/bin/"
-ExecStart=/opt/ddmail_backup_receiver_venv/bin/gunicorn -b 127.0.0.1:8004 --log-file /var/log/gunicorn/ddmail_backup_receiver.log --workers 2 "backup_receiver:create_app()" 
+WorkingDirectory=/opt/ddmail_backup_receiver
+Environment="PATH=/opt/ddmail_backup_receiver/venv/bin/"
+ExecStart=/opt/ddmail_backup_receiver/venv/bin/gunicorn -b 127.0.0.1:8004 --log-file /var/log/gunicorn/ddmail_backup_receiver.log --workers 2 "ddmail_backup_receiver:create_app(config_file = \"/opt/ddmail_backup_receiver/config/config.toml\")" 
 RuntimeDirectory=ddmail_backup_receiver
 Restart=on-failure
 RestartSec=10s
@@ -35,8 +35,8 @@ MemoryDenyWriteExecute=yes
 
 # Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/ddmail_backup_receiver_venv /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11
-BindPaths=/var/log/gunicorn/ddmail_backup_receiver.log /var/log/ddmail_backup_receiver.log /opt/ddmail_backup_receiver_venv/backup_receiver/backups
+BindReadOnlyPaths=/opt/ddmail_backup_receiver /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11
+BindPaths=/var/log/gunicorn/ddmail_backup_receiver.log /var/log/ddmail_backup_receiver.log /opt/ddmail_backup_receiver/backups
 
 # Deny all CAP
 CapabilityBoundingSet=
