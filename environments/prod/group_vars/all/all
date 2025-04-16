@@ -175,8 +175,8 @@ ddmail_backup_taker_pubkey_fingerprint: "{{ vault_ddmail_backup_taker_pubkey_fin
 ddmail_backup_taker_pubkey: "{{ vault_ddmail_backup_taker_pubkey }}"
 
 # ddmail_backup_receiver
-ddmail_backup_receiver_venv_user_owner: root
-ddmail_backup_receiver_venv_group_owner: root
+ddmail_backup_receiver_user_owner: root
+ddmail_backup_receiver_group_owner: root
 ddmail_backup_receiver_runas_user: backup-receiver
 ddmail_backup_receiver_runas_group: backup-receiver
 ddmail_backup_receiver_prod_secret_key: "{{ vault_ddmail_backup_receiver_prod_secret_key }}"
