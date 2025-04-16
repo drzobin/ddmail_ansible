@@ -56,9 +56,9 @@ Add the following to your local /etc/hosts<br>
 
 ### Login to your local ddmail development system
 Open your webbrowser and access http://dev1.ddmail.internal and/or http://dev2.ddmail.internal using those login details:<br>
-Username: DEV<br>
-Password: password<br>
-Key file content: password<br>
+Username: "A"*12<br>
+Password: "A"*24<br>
+Key file content: "A"*4096<br>
 
 ### Setup Thunderbird
 IMAP mail server<br>
