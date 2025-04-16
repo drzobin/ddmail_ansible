@@ -1,0 +1,5 @@
+#!/bin/bash
+source /opt/ddmail_backup_receiver/venv/bin/activate
+cd /opt/ddmail_backup_receiver/ddmail_backup_receiver
+export MODE=DEVELOPMENT
+flask --app ddmail_backup_receiver:create_app\(config_file=\"/opt/ddmail_backup_receiver/config/config.toml\"\) run --host=127.0.0.1 --port 8004 --debug
