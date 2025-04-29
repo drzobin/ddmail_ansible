@@ -117,7 +117,7 @@
     login_db: "{{ mail_db_name }}"
     login_user: "{{ mail_db_user_rw }}"
     login_password: "{{ mail_db_user_rw_password }}"
-    query: SELECT account from accounts WHERE account LIKE "DEV"
+    query: SELECT account from accounts WHERE account LIKE "AAAAAAAAAAAA"
   register: accounts
   when: env == "dev"
 
@@ -126,7 +126,7 @@
     login_db: "{{ mail_db_name }}"
     login_user: "{{ mail_db_user_rw }}"
     login_password: "{{ mail_db_user_rw_password }}"
-    query: INSERT INTO accounts (account, payment_token, is_enabled, is_gratis, created) VALUES ("DEV","A3F3G4F3D2G5", 1, 1, "{{ "%Y-%m-%d %H:%M:%S"|strftime }}")
+    query: INSERT INTO accounts (account, payment_token, is_enabled, is_gratis, created) VALUES ("AAAAAAAAAAAA","A3F3G4F3D2G5", 1, 1, "{{ "%Y-%m-%d %H:%M:%S"|strftime }}")
   when:
     - env == "dev"
     - accounts.query_result[0][0]["account"] is not defined
@@ -136,7 +136,7 @@
     login_db: "{{ mail_db_name }}"
     login_user: "{{ mail_db_user_rw }}"
     login_password: "{{ mail_db_user_rw_password }}"
-    query: SELECT account_id from users WHERE user LIKE "DEV"
+    query: SELECT account_id from users WHERE user LIKE "AAAAAAAAAAAA"
   register: users
   when: env == "dev"
 
@@ -145,7 +145,7 @@
     login_db: "{{ mail_db_name }}"
     login_user: "{{ mail_db_user_rw }}"
     login_password: "{{ mail_db_user_rw_password }}"
-    query: SELECT id from accounts WHERE account LIKE "DEV"
+    query: SELECT id from accounts WHERE account LIKE "AAAAAAAAAAAA"
   register: account
   when: 
     - env == "dev"
@@ -156,7 +156,7 @@
     login_db: "{{ mail_db_name }}"
     login_user: "{{ mail_db_user_rw }}"
     login_password: "{{ mail_db_user_rw_password }}"
-    query: INSERT INTO users (account_id,user,password_hash,password_key_hash) VALUES ("{{ account.query_result[0][0]["id"] }}","DEV","{{ mailsystem_db_dev_user_password_hash }}","{{ mailsystem_db_dev_user_keyfile_hash }}")
+    query: INSERT INTO users (account_id,user,password_hash,password_key_hash) VALUES ("{{ account.query_result[0][0]["id"] }}","AAAAAAAAAAAA","{{ mailsystem_db_dev_user_password_hash }}","{{ mailsystem_db_dev_user_keyfile_hash }}")
   when:
     - env == "dev"
     - users.query_result[0][0]["account_id"] is not defined
