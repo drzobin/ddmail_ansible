@@ -84,15 +84,15 @@
 
 - name: Download OWASP crs rules https://github.com/coreruleset/coreruleset/archive/refs/tags/v4.0.0.zip
   ansible.builtin.get_url:
-    url: https://github.com/coreruleset/coreruleset/archive/refs/tags/v4.0.0.zip
-    dest: /root/v4.0.0.zip
+    url: https://github.com/coreruleset/coreruleset/archive/refs/tags/v4.14.0.zip
+    dest: /root/v4.14.0.zip
     owner: root
     group: root
     mode: "u=rw,g=r,o="
 
 - name: Unarchive OWASP crs rules.
   ansible.builtin.unarchive:
-    src: /root/v4.0.0.zip
+    src: /root/v4.14.0.zip
     dest: /root/
     remote_src: yes
 
@@ -102,7 +102,7 @@
     path: /etc/apache2/modsecurity-crs
 
 - name: Move OWASP crs rules to correct location.
-  command: /usr/bin/mv /root/coreruleset-4.0.0 /etc/apache2/modsecurity-crs
+  command: /usr/bin/mv /root/coreruleset-4.14.0 /etc/apache2/modsecurity-crs
 
 - name: Create/edit apache2 config file /etc/apache2/modsecurity-crs/crs-setup.conf
   ansible.builtin.template:
@@ -115,7 +115,7 @@
 - name: Delete OWASP csr zip file.
   ansible.builtin.file:
     state: absent
-    path: /root/v4.0.0.zip
+    path: /root/v4.14.0.zip
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/000-default.conf (prod)
   ansible.builtin.template:
