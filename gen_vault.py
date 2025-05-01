@@ -139,20 +139,20 @@ if __name__ == "__main__":
             f.write(line)
             save = None
         elif "vault_mailsystem_db_dev_user_password_hash" in line:
-            argon2i_hash = gen_hash("password")
+            argon2i_hash = gen_hash("A"*24)
             line = line.replace("change_me_to_argon2_hash", argon2i_hash)
 
             f.write(line)
             save = None
         elif "vault_mailsystem_db_dev_user_file_hash" in line:
-            argon2i_hash = gen_hash("password")
+            argon2i_hash = gen_hash("A"*4096)
             line = line.replace("change_me_to_argon2_hash", argon2i_hash)
 
             f.write(line)
             save = None
         elif "vault_mailsystem_db_dev_email_hash" in line:
             none_default_ph = PasswordHasher(time_cost=3,memory_cost=65536,parallelism=1)
-            argon2i_hash = none_default_ph.hash("password")
+            argon2i_hash = none_default_ph.hash("A"*24)
             line = line.replace("change_me_to_argon2_hash", argon2i_hash)
 
             f.write(line)
