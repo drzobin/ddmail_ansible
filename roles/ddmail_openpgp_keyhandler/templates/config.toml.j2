@@ -2,13 +2,19 @@
     SECRET_KEY = '{{ ddmail_openpgp_keyhandler_prod_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_openpgp_keyhandler_prod_password_hash }}'
     GNUPG_HOME = '{{ ddmail_openpgp_keyhandler_prod_gnupg_home }}'
+    LOGFILE = '/var/log/ddmail_openpgp_keyhandler.log'
+    LOGLEVEL = 'INFO'
 
 [TESTING]
     SECRET_KEY = '{{ ddmail_openpgp_keyhandler_test_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_openpgp_keyhandler_test_password_hash }}'
     GNUPG_HOME = '{{ ddmail_openpgp_keyhandler_test_gnupg_home }}'
+    LOGFILE = '/var/log/ddmail_openpgp_keyhandler.log'
+    LOGLEVEL = 'INFO'
 
 [DEVELOPMENT]
     SECRET_KEY = '{{ ddmail_openpgp_keyhandler_dev_secret_key }}'
     PASSWORD_HASH = '{{ ddmail_openpgp_keyhandler_dev_password_hash }}'
     GNUPG_HOME = '{{ ddmail_openpgp_keyhandler_dev_gnupg_home }}'
+    LOGFILE = '/var/log/ddmail_openpgp_keyhandler.log'
+    LOGLEVEL = 'INFO'
