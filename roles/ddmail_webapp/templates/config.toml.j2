@@ -16,8 +16,12 @@
     DMARC_RECORD = '{{ ddmail_webapp_prod_dmarc_record }}'
     TOR_ADDRESS = '{{ ddmail_webapp_prod_tor_address }}'
     I2P_ADDRESS = '{{ ddmail_webapp_prod_i2p_address }}'
-    LOGFILE = '/var/log/ddmail_webapp.log'
-    LOGLEVEL = 'INFO'
+    [PRODUCTION.LOGGING]
+        LOGLEVEL = 'INFO'
+        LOG_TO_FILE = false
+        LOGFILE = '/var/log/ddmail_webapp.log'
+        LOG_TO_SYSLOG = true
+        SYSLOG_SERVER = '/dev/log'
 
 [TESTING]
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_test_wtf_csrf_secret_key }}'
@@ -37,8 +41,12 @@
     DMARC_RECORD = '{{ ddmail_webapp_test_dmarc_record }}'
     TOR_ADDRESS = '{{ ddmail_webapp_test_tor_address }}'
     I2P_ADDRESS = '{{ ddmail_webapp_test_i2p_address }}'
-    LOGFILE = '/var/log/ddmail_webapp.log'
-    LOGLEVEL = 'DEBUG'
+    [TESTING.LOGGING]
+        LOGLEVEL = 'DEBUG'
+        LOG_TO_FILE = true
+        LOGFILE = '/var/log/ddmail_webapp.log'
+        LOG_TO_SYSLOG = false
+        SYSLOG_SERVER = '/dev/log'
 
 [DEVELOPMENT]
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_dev_wtf_csrf_secret_key }}'
@@ -58,5 +66,9 @@
     DMARC_RECORD = '{{ ddmail_webapp_dev_dmarc_record }}'
     TOR_ADDRESS = '{{ ddmail_webapp_dev_tor_address }}'
     I2P_ADDRESS = '{{ ddmail_webapp_dev_i2p_address }}'
-    LOGFILE = '/var/log/ddmail_webapp.log'
-    LOGLEVEL = 'DEBUG'
+    [DEVELOPMENT.LOGGING]
+        LOGLEVEL = 'DEBUG'
+        LOG_TO_FILE = true
+        LOGFILE = '/var/log/ddmail_webapp.log'
+        LOG_TO_SYSLOG = false
+        SYSLOG_SERVER = '/dev/log'
