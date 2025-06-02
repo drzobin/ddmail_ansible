@@ -36,7 +36,7 @@ MemoryDenyWriteExecute=yes
 # Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
 BindReadOnlyPaths=/opt/ddmail_webapp /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /run/mysqld/mysqld.sock /etc/resolv.conf
-BindPaths=/var/log/gunicorn/ddmail_webapp.log /var/log/ddmail_webapp.log
+BindPaths=/var/log/gunicorn/ddmail_webapp.log /var/log/ddmail_webapp.log /dev/log
 
 # Deny all CAP
 CapabilityBoundingSet=
