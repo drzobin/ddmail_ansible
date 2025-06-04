@@ -10,7 +10,7 @@ User={{ ddmail_openpgp_keyhandler_runas_user }}
 Group={{ ddmail_openpgp_keyhandler_runas_group }}
 WorkingDirectory=/opt/ddmail_openpgp_keyhandler/
 Environment="PATH=/opt/ddmail_openpgp_keyhandler/venv/bin/"
-ExecStart=/opt/ddmail_openpgp_keyhandler/venv/bin/gunicorn -b 127.0.0.1:8003 --log-file /var/log/gunicorn/ddmail_openpgp_keyhandler.log --workers 2 "ddmail_openpgp_keyhandler:create_app(config_file = \"/opt/ddmail_openpgp_keyhandler/config/config.toml\")" 
+ExecStart=/opt/ddmail_openpgp_keyhandler/venv/bin/gunicorn -b 127.0.0.1:8003 --log-file /var/log/gunicorn/ddmail_openpgp_keyhandler.log --workers 2 "ddmail_openpgp_keyhandler:create_app(config_file = \"/opt/ddmail_openpgp_keyhandler/config/config.toml\")"
 RuntimeDirectory=ddmail_openpgp_keyhandler
 Restart=on-failure
 RestartSec=10s
@@ -36,7 +36,7 @@ MemoryDenyWriteExecute=yes
 # Create a filesystem jail with namespace
 #TemporaryFileSystem=/:ro
 BindReadOnlyPaths=/opt/ddmail_openpgp_keyhandler /usr/bin/ls /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/gpg
-BindPaths=/var/log/gunicorn/ddmail_openpgp_keyhandler.log /var/log/ddmail_openpgp_keyhandler.log {{ openpgp_keyrings_folder }}
+BindPaths=/var/log/gunicorn/ddmail_openpgp_keyhandler.log /var/log/ddmail_openpgp_keyhandler.log /dev/log /opt/ddmail_openpgp_keyhandler/tmp
 
 # Deny all CAP
 CapabilityBoundingSet=
@@ -51,4 +51,3 @@ IPAddressAllow=127.0.0.0/8
 
 [Install]
 WantedBy=multi-user.target
-
