@@ -48,11 +48,10 @@
   ansible.builtin.file:
     path: /etc/ddmail_openpgp_encryptor
     state: directory
-    owner: '{{ ddmail_openpgp_encryptor_runas_user }}'
-    group: '{{ ddmail_openpgp_encryptor_runas_group }}'
+    owner: "{{ ddmail_openpgp_encryptor_runas_user }}"
+    group: "{{ ddmail_openpgp_encryptor_runas_group }}"
     mode: "u=rwx,g=rx,o=rx"
   when: env == "dev"
-
 
 - name: Clone ddmail_openpgp_encryptor repo with separate git directory
   ansible.builtin.git:
@@ -102,20 +101,20 @@
   become_user: "{{ ddmail_openpgp_encryptor_runas_user }}"
   when: env == "dev"
 
-- name: Create/edit ddmail_openpgp_encryptor config file /opt/ddmail_openpgp_encryptor/config/config.ini
+- name: Create/edit ddmail_openpgp_encryptor config file /opt/ddmail_openpgp_encryptor/config/config.toml
   ansible.builtin.template:
-    src: config.ini.j2
-    dest: /opt/ddmail_openpgp_encryptor/config/config.ini
-    owner: '{{ ddmail_openpgp_encryptor_runas_user }}'
-    group: '{{ ddmail_openpgp_encryptor_runas_group }}'
+    src: config.toml.j2
+    dest: /opt/ddmail_openpgp_encryptor/config/config.toml
+    owner: "{{ ddmail_openpgp_encryptor_runas_user }}"
+    group: "{{ ddmail_openpgp_encryptor_runas_group }}"
     mode: "u=rw,g=r,o="
 
 - name: Add logdir for ddmail_openpgp_encryptor.
   ansible.builtin.file:
     path: /var/log/ddmail_openpgp_encryptor.log
     state: touch
-    owner: '{{ ddmail_openpgp_encryptor_runas_user }}'
-    group: '{{ ddmail_openpgp_encryptor_runas_group }}'
+    owner: "{{ ddmail_openpgp_encryptor_runas_user }}"
+    group: "{{ ddmail_openpgp_encryptor_runas_group }}"
     mode: u=rw,g=r,o=
 
 - name: Create/edit ddmail_openpgp_encryptor service configuration file /etc/systemd/system/ddmail_openpgp_encryptor.service
@@ -131,6 +130,14 @@
   ansible.builtin.systemd:
     daemon_reload: true
   when: env == "prod"
+
+- name: Create /opt/ddmail_openpgp_encryptor/tmp if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_openpgp_encryptor/tmp
+    state: directory
+    owner: "{{ ddmail_openpgp_encryptor_runas_user }}"
+    group: "{{ ddmail_openpgp_encryptor_runas_group }}"
+    mode: "u=rwx,g=rx,o="
 
 - name: Restart ddmail_openpgp_encryptor service
   ansible.builtin.service:
