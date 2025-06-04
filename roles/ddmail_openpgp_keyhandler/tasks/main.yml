@@ -40,8 +40,8 @@
   ansible.builtin.file:
     path: /opt/ddmail_openpgp_keyhandler
     state: directory
-    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
-    group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
     mode: "u=rwx,g=rx,o=rx"
   when: env == "dev"
 
@@ -105,16 +105,16 @@
   ansible.builtin.file:
     path: /opt/ddmail_openpgp_keyhandler/config
     state: directory
-    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
-    group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
     mode: "u=rwx,g=rx,o="
 
 - name: Create/edit ddmail_openpgp_keyhandler config file /opt/ddmail_openpgp_keyhandler/config/config.toml
   ansible.builtin.template:
     src: config.toml.j2
     dest: /opt/ddmail_openpgp_keyhandler/config/config.toml
-    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
-    group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
     mode: "u=rw,g=r,o="
 
 - name: Create/edit ddmail_openpgp_keyhandler gunicorne service configuration file /etc/systemd/system/ddmail_openpgp_keyhandler.service
@@ -139,8 +139,8 @@
   ansible.builtin.file:
     path: /var/log/gunicorn/ddmail_openpgp_keyhandler.log
     state: touch
-    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
-    group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
     mode: u=rw,g=r,o=
   when: env == "prod"
 
@@ -148,8 +148,8 @@
   ansible.builtin.file:
     path: /var/log/ddmail_openpgp_keyhandler.log
     state: touch
-    owner: '{{ ddmail_openpgp_keyhandler_runas_user }}'
-    group: '{{ ddmail_openpgp_keyhandler_runas_group }}'
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
     mode: u=rw,g=r,o=
 
 - name: Add keyring/gnupg home folder for prod.
@@ -201,6 +201,14 @@
     group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
     mode: "u=rwx,g=r,o=r"
   when: env == "dev"
+
+- name: Create /opt/ddmail_openpgp_keyhandler/tmp if it does not exist
+  ansible.builtin.file:
+    path: /opt/ddmail_openpgp_keyhandler/tmp
+    state: directory
+    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
+    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
+    mode: "u=rwx,g=rx,o="
 
 - name: Start development server in screen.
   ansible.builtin.command: screen -S ddmail_openpgp_keyhandler -d -m bash -c "sleep 5; source /opt/ddmail_openpgp_keyhandler/run_dev.sh; /bin/bash"
