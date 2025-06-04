@@ -180,35 +180,35 @@
     mode: u=rw,g=r,o=
   when: env == "prod"
 
-- name: Stat tor onion service address file
-  ansible.builtin.stat:
-    path: /var/lib/tor/ddmail_http/hostname
-  register: tor_hostname
-  when: env == "prod"
+#- name: Stat tor onion service address file
+#  ansible.builtin.stat:
+#    path: /var/lib/tor/ddmail_http/hostname
+#  register: tor_hostname
+#  when: env == "prod"
 
-- name: Copy tor onion service hostname file to ddmail_webapp templates folder.
-  ansible.builtin.copy:
-    remote_src: True
-    src: /var/lib/tor/ddmail_http/hostname
-    dest: /opt/ddmail_webapp_venv/ddmail/ddmail/templates/tor_hostname
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  when:
-    - env == "prod"
-    - tor_hostname.stat.exists
+#- name: Copy tor onion service hostname file to ddmail_webapp templates folder.
+#  ansible.builtin.copy:
+#    remote_src: True
+#    src: /var/lib/tor/ddmail_http/hostname
+#    dest: /opt/ddmail_webapp_venv/ddmail/ddmail/templates/tor_hostname
+#    owner: root
+#    group: root
+#    mode: "u=rw,g=r,o=r"
+#  when:
+#    - env == "prod"
+#    - tor_hostname.stat.exists
 
-- name: Stat i2p b32 address file
-  ansible.builtin.stat:
-    path: /var/lib/i2pd/ddmail_key.dat
-  register: i2p_hostname
-  when: env == "prod"
+#- name: Stat i2p b32 address file
+#  ansible.builtin.stat:
+#    path: /var/lib/i2pd/ddmail_key.dat
+#  register: i2p_hostname
+#  when: env == "prod"
 
-- name: Set i2p b32 address for ddmail_webapp
-  ansible.builtin.shell: echo "$(head -c 391 /var/lib/i2pd/ddmail_key.dat | sha256sum | cut -f1 -d\  | xxd -r -p | base32 | tr '[:upper:]' '[:lower:]' | sed -r 's/=//g').b32.i2p" > /opt/ddmail_webapp_venv/ddmail/ddmail/templates/i2p_hostname
-  when:
-    - env == "prod"
-    - i2p_hostname.stat.exists
+#- name: Set i2p b32 address for ddmail_webapp
+#  ansible.builtin.shell: echo "$(head -c 391 /var/lib/i2pd/ddmail_key.dat | sha256sum | cut -f1 -d\  | xxd -r -p | base32 | tr '[:upper:]' '[:lower:]' | sed -r 's/=//g').b32.i2p" > /opt/ddmail_webapp_venv/ddmail/ddmail/templates/i2p_hostname
+#  when:
+#    - env == "prod"
+#    - i2p_hostname.stat.exists
 
 - name: Reload systemd
   ansible.builtin.systemd:
