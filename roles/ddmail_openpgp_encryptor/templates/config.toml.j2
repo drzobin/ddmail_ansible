@@ -1,15 +1,21 @@
-[DEFAULT]
-gpg_binary_location = /usr/bin/gpg
-gnupg_home = {{ ddmail_openpgp_encryptor_keyrings_folder }}
-listen_on_ip = 127.0.0.1
-listen_on_port = 8005
-send_to_ip = 127.0.0.1
-send_to_port = 10026
+LISTEN_ON_IP = 127.0.0.1
+SEND_TO_IP = 127.0.0.1
+GPG_BINARY_PATH = '/usr/bin/gpg'
+TMP_FOLDER = '/opt/ddmail_openpgp_encryptor/tmp'
+LISTEN_ON_PORT = 8005
+SEND_TO_PORT = 10026
 
-[mariadb]
-host = 127.0.0.1
-port = 3306
-db = {{ ddmail_openpgp_encryptor_mail_db }} 
-user = {{ ddmail_openpgp_encryptor_mail_db_user }}
-password = {{ ddmail_openpgp_encryptor_mail_db_user_password }}
+[MARIADB]
+HOST = '127.0.0.1'
+PORT = 3306
+DB = '{{ ddmail_openpgp_encryptor_mail_db }}' 
+USER = '{{ ddmail_openpgp_encryptor_mail_db_user }}'
+PASSWORD = '{{ ddmail_openpgp_encryptor_mail_db_user_password }}'
 
+[LOGGING]
+LOGLEVEL = 'INFO'
+LOG_TO_CONSOLE = false
+LOG_TO_FILE = false
+LOGFILE = '/var/log/ddmail_openpgp_encryptor.log'
+LOG_TO_SYSLOG = true
+SYSLOG_SERVER = '/dev/log'
