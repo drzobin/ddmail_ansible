@@ -152,32 +152,6 @@
     group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
     mode: u=rw,g=r,o=
 
-- name: Add keyring/gnupg home folder for prod.
-  ansible.builtin.file:
-    path: "{{ ddmail_openpgp_keyhandler_prod_gnupg_home }}"
-    state: directory
-    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
-    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
-    mode: "u=rwx,g=rx,o="
-  when: env == "prod"
-
-- name: Add keyring/gnupg home folder for dev.
-  ansible.builtin.file:
-    path: "{{ ddmail_openpgp_keyhandler_dev_gnupg_home }}"
-    state: directory
-    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
-    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
-    mode: "u=rwx,g=rx,o="
-  when: env == "dev"
-
-- name: Add keyring/gnupg home folder for test.
-  ansible.builtin.file:
-    path: "{{ ddmail_openpgp_keyhandler_test_gnupg_home }}"
-    state: directory
-    owner: "{{ ddmail_openpgp_keyhandler_runas_user }}"
-    group: "{{ ddmail_openpgp_keyhandler_runas_group }}"
-    mode: "u=rwx,g=rx,o="
-
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_openpgp_keyhandler quit
   become: true
