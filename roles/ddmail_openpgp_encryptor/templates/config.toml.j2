@@ -1,5 +1,5 @@
-LISTEN_ON_IP = 127.0.0.1
-SEND_TO_IP = 127.0.0.1
+LISTEN_ON_IP = '127.0.0.1'
+SEND_TO_IP = '127.0.0.1'
 GPG_BINARY_PATH = '/usr/bin/gpg'
 TMP_FOLDER = '/opt/ddmail_openpgp_encryptor/tmp'
 LISTEN_ON_PORT = 8005
@@ -8,7 +8,7 @@ SEND_TO_PORT = 10026
 [MARIADB]
 HOST = '127.0.0.1'
 PORT = 3306
-DB = '{{ ddmail_openpgp_encryptor_mail_db }}' 
+DB = '{{ ddmail_openpgp_encryptor_mail_db }}'
 USER = '{{ ddmail_openpgp_encryptor_mail_db_user }}'
 PASSWORD = '{{ ddmail_openpgp_encryptor_mail_db_user_password }}'
 
