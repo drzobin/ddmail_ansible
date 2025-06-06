@@ -10,7 +10,7 @@ User={{ ddmail_openpgp_keyhandler_runas_user }}
 Group={{ ddmail_openpgp_keyhandler_runas_group }}
 WorkingDirectory=/opt/ddmail_openpgp_keyhandler/
 Environment="PATH=/opt/ddmail_openpgp_keyhandler/venv/bin/"
-ExecStart=/opt/ddmail_openpgp_keyhandler/venv/bin/gunicorn -b 127.0.0.1:8003 --log-file /var/log/gunicorn/ddmail_openpgp_keyhandler.log --workers 2 "ddmail_openpgp_keyhandler:create_app(config_file = \"/opt/ddmail_openpgp_keyhandler/config/config.toml\")"
+ExecStart=/opt/ddmail_openpgp_keyhandler/venv/bin/gunicorn -b 127.0.0.1:8003 --workers 2 "ddmail_openpgp_keyhandler:create_app(config_file = \"/opt/ddmail_openpgp_keyhandler/config/config.toml\")"
 RuntimeDirectory=ddmail_openpgp_keyhandler
 Restart=on-failure
 RestartSec=10s
