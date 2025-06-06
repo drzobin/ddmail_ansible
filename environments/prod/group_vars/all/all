@@ -1,7 +1,6 @@
 ---
 # global vars
 env: prod
-openpgp_keyrings_folder: /opt/ddmail_keyrings
 
 # mariadb
 mariadb_mysqlservice: mysqld
@@ -153,22 +152,18 @@ ddmail_openpgp_keyhandler_dev_password: "{{ vault_ddmail_openpgp_keyhandler_dev_
 ddmail_openpgp_keyhandler_prod_password_hash: "{{ vault_ddmail_openpgp_keyhandler_prod_password_hash }}"
 ddmail_openpgp_keyhandler_test_password_hash: "{{ vault_ddmail_openpgp_keyhandler_test_password_hash }}"
 ddmail_openpgp_keyhandler_dev_password_hash: "{{ vault_ddmail_openpgp_keyhandler_dev_password_hash }}"
-ddmail_openpgp_keyhandler_prod_gnupg_home: "{{ openpgp_keyrings_folder }}"
-ddmail_openpgp_keyhandler_test_gnupg_home: /tmp/test_gnupg_home
-ddmail_openpgp_keyhandler_dev_gnupg_home: "{{ openpgp_keyrings_folder }}"
 
 # ddmail_openpgp_encryptor
 ddmail_openpgp_encryptor_user_owner: root
 ddmail_openpgp_encryptor_group_owner: root
 ddmail_openpgp_encryptor_runas_user: openpgp-keyhandler
 ddmail_openpgp_encryptor_runas_group: openpgp-keyhandler
-ddmail_openpgp_encryptor_keyrings_folder: "{{ openpgp_keyrings_folder }}"
 ddmail_openpgp_encryptor_mail_db: "{{ mail_db_name }}"
 ddmail_openpgp_encryptor_mail_db_user: "{{ mail_db_user_r }}"
 ddmail_openpgp_encryptor_mail_db_user_password: "{{ mail_db_user_r_password }}"
 
 # ddmail_backup_taker
-ddmail_backup_taker_folders_to_backup: /var/mail /var/lib/rspamd/dkim /var/lib/i2pd /etc/i2pd /var/lib/tor /etc/tor /etc/letsencrypt {{ openpgp_keyrings_folder }}
+ddmail_backup_taker_folders_to_backup: /var/mail /var/lib/rspamd/dkim /var/lib/i2pd /etc/i2pd /var/lib/tor /etc/tor /etc/letsencrypt
 ddmail_backup_taker_backup_receiver_url: https://secondary.ddmail.se/receive_backup
 ddmail_backup_taker_backup_receiver_password: "{{ ddmail_backup_receiver_prod_password }}"
 ddmail_backup_taker_pubkey_fingerprint: "{{ vault_ddmail_backup_taker_pubkey_fingerprint }}"
@@ -200,7 +195,7 @@ olefy_olevba_path: /opt/olefy_venv/bin/olevba
 
 # tor oniun service
 tor_ddmail_http_hidden_service_dir: /var/lib/tor/ddmail_http/
-tor_ddmail_hidden_service_port: 80 
+tor_ddmail_hidden_service_port: 80
 tor_ddmail_hidden_service_map: "{{ apache2_darknet_listner }}"
 tor_dovecot_hidden_service_port: 143
 tor_dovecot_hidden_service_map: 127.0.0.1:143
