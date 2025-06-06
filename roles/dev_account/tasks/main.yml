@@ -1,0 +1,108 @@
+---
+- name: Install dep packages.
+  ansible.builtin.apt:
+    name: python3-pymysql
+    update_cache: true
+    state: latest
+
+- name: Select domain from global_domains table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT domain from global_domains WHERE domain LIKE "{{ hostvars[inventory_hostname]['fqdn'] }}"
+  register: global_domains
+  when: env == "dev"
+
+- name: Insert domain to global_domains table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO global_domains (domain, is_enabled) VALUES ("{{ hostvars[inventory_hostname]['fqdn'] }}", 1)
+  when:
+    - env == "dev"
+    - global_domains.query_result[0][0]["domain"] is not defined
+
+- name: Select id for domain in global_domains table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT id from global_domains WHERE domain LIKE "{{ hostvars[inventory_hostname]['fqdn'] }}"
+  register: global_domain
+  when: env == "dev"
+
+- name: Select account from accounts table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT account from accounts WHERE account LIKE "{{ dev_account_account_name }}"
+  register: accounts
+  when: env == "dev"
+
+- name: Insert dev account in accounts table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO accounts (account, payment_token, is_enabled, is_gratis, created) VALUES ("{{ dev_account_account_name }}","A3F3G4F3D2G5", 1, 1, "{{ "%Y-%m-%d %H:%M:%S"|strftime }}")
+  when:
+    - env == "dev"
+    - accounts.query_result[0][0]["account"] is not defined
+
+- name: Select user from users table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT account_id from users WHERE user LIKE "{{ dev_account_user_name }}"
+  register: users
+  when: env == "dev"
+
+- name: Select account id from accounts table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT id from accounts WHERE account LIKE "{{ dev_account_user_name }}"
+  register: account
+  when:
+    - env == "dev"
+
+- name: Insert DEV user to users table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO users (account_id,user,password_hash,password_key_hash) VALUES ("{{ account.query_result[0][0]["id"] }}","{{ dev_account_user_name }}","{{ dev_account_user_password_hash }}","{{ dev_account_user_keyfile_hash }}")
+  when:
+    - env == "dev"
+    - users.query_result[0][0]["account_id"] is not defined
+
+- name: Select email from emails table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: SELECT email from emails WHERE email LIKE "dev@{{ hostvars[inventory_hostname]['fqdn'] }}"
+  register: emails
+  when:
+    - env == "dev"
+
+- name: Insert dev email to emails table
+  community.mysql.mysql_query:
+    login_db: "{{ mail_db_name }}"
+    login_user: "{{ mail_db_user_rw }}"
+    login_password: "{{ mail_db_user_rw_password }}"
+    query: INSERT INTO emails (account_id,global_domain_id, email, password_hash) VALUES ("{{ account.query_result[0][0]["id"] }}","{{ global_domain.query_result[0][0]["id"] }}","dev@{{ hostvars[inventory_hostname]['fqdn'] }}","{{ dev_account_email_password_hash }}")
+  when:
+    - env == "dev"
+    - emails.query_result[0][0]["email"] is not defined
+
+- name: Create devecot encryption keys for email account dev@{{ hostvars[inventory_hostname]['fqdn'] }}.
+  ansible.builtin.command: /usr/bin/doveadm -o plugin/mail_crypt_private_password="{{ dev_account_email_password_base64 }}" mailbox cryptokey generate -u dev@"{{ hostvars[inventory_hostname]['fqdn'] }}"  -U
+  when:
+    - env == "dev"
+    - emails.query_result[0][0]["email"] is not defined
