@@ -35,7 +35,7 @@ MemoryDenyWriteExecute=yes
 
 # Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/ddmail_openpgp_encryptor /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/gpg {{ openpgp_keyrings_folder }}
+BindReadOnlyPaths=/opt/ddmail_openpgp_encryptor /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /usr/bin/gpg
 BindPaths=/var/log/ddmail_openpgp_encryptor.log /dev/log /opt/ddmail_openpgp_encryptor/tmp
 
 # Deny all CAP
