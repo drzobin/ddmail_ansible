@@ -125,7 +125,9 @@ milter_default_action = accept
 # Send mail to rspamd.
 smtpd_milters = inet:localhost:11332
 
-# Send mail to ddmail content filter openpgp encryptor
+# Send mail to ddmail content filter ddmail_openpgp_encryptor, 
+# whick will check if the email should be encrypted with OpenPGP
+# the users uploaded public key.
 content_filter = scan:[127.0.0.1]:8005
 
 
@@ -136,3 +138,6 @@ default_destination_recipient_limit = 25
 # Sending mail to rspamd and opendkim
 #smtpd_milters = inet:localhost:11332, inet:localhost:12301
 #non_smtpd_milters = inet:localhost:11332, inet:localhost:12301
+
+# mail size limit 50mb
+message_size_limit = 51200000
