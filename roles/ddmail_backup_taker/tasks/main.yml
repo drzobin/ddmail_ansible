@@ -78,7 +78,7 @@
     path: /root/ddmail_backup_taker
 
 - name: Set git remote for ddmail_backup_taker
-  ansible.builtin.shell: cd /root/ddmail_backup_taker; git remote set-url origin git@github.com:drzobin/ddmail_backup_taker.git
+  ansible.builtin.shell: cd /root/ddmail_backup_taker/ddmail_backup_taker; git remote set-url origin git@github.com:drzobin/ddmail_backup_taker.git
   when: env == "dev"
 
 - name: Create/edit ddmail_backup config file /root/ddmail_backup_taker/config/config.toml
