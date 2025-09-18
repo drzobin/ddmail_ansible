@@ -110,4 +110,4 @@
     name: "Take backups"
     minute: "0"
     hour: "5"
-    job: "/root/ddmail_backup_taker/venv/bin/python3 ddmail_backup_taker --config-file /root/ddmail_backup_taker/config/config.toml > /dev/null 2>&1"
+    job: "/root/ddmail_backup_taker/venv/bin/ddmail_backup_taker --config-file /root/ddmail_backup_taker/config/config.toml > /dev/null 2>&1"
