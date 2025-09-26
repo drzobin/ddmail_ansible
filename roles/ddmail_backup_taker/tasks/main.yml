@@ -5,6 +5,7 @@
       - python3
       - tar
       - gpg
+      - secure-delete
     state: latest
 
 - name: Add gpg public key for root used during encryption of backups
@@ -49,7 +50,7 @@
     dest: /root/ddmail_backup_taker/ddmail_backup_taker
   when: env == "dev"
 
-- name: Create ddmail_backup_taker python env.
+- name: Create ddmail_backup_taker python venv.
   ansible.builtin.command: python3 -m venv /root/ddmail_backup_taker/venv
 
 - name: Install ddmail_backup_taker and requirenments for production with pip.
