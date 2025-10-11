@@ -40,3 +40,5 @@ wcmatch
 yamllint
 argon2_cffi
 flake8
+ruff
+pyright
