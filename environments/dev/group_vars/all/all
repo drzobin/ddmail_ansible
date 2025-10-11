@@ -222,10 +222,8 @@ git_global_user_email: "{{ vault_git_global_user_email }}"
 
 # dev_account
 dev_account_account_name: AAAAAAAAAAAA
-dev_account_account_password: "{{ vault_dev_account_password }}"
-dev_account_account_password_hash: "{{ vault_dev_account_password }}"
 dev_account_user_name: AAAAAAAAAAAA
-dev_account_user_password: "{{ vault_dev_user_password }}"
+dev_account_user_password: "{{ vault_dev_account_user_password }}"
 dev_account_user_password_hash: "{{ vault_dev_account_user_password_hash }}"
 dev_account_user_keyfile: "{{ vault_dev_account_user_keyfile }}"
 dev_account_user_keyfile_hash: "{{ vault_dev_account_user_keyfile_hash }}"
