@@ -117,42 +117,40 @@ if __name__ == "__main__":
     # Open output file for writing
     f = open(args.output_file, "a")
 
+    # Temporarly save all passwords in memory to be used when generating hashes.
+    passwords = {}
+
     # Parse template file line by line.
-    save = None
     for line in lines:
         if "change_me_to_password" in line:
             password = gen_pass(24)
             line = line.replace("change_me_to_password", password)
-            save = line
+            passwords[line.split(":")[0]] = password
 
             f.write(line)
-        elif "change_me_to_argon2_hash" in line and save is not None:
-            password = save.split(" ")[1]
+        elif "change_me_to_argon2_hash" in line:
+            password = passwords[line.split(":")[0].replace("_hash", "")]
             argon2i_hash = gen_hash(password)
             line = line.replace("change_me_to_argon2_hash", argon2i_hash)
 
             f.write(line)
-            save = None
         elif "change_me_to_secret_key" in line:
             key = gen_key(128)
             line = line.replace("change_me_to_secret_key", key)
 
             f.write(line)
-            save = None
         elif "vault_ddmail_backup_taker_pubkey_fingerprint" in line:
             line = line.replace(
                 "change_me", args.backup_taker_pubkey_fingerprint
             )
 
             f.write(line)
-            save = None
         elif "vault_ddmail_backup_taker_pubkey" in line:
             pub_key_data = parse_key(args.backup_taker_pubkey)
 
             data = "vault_ddmail_backup_taker_pubkey: " + pub_key_data + "\n"
 
             f.write(data)
-            save = None
         elif (
             "vault_github_ssh_pubkey" in line
             and args.github_ssh_pubkey is not None
@@ -166,7 +164,6 @@ if __name__ == "__main__":
 
             data = "vault_github_ssh_pubkey: " + pub_key_data + "\n"
             f.write(data)
-            save = None
         elif (
             "vault_github_ssh_privkey" in line
             and args.github_ssh_privkey is not None
@@ -180,10 +177,8 @@ if __name__ == "__main__":
 
             data = "vault_github_ssh_privkey: " + priv_key_data + "\n"
             f.write(data)
-            save = None
         else:
             f.write(line)
-            save = None
     f.close()
 
     print("Do not forget to encrypt the vault file with: ")
