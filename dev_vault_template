@@ -17,11 +17,6 @@ vault_mail_prod_db_user_rw_password: change_me_to_password
 vault_mail_test_db_user_rw_password: change_me_to_password
 vault_mail_dev_db_user_rw_password: change_me_to_password
 
-# mailsystem_db
-vault_mailsystem_db_dev_user_password_hash: change_me_to_argon2_hash
-vault_mailsystem_db_dev_user_file_hash: change_me_to_argon2_hash
-vault_mailsystem_db_dev_email_hash: change_me_to_argon2_hash
-
 # redis
 vault_redis_requirepass: change_me_to_password
 
