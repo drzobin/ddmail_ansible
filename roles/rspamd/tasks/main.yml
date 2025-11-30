@@ -92,27 +92,27 @@
     group: _rspamd
     mode: "u=rwx,g=rwxs,o="
 
-- name: Stat dkim key file /var/lib/rspamd/dkim/mail.key
+- name: Stat dkim key file /var/lib/rspamd/dkim/dkim1.key
   ansible.builtin.stat:
-    path: /var/lib/rspamd/dkim/mail.key
+    path: /var/lib/rspamd/dkim/dkim1.key
   register: dkim_key
 
 - name: Create dkim cert.
   ansible.builtin.shell: >
-    /usr/bin/rspamadm dkim_keygen -b 2048 -s mail -k /var/lib/rspamd/dkim/mail.key |
-    /usr/bin/tee -a /var/lib/rspamd/dkim/mail.pub
+    /usr/bin/rspamadm dkim_keygen -b 2048 -s mail -k /var/lib/rspamd/dkim/dkim1.key |
+    /usr/bin/tee -a /var/lib/rspamd/dkim/dkim1.pub
   when: not dkim_key.stat.exists
 
 - name: Set premission on dkim private key.
   ansible.builtin.file:
-    path: /var/lib/rspamd/dkim/mail.key
+    path: /var/lib/rspamd/dkim/dkim1.key
     owner: root
     group: _rspamd
     mode: "u=rwx,g=r,o="
 
 - name: Set premission on dkim pub key.
   ansible.builtin.file:
-    path: /var/lib/rspamd/dkim/mail.pub
+    path: /var/lib/rspamd/dkim/dkim1.pub
     owner: root
     group: _rspamd
     mode: "u=rwx,g=r,o="
