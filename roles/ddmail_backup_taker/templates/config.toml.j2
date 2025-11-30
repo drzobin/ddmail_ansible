@@ -17,25 +17,25 @@ SRM_BIN = '/usr/bin/srm'
 # Set to true if we should take backups of folders and/or files else false.
 USE = true
 # Space separated string containing the folders and/or files that should be backed up.
-DATA_TO_BACKUP = {{ ddmail_backup_taker_data_to_backup }}
+DATA_TO_BACKUP = '{{ ddmail_backup_taker_data_to_backup }}'
 
 [MARIADB]
 # Set to true if we should take backups of all mariadb databases else false.
 USE = true
 MARIADBDUMP_BIN = '/usr/bin/mariadb-dump'
-ROOT_PASSWORD = {{ mariadb_root_password }}
+ROOT_PASSWORD = '{{ mariadb_root_password }}'
 
 [GPG_ENCRYPTION]
 # Set to true if we should encrypt the backup file with gpg using a public key else false.
 USE = true
-PUBKEY_FINGERPRINT = {{ ddmail_backup_taker_pubkey_fingerprint }}
+PUBKEY_FINGERPRINT = '{{ ddmail_backup_taker_pubkey_fingerprint }}'
 GPG_BIN = '/usr/bin/gpg'
 
 [BACKUP_RECEIVER]
 # Set to true if we should send the backup to a remote server using ddmail_backup_receiver else false.
 USE = true
-URL = {{ ddmail_backup_taker_backup_receiver_url }}
-PASSWORD = {{ ddmail_backup_taker_backup_receiver_password }}
+URL = '{{ ddmail_backup_taker_backup_receiver_url }}'
+PASSWORD = '{{ ddmail_backup_taker_backup_receiver_password }}'
 
 [LOGGING]
 LOGLEVEL = 'INFO'
