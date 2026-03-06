@@ -1,0 +1,21 @@
+hostname: dev01
+ansible_host: "{{ external_ip }}"
+external_ip: 192.168.56.101
+ansible_ssh_user: "{{ vault_ansible_ssh_user }}"
+ansible_become_pass: "{{ vault_ansible_become_pass }}"
+# Location of TLS certificate for dovecot.
+dovecot_ssl_server_cert_file: "{{ self_signed_certs_cert }}"
+dovecot_ssl_server_key_file: "{{ self_signed_certs_key }}"
+# Location of TLS certificate for postfix.
+postfix_smtpd_tls_cert_file: "{{ self_signed_certs_cert }}"
+postfix_smtpd_tls_key_file: "{{ self_signed_certs_key }}"
+# DNS A record and PTR record for postfix myhostname needs to point to external_ip.
+postfix_myhostname: dev1.ddmail.internal
+# Location of TLS certificate for apache.
+apache2_ssl_certificate_file: "{{ self_signed_certs_cert }}"
+apache2_ssl_certificate_key_file: "{{ self_signed_certs_key }}"
+
+# Those will be redirected to its https equivalent.
+apache2_server_name:
+  - www2.ddmail.se
+  - srv02.ddmail.se

@@ -1,0 +1,40 @@
+hostname: srv02
+ansible_host: "{{ nebula_ip }}"
+external_ip: 109.74.12.239
+ansible_ssh_user: "{{ vault_ansible_ssh_user }}"
+ansible_become_pass: "{{ vault_ansible_become_pass }}"
+nebula_host_cert: "{{ vault_nebula_cert }}"
+nebula_host_key: "{{ vault_nebula_key }}"
+nebula_ip: 10.42.42.2
+# Location of TLS certificate for dovecot.
+dovecot_ssl_server_cert_file: /etc/letsencrypt/live/imap.ddmail.se/fullchain.pem
+dovecot_ssl_server_key_file: /etc/letsencrypt/live/imap.ddmail.se/privkey.pem
+# Location of TLS certificate for postfix.
+postfix_smtpd_tls_cert_file: /etc/letsencrypt/live/smtp.ddmail.se/fullchain.pem
+postfix_smtpd_tls_key_file: /etc/letsencrypt/live/smtp.ddmail.se/privkey.pem
+# DNS A record and PTR record for postfix myhostname needs to point to external_ip.
+postfix_myhostname: smtp.ddmail.se
+# Location of TLS certificate for apache.
+apache2_ssl_certificate_file: /etc/letsencrypt/live/www2.ddmail.se/fullchain.pem
+apache2_ssl_certificate_key_file: /etc/letsencrypt/live/www2.ddmail.se/privkey.pem
+
+# Those will be redirected to its https equivalent.
+apache2_server_name:
+  - www2.ddmail.se
+  - srv02.ddmail.se
+
+certbot_certs:
+  # TLS certificate for dovecot.
+  - fullchain_file: /etc/letsencrypt/live/imap.ddmail.se/fullchain.pem
+    domains:
+      - imap.ddmail.se
+  # TLS certificate for apache.
+  - fullchain_file: /etc/letsencrypt/live/www2.ddmail.se/fullchain.pem
+    domains:
+      - www2.ddmail.se
+      - srv02.ddmail.se
+  # TLS certificate for postfix.
+  - fullchain_file: /etc/letsencrypt/live/smtp.ddmail.se/fullchain.pem
+    domains:
+      - smtp.ddmail.se
+      - smtp02.ddmail.se

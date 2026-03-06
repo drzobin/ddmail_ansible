@@ -1,0 +1,9 @@
+ansible_host: "{{ nebula_ip }}"
+external_ip: 158.174.211.145
+hostname: srv03
+nebula_ip: 10.42.42.3
+
+ansible_ssh_user: "{{ vault_srv03_ansible_ssh_user }}"
+ansible_become_pass: "{{ vault_srv03_ansible_become_pass }}"
+nebula_host_cert: "{{ vault_nebula_srv03_cert }}"
+nebula_host_key: "{{ vault_nebula_srv03_key }}"
