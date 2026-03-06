@@ -6,21 +6,22 @@
       - apt-transport-https
     state: latest
 
-- name: Add rspamd apt signing key.
-  ansible.builtin.apt_key:
+- name: Download and install rpsamd GPG key
+  ansible.builtin.get_url:
     url: https://rspamd.com/apt-stable/gpg.key
-    state: present
+    dest: /etc/apt/keyrings/rspamd.gpg
+    mode: "0644"
 
 - name: Add rspamd apt repository.
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://rspamd.com/apt-stable/ bookworm main"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/rspamd.gpg] https://rspamd.com/apt-stable/ {{ ansible_distribution_release }} main"
     state: present
     filename: rspamd
     update_cache: true
 
 - name: Add rspamd src apt repository.
   ansible.builtin.apt_repository:
-    repo: "deb-src [arch=amd64] https://rspamd.com/apt-stable/ bookworm main"
+    repo: "deb-src [arch=amd64 signed-by=/etc/apt/keyrings/rspamd.gpg] https://rspamd.com/apt-stable/ {{ ansible_distribution_release }} main"
     state: present
     filename: rspamd
     update_cache: true
