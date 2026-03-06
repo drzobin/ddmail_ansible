@@ -1,111 +1,89 @@
 ---
-- name: Install dovecot packages.
+- name: Install dovecot packages
   ansible.builtin.apt:
     pkg:
       - dovecot-core
       - dovecot-imapd
       - dovecot-lmtpd
       - dovecot-mysql
-    state: latest
+      - dovecot-managesieved
+    state: present
+    update_cache: yes
 
-- name: Ensure group vmail exists with correct gid.
+- name: Ensure group vmail exists with correct gid
   ansible.builtin.group:
     name: vmail
     state: present
     gid: 5000
 
-- name: Add the user vmail.
+- name: Add the user vmail
   ansible.builtin.user:
     name: vmail
     shell: /sbin/nologin
     comment: vmail
     uid: 5000
     group: vmail
-    home: /var/vmail
+    home: /var/mail
     create_home: false
 
-- name: Create folder to store mail in.
+- name: Create mail storage directory
   ansible.builtin.file:
-    path: /var/mail
+    path: /var/mail/vhosts
     state: directory
-    owner: root
+    owner: vmail
     group: vmail
-    mode: "u=rwx,g=rwxs,o="
+    mode: "0755"
+    recurse: yes
 
-- name: Create/edit dovecot configuration file dovecot.conf.
+- name: Remove old Dovecot configuration files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/dovecot/conf.d/10-auth.conf
+    - /etc/dovecot/conf.d/10-logging.conf
+    - /etc/dovecot/conf.d/10-mail.conf
+    - /etc/dovecot/conf.d/10-master.conf
+    - /etc/dovecot/conf.d/10-ssl.conf
+    - /etc/dovecot/conf.d/10-mailcrypt.conf
+    - /etc/dovecot/conf.d/auth-sql.conf.ext
+    - /etc/dovecot/dovecot-sql.conf.ext
+
+- name: Create main dovecot configuration file
   ansible.builtin.template:
     src: dovecot.conf.j2
     dest: /etc/dovecot/dovecot.conf
     owner: root
     group: root
-    mode: "u=rw,g=r,o=r"
+    mode: "0644"
+    backup: yes
+  notify: restart dovecot
 
-- name: Create/edit dovecot configuration file conf.d/10-logging.conf.
-  ansible.builtin.template:
-    src: 10-logging.conf.j2
-    dest: /etc/dovecot/conf.d/10-logging.conf
+- name: Generate DH parameters if not present
+  ansible.builtin.command:
+    cmd: openssl dhparam -out /etc/dovecot/dh.pem 2048
+    creates: /etc/dovecot/dh.pem
+  notify: restart dovecot
+
+- name: Set ownership of DH parameters file
+  ansible.builtin.file:
+    path: /etc/dovecot/dh.pem
     owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-
-- name: Create/edit dovecot configuration file conf.d/10-mail.conf.
-  ansible.builtin.template:
-    src: 10-mail.conf.j2
-    dest: /etc/dovecot/conf.d/10-mail.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-
-- name: Create/edit dovecot configuration file conf.d/10-auth.conf.
-  ansible.builtin.template:
-    src: 10-auth.conf.j2
-    dest: /etc/dovecot/conf.d/10-auth.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-
-- name: Create/edit dovecot configuration file conf.d/auth-sql.ext.
-  ansible.builtin.template:
-    src: auth-sql.conf.ext.j2
-    dest: /etc/dovecot/conf.d/auth-sql.conf.ext
-    owner: dovecot
     group: dovecot
-    mode: "u=rw,g=r,o="
+    mode: "0640"
 
-- name: Create/edit dovecot configuration file dovecot-sql.ext.
-  ansible.builtin.template:
-    src: dovecot-sql.conf.ext.j2
-    dest: /etc/dovecot/dovecot-sql.conf.ext
-    owner: dovecot
-    group: dovecot
-    mode: "u=rw,g=r,o="
+- name: Validate Dovecot configuration
+  ansible.builtin.command:
+    cmd: doveconf -n
+  register: dovecot_config_check
+  failed_when: dovecot_config_check.rc != 0
+  changed_when: false
 
-- name: Create/edit dovecot configuration file conf.d/10-master.conf.
-  ansible.builtin.template:
-    src: 10-master.conf.j2
-    dest: /etc/dovecot/conf.d/10-master.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-
-- name: Create/edit dovecot configuration file conf.d/10-ssl.conf.
-  ansible.builtin.template:
-    src: 10-ssl.conf.j2
-    dest: /etc/dovecot/conf.d/10-ssl.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-
-- name: Create/edit dovecot configuration file conf.d/10-mailcrypt.conf.
-  ansible.builtin.template:
-    src: 10-mailcrypt.conf.j2
-    dest: /etc/dovecot/conf.d/10-mailcrypt.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-
-- name: Restart dovecot service
+- name: Start and enable dovecot service
   ansible.builtin.service:
     name: dovecot
-    state: restarted
-    enabled: true
+    state: started
+    enabled: yes
+
+- name: Create dovecot restart handler
+  ansible.builtin.meta: flush_handlers
