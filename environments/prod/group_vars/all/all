@@ -1,6 +1,7 @@
 ---
 # global vars
 env: prod
+ansible_python_interpreter: /usr/bin/python3
 
 # mariadb
 mariadb_mysqlservice: mysqld
@@ -37,8 +38,8 @@ postfix_smtpd_tls_cert_file: /etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
 postfix_smtpd_tls_key_file: /etc/letsencrypt/live/mail.ddmail.se/privkey.pem
 
 # dovecot
-dovecot_ssl_cert: </etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
-dovecot_ssl_key: </etc/letsencrypt/live/mail.ddmail.se/privkey.pem
+#dovecot_ssl_cert: /etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
+#dovecot_ssl_key: /etc/letsencrypt/live/mail.ddmail.se/privkey.pem
 
 # rspamd
 rspamd_redis_servers: "{{ redis_bind }}"
@@ -94,7 +95,6 @@ ddmail_webapp_test_spf_record: "\"v=spf1 mx -all\""
 ddmail_webapp_test_dkim_record1: dkim1._domainkey.ddmail.se.
 ddmail_webapp_test_dkim_record2: dkim2._domainkey.ddmail.se.
 ddmail_webapp_test_dkim_record3: dkim3._domainkey.ddmail.se.
-ddmail_webapp_prod_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_test_dmarc_record: "\"v=DMARC1; p=none\""
 ddmail_webapp_test_payment_bankgiro: "{{ vault_ddmail_webapp_test_payment_bankgiro }}"
 ddmail_webapp_test_i2p_address: i2p.test.address
