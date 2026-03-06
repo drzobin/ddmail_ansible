@@ -47,8 +47,8 @@ postfix_smtpd_tls_cert_file: "{{ self_signed_certs_cert }}"
 postfix_smtpd_tls_key_file: "{{ self_signed_certs_key }}"
 
 # dovecot
-dovecot_ssl_cert: "<{{ self_signed_certs_cert }}"
-dovecot_ssl_key: "<{{ self_signed_certs_key }}"
+dovecot_ssl_cert: "{{ self_signed_certs_cert }}"
+dovecot_ssl_key: "{{ self_signed_certs_key }}"
 
 # rspamd
 rspamd_redis_servers: "{{ redis_bind }}"
