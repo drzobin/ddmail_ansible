@@ -2,7 +2,7 @@
 - name: Install dep packages.
   ansible.builtin.apt:
     name: python3-pymysql
-    update_cache: true
+    #update_cache: true
     state: latest
 
 - name: Create mail system database
