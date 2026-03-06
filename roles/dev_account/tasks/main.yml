@@ -102,7 +102,7 @@
     - emails.query_result[0][0]["email"] is not defined
 
 - name: Create devecot encryption keys for email account dev@{{ hostvars[inventory_hostname]['fqdn'] }}.
-  ansible.builtin.command: /usr/bin/doveadm -o plugin/mail_crypt_private_password="{{ dev_account_email_password_base64 }}" mailbox cryptokey generate -u dev@"{{ hostvars[inventory_hostname]['fqdn'] }}"  -U
+  ansible.builtin.command: /usr/bin/doveadm -o crypt_user_key_password="{{ dev_account_email_password_base64 }}" mailbox cryptokey generate -u dev@"{{ hostvars[inventory_hostname]['fqdn'] }}"  -U
   when:
     - env == "dev"
     - emails.query_result[0][0]["email"] is not defined
