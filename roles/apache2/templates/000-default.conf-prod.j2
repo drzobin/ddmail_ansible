@@ -1,17 +1,10 @@
+{% for server_name in apache2_server_name %}
 <VirtualHost *:80>
-    ServerName ddmail.se
+    ServerName {{ server_name }}
 
-    Redirect permanent / https://ddmail.se/
+    Redirect permanent / https://{{ server_name }}
 
     ErrorLog ${APACHE_LOG_DIR}/clearnet_port80_error.log
     CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log privacy
 </VirtualHost>
-
-<VirtualHost *:80>
-    ServerName www.ddmail.se
-
-    Redirect permanent / https://www.ddmail.se/
-
-    ErrorLog ${APACHE_LOG_DIR}/clearnet_port80_error.log
-    CustomLog ${APACHE_LOG_DIR}/clearnet_port80_access.log privacy
-</VirtualHost>
+{% endfor %}
