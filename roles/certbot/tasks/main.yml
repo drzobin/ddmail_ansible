@@ -12,7 +12,7 @@
     path: /etc/letsencrypt/.registered
   register: certbot_reg_lockfile
 
-- name: Stop apache2 service
+- name: Stop apache2 service for certbot registration
   ansible.builtin.service:
     name: apache2
     state: stopped
@@ -27,37 +27,11 @@
   ansible.builtin.command: touch /etc/letsencrypt/.registered
   when: not certbot_reg_lockfile.stat.exists
 
-- name: Stat cerbot apache ssl cert for ddmail.se and www.ddmail.se
-  ansible.builtin.stat:
-    path: /etc/letsencrypt/live/ddmail.se/fullchain.pem
-  register: certbot_apache_ssl
-
-- name: Stop apache2 service
-  ansible.builtin.service:
-    name: apache2
-    state: stopped
-    enabled: true
-  when: not certbot_apache_ssl.stat.exists
-
-- name: Get apache ssl certificate for ddmail.se and www.ddmail.se
-  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 --keep --reuse-key --pre-hook "systemctl stop apache2" --post-hook "systemctl start apache2" -d ddmail.se -d www.ddmail.se -d mta-sts.ddmail.se
-  when: not certbot_apache_ssl.stat.exists
-
-- name: Stat cerbot postfix/dovecot ssl cert for mail.ddmail.se
-  ansible.builtin.stat:
-    path: /etc/letsencrypt/live/mail.ddmail.se/fullchain.pem
-  register: certbot_mail_ssl
-
-- name: Stop apache2 service
-  ansible.builtin.service:
-    name: apache2
-    state: stopped
-    enabled: true
-  when: not certbot_mail_ssl.stat.exists
-
-- name: Get postfix/dovecot ssl certificate for mail.ddmail.se
-  ansible.builtin.command: /usr/bin/certbot certonly --standalone --rsa-key-size 4096 --keep --reuse-key --pre-hook "systemctl stop apache2" --post-hook "systemctl start apache2" -d mail.ddmail.se
-  when: not certbot_mail_ssl.stat.exists
+- name: Get ssl/tls certificates
+  ansible.builtin.include_tasks: get_cert.yml
+  loop: "{{ certbot_certs }}"
+  loop_control:
+    loop_var: cert
 
 - name: Restart apache2 service
   ansible.builtin.service:
