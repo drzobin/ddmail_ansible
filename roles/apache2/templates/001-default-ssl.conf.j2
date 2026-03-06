@@ -13,8 +13,8 @@
     #SSLOpenSSLConfCmd ECDHParameters secp521r1
     #SSLOpenSSLConfCmd Curves secp521r1
 
-    SSLCertificateFile "/etc/letsencrypt/live/ddmail.se/fullchain.pem"
-    SSLCertificateKeyFile "/etc/letsencrypt/live/ddmail.se/privkey.pem"
+    SSLCertificateFile "{{ apache2_ssl_certificate_file }}"
+    SSLCertificateKeyFile "{{ apache2_ssl_certificate_key_file }}"
 
     Header always set Server "nginx"
     Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
