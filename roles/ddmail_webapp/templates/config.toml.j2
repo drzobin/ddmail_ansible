@@ -11,11 +11,17 @@
     PAYMENT_BANKGIRO = '{{ ddmail_webapp_prod_payment_bankgiro }}'
     MX_RECORD_HOST = '{{ ddmail_webapp_prod_mx_record_host }}'
     MX_RECORD_PRIORITY = '{{ ddmail_webapp_prod_mx_record_priority }}'
+    MTA_STS_MX = ['smtp.ddmail.se']
     SPF_RECORD = '{{ ddmail_webapp_prod_spf_record }}'
     DKIM_CNAME_RECORD1 = '{{ ddmail_webapp_prod_dkim_record1 }}'
     DKIM_CNAME_RECORD2 = '{{ ddmail_webapp_prod_dkim_record2 }}'
     DKIM_CNAME_RECORD3 = '{{ ddmail_webapp_prod_dkim_record3 }}'
     DMARC_RECORD = '{{ ddmail_webapp_prod_dmarc_record }}'
+    SECURITY_TXT_CONTACT = ['mailto:security@crew.ddmail.se']
+    SECURITY_TXT_EXPIRES = '2035-01-01T21:00:00.000Z'
+    SECURITY_TXT_ENCRYPTION = ['https://www.ddmail.se/static/contact_security_pubkey.asc', 'https://ddmail.se/static/contact_security_pubkey.asc']
+    SECURITY_TXT_PREFERRED_LANGUAGES = 'en,sv'
+    SECURITY_TXT_CANONICAL = ['https://www.ddmail.se/.well-known/security.txt', 'https://www.ddmail.se/security.txt', 'https://ddmail.se/.well-known/security.txt', 'https://ddmail.se/security.txt']
     TOR_ADDRESS = '{{ ddmail_webapp_prod_tor_address }}'
     I2P_ADDRESS = '{{ ddmail_webapp_prod_i2p_address }}'
     [PRODUCTION.LOGGING]
@@ -38,12 +44,18 @@
     PAYMENT_BANKGIRO = '{{ ddmail_webapp_test_payment_bankgiro }}'
     MX_RECORD_HOST = '{{ ddmail_webapp_test_mx_record_host }}'
     MX_RECORD_PRIORITY = '{{ ddmail_webapp_test_mx_record_priority }}'
+    MTA_STS_MX = ['smtp.ddmail.se']
     SPF_RECORD = '{{ ddmail_webapp_test_spf_record }}'
     DKIM_CNAME_RECORD1 = '{{ ddmail_webapp_test_dkim_record1 }}'
     DKIM_CNAME_RECORD2 = '{{ ddmail_webapp_test_dkim_record2 }}'
     DKIM_CNAME_RECORD3 = '{{ ddmail_webapp_test_dkim_record3 }}'
     DMARC_RECORD = '{{ ddmail_webapp_test_dmarc_record }}'
-    TOR_ADDRESS = '{{ ddmail_webapp_test_tor_address }}'
+    SECURITY_TXT_CONTACT = ['mailto:security@crew.ddmail.se']
+    SECURITY_TXT_EXPIRES = '2035-01-01T21:00:00.000Z'
+    SECURITY_TXT_ENCRYPTION = ['https://www.ddmail.se/static/contact_security_pubkey.asc', 'https://ddmail.se/static/contact_security_pubkey.asc']
+    SECURITY_TXT_PREFERRED_LANGUAGES = 'en,sv'
+    SECURITY_TXT_CANONICAL = ['https://www.ddmail.se/.well-known/security.txt', 'https://www.ddmail.se/security.txt', 'https://ddmail.se/.well-known/security.txt', 'https://ddmail.se/security.txt']
+    TOR_ADDRESS = '{{ ddmail_webapp_prod_tor_address }}'
     I2P_ADDRESS = '{{ ddmail_webapp_test_i2p_address }}'
     [TESTING.LOGGING]
         LOGLEVEL = 'DEBUG'
@@ -65,12 +77,18 @@
     PAYMENT_BANKGIRO = '{{ ddmail_webapp_dev_payment_bankgiro }}'
     MX_RECORD_HOST = '{{ ddmail_webapp_dev_mx_record_host }}'
     MX_RECORD_PRIORITY = '{{ ddmail_webapp_dev_mx_record_priority }}'
+    MTA_STS_MX = ['smtp.ddmail.se']
     SPF_RECORD = '{{ ddmail_webapp_dev_spf_record }}'
     DKIM_CNAME_RECORD1 = '{{ ddmail_webapp_dev_dkim_record1 }}'
     DKIM_CNAME_RECORD2 = '{{ ddmail_webapp_dev_dkim_record2 }}'
     DKIM_CNAME_RECORD3 = '{{ ddmail_webapp_dev_dkim_record3 }}'
     DMARC_RECORD = '{{ ddmail_webapp_dev_dmarc_record }}'
-    TOR_ADDRESS = '{{ ddmail_webapp_dev_tor_address }}'
+    SECURITY_TXT_CONTACT = ['mailto:security@crew.ddmail.se']
+    SECURITY_TXT_EXPIRES = '2035-01-01T21:00:00.000Z'
+    SECURITY_TXT_ENCRYPTION = ['https://www.ddmail.se/static/contact_security_pubkey.asc', 'https://ddmail.se/static/contact_security_pubkey.asc']
+    SECURITY_TXT_PREFERRED_LANGUAGES = 'en,sv'
+    SECURITY_TXT_CANONICAL = ['https://www.ddmail.se/.well-known/security.txt', 'https://www.ddmail.se/security.txt', 'https://ddmail.se/.well-known/security.txt', 'https://ddmail.se/security.txt']
+    TOR_ADDRESS = '{{ ddmail_webapp_prod_tor_address }}'
     I2P_ADDRESS = '{{ ddmail_webapp_dev_i2p_address }}'
     [DEVELOPMENT.LOGGING]
         LOGLEVEL = 'DEBUG'
