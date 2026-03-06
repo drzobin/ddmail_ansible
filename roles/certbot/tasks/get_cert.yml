@@ -1,0 +1,20 @@
+---
+- name: "Stat certbot ssl cert {{ cert.domains[0] }}"
+  ansible.builtin.stat:
+    path: "{{ cert.fullchain_file }}"
+  register: certbot_cert_file
+
+- name: "Stop apache2 service for {{ cert.domains[0] }}"
+  ansible.builtin.service:
+    name: apache2
+    state: stopped
+    enabled: true
+  when: not certbot_cert_file.stat.exists
+
+- name: "Get ssl certificate for {{ cert.domains | join(', ') }}"
+  ansible.builtin.command: >-
+    /usr/bin/certbot certonly --standalone --rsa-key-size 4096 --keep --reuse-key
+    --pre-hook "systemctl stop apache2"
+    --post-hook "systemctl start apache2"
+    {{ cert.domains | map('regex_replace', '^', '-d ') | join(' ') }}
+  when: not certbot_cert_file.stat.exists
