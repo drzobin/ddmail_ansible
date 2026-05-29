@@ -10,6 +10,7 @@
   ansible.builtin.template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
+    backup: yes
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
@@ -26,6 +27,7 @@
   ansible.builtin.template:
     src: master.cf.j2
     dest: /etc/postfix/master.cf
+    backup: yes
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
