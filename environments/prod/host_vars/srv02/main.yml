@@ -15,13 +15,14 @@ postfix_smtpd_tls_key_file: /etc/letsencrypt/live/smtp.ddmail.se/privkey.pem
 # DNS A record and PTR record for postfix myhostname needs to point to external_ip.
 postfix_myhostname: smtp.ddmail.se
 # Location of TLS certificate for apache.
-apache2_ssl_certificate_file: /etc/letsencrypt/live/www2.ddmail.se/fullchain.pem
-apache2_ssl_certificate_key_file: /etc/letsencrypt/live/www2.ddmail.se/privkey.pem
+apache2_ssl_certificate_file: /etc/letsencrypt/live/ddmail.se/fullchain.pem
+apache2_ssl_certificate_key_file: /etc/letsencrypt/live/ddmail.se/privkey.pem
 
 # Those will be redirected to its https equivalent.
 apache2_server_name:
-  - www2.ddmail.se
-  - srv02.ddmail.se
+  - ddmail.se
+  - www.ddmail.se
+  - mta-sts.ddmail.se
 
 certbot_certs:
   # TLS certificate for dovecot.
@@ -29,10 +30,11 @@ certbot_certs:
     domains:
       - imap.ddmail.se
   # TLS certificate for apache.
-  - fullchain_file: /etc/letsencrypt/live/www2.ddmail.se/fullchain.pem
+  - fullchain_file: /etc/letsencrypt/live/ddmail.se/fullchain.pem
     domains:
-      - www2.ddmail.se
-      - srv02.ddmail.se
+      - ddmail.se
+      - www.ddmail.se
+      - mta-sts.ddmail.se
   # TLS certificate for postfix.
   - fullchain_file: /etc/letsencrypt/live/smtp.ddmail.se/fullchain.pem
     domains:
