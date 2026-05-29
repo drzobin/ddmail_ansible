@@ -3,6 +3,7 @@ ansible_host: "{{ external_ip }}"
 external_ip: 192.168.56.101
 ansible_ssh_user: "{{ vault_ansible_ssh_user }}"
 ansible_become_pass: "{{ vault_ansible_become_pass }}"
+ansible_python_interpreter: /usr/bin/python3.13
 # Location of TLS certificate for dovecot.
 dovecot_ssl_server_cert_file: "{{ self_signed_certs_cert }}"
 dovecot_ssl_server_key_file: "{{ self_signed_certs_key }}"
