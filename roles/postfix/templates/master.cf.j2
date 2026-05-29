@@ -29,26 +29,35 @@ smtp      inet  n       -       y       -       -       smtpd
 #  -o smtpd_recipient_restrictions=
 #  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
 #  -o milter_macro_daemon_name=ORIGINATING
+#
+# Used for authenticated users port 465 over internet
 smtps     inet  n       -       -       -       -       smtpd
   -o syslog_name=postfix/smtps
   -o smtpd_tls_wrappermode=yes
   -o smtpd_sasl_auth_enable=yes
   -o smtpd_sasl_type=dovecot
   -o smtpd_sasl_path=private/auth
+  -o smtpd_sasl_security_options=noanonymous,noplaintext
+  -o smtpd_sasl_tls_security_options=noanonymous
   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o smtpd_sender_restrictions=reject_authenticated_sender_login_mismatch,reject_unauthenticated_sender_login_mismatch
+  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
+  -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject
   -o milter_macro_daemon_name=ORIGINATING
 #
-# Used for tor onion and i2p service
+# Used for authenticated users for tor onion and i2p service
 127.0.0.1:10025      inet  n       -       -       -       -       smtpd
   -o syslog_name=postfix/smtpd/tor_i2p_service
-  -o smtpd_use_tls=no
-  -o smtpd_tls_auth_only=no
+  -o smtpd_tls_security_level=none
   -o smtpd_sasl_auth_enable=yes
   -o smtpd_sasl_type=dovecot
   -o smtpd_sasl_path=private/auth
-  -o smtpd_sasl_security_options=noanonymous
+  -o smtpd_sasl_security_options=noanonymous,noplaintext
   -o smtpd_sasl_tls_security_options=noanonymous
   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o smtpd_sender_restrictions=reject_authenticated_sender_login_mismatch,reject_unauthenticated_sender_login_mismatch
+  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
+  -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject
   -o milter_macro_daemon_name=ORIGINATING
 #
 # Used for ddmail openpgp encryptor
@@ -56,7 +65,7 @@ scan      unix  -       -       n       -       10      smtp
   -o smtp_send_xforward_command=yes
   -o disable_mime_output_conversion=yes
   -o smtp_generic_maps=
-  -o disable_dns_lookups=yes
+  -o smtp_dns_support_level=disabled
 #
 127.0.0.1:10026 inet    n   -   n   -   10  smtpd
   -o content_filter=
