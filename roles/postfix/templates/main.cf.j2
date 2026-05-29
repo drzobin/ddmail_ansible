@@ -31,6 +31,11 @@ disable_vrfy_command=yes
 # Require HELO EHLO
 smtpd_helo_required=yes
 
+smtpd_helo_restrictions =
+        permit_mynetworks,
+        reject_invalid_helo_hostname,
+        reject_non_fqdn_helo_hostname
+
 # TLS configuration
 smtpd_tls_cert_file = {{ postfix_smtpd_tls_cert_file }}
 smtpd_tls_key_file = {{ postfix_smtpd_tls_key_file }}
@@ -39,8 +44,8 @@ smtpd_tls_key_file = {{ postfix_smtpd_tls_key_file }}
 #smtp_tls_security_level = may
 smtpd_tls_security_level = may
 
-smtpd_use_tls = yes
-smtp_use_tls = yes
+#smtpd_use_tls = yes
+#smtp_use_tls = yes
 
 smtpd_tls_auth_only = yes
 
@@ -78,28 +83,27 @@ smtpd_data_restrictions = reject_unauth_pipelining
 smtpd_forbid_unauth_pipelining = yes
 
 # sasl configuration
-smtpd_sasl_security_options = noanonymous, noplaintext
-smtpd_sasl_tls_security_options = noanonymous
-
-smtpd_sasl_type = dovecot
-smtpd_sasl_path = private/auth
-smtpd_sasl_auth_enable = yes
+#smtpd_sasl_security_options = noanonymous, noplaintext
+#smtpd_sasl_tls_security_options = noanonymous
+#smtpd_sasl_type = dovecot
+#smtpd_sasl_path = private/auth
+# only allow sasl authentication using smtp wrapped in tls on port 465
+smtpd_sasl_auth_enable = no
 
 smtpd_recipient_restrictions =
-        permit_sasl_authenticated,
         permit_mynetworks,
         reject_unauth_destination
 
-smtpd_sender_restrictions =
-	reject_authenticated_sender_login_mismatch,
-	reject_unauthenticated_sender_login_mismatch
+#smtpd_sender_restrictions =
+#	reject_authenticated_sender_login_mismatch,
+#	reject_unauthenticated_sender_login_mismatch
 
-smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+smtpd_relay_restrictions = permit_mynetworks defer_unauth_destination
 
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 mydestination = localhost
-relayhost = 
+relayhost =
 #mynetworks = 127.0.0.0/8
 mynetworks =
 mailbox_size_limit = 0
@@ -121,10 +125,13 @@ milter_protocol = 6
 # skip mail without checks if something goes wrong
 milter_default_action = accept
 
+# send information about the mail to the milter
+milter_mail_macros = i {mail_addr} {client_addr} {client_name} {auth_authen}
+
 # Send mail to rspamd.
 smtpd_milters = inet:localhost:11332
 
-# Send mail to ddmail content filter ddmail_openpgp_encryptor, 
+# Send mail to ddmail content filter ddmail_openpgp_encryptor,
 # whick will check if the email should be encrypted with OpenPGP
 # the users uploaded public key.
 content_filter = scan:[127.0.0.1]:8005
