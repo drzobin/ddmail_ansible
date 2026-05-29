@@ -67,7 +67,7 @@ LockPersonality=yes
 # When set, sets up a new UTS namespace for the executed processes. In addition, changing hostname or domainname is prevented.
 ProtectHostname=yes
 
-# If true, sets up a new user namespace for the executed processes and configures a minimal user and group mapping, that maps the "root" user and group as well as the unit's own user and group to themselves and everything else to the "nobody" user and group. 
+# If true, sets up a new user namespace for the executed processes and configures a minimal user and group mapping, that maps the "root" user and group as well as the unit's own user and group to themselves and everything else to the "nobody" user and group.
 PrivateUsers=true
 
 # Dirs that is inaccessible
@@ -75,12 +75,12 @@ PrivateUsers=true
 
 # Create a filesystem jail with namespace
 TemporaryFileSystem=/:ro
-BindReadOnlyPaths=/opt/olefy_venv /usr/bin/python3.11 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.11 /bin/kill /usr/share/misc/magic /usr/share/misc
+BindReadOnlyPaths=/opt/olefy_venv /usr/bin/python3.13 /usr/bin/python3 /lib/x86_64-linux-gnu /lib64 /usr/lib/python3.13 /bin/kill /usr/share/misc/magic /usr/share/misc
 #BindPaths=/tmp
 
 
 # CAP filter whitelist
-CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_SETUID CAP_SETGID CAP_CHOWN 
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_SETUID CAP_SETGID CAP_CHOWN
 AmbientCapabilities=
 
 # System call filter whitelist @system-service deny all other, for more information regaring what system calls that is included run: systemd-analyze syscall-filter
