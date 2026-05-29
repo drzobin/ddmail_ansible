@@ -1,3 +1,15 @@
+# Sign authenticated and local
+sign_authenticated = true;
+sign_local = false;
+
+# Do not sign inbound mail
+sign_inbound = false;
+
+# Do not allow username mismatch of SASL authenticated username and the From: header domain.
+allow_username_mismatch = false;
+
+# Only sign when daemon_name is ORIGINATING
+use_milter_vars = true;
+
 selector = "dkim1";
 path = "/var/lib/rspamd/dkim/$selector.key";
-allow_username_mismatch = true;
