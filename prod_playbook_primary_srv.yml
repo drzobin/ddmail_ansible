@@ -10,6 +10,7 @@
     - general_packages
     - disable_ipv6
     - inaccessible_dirs
+    - chrony
     - nebula
     - nftables
     - sshd
@@ -36,4 +37,4 @@
     - apache2
     - tor_onion_service
     - i2pd
-    #- ddmail_backup_taker
+    - ddmail_backup_taker
