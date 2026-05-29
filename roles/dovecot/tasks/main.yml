@@ -16,7 +16,14 @@
     state: present
     gid: 5000
 
-- name: Add the user vmail
+- name: Check if vmail user exists
+  ansible.builtin.getent:
+    database: passwd
+    key: vmail
+  ignore_errors: true
+  register: vmail_user
+
+- name: Add the user vmail if it do not exist
   ansible.builtin.user:
     name: vmail
     shell: /sbin/nologin
@@ -25,6 +32,7 @@
     group: vmail
     home: /var/mail
     create_home: false
+  when: vmail_user.failed
 
 - name: Create mail storage directory
   ansible.builtin.file:
