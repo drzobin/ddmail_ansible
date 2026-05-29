@@ -5,7 +5,7 @@ Ansible for the DDMail project.
 DDMail is a e-mail system/service that prioritizes security. A current production example can be found at www.ddmail.se
 
 ## Operating system
-Developt for and tested on debian 12.
+Developt for and tested on debian 13.
 
 ## Installation and setup for dev
 The development environment is designed to be run locally on your computer on two separate vms. Those two vms needs to have access to each other and the host over a host only network. Those vms also needs to be able to reach internet over ipv4, recommended is to add a secondary network card with NAT. The development servers should not be reached from internet. The two vms will have there own seperate ddmail systems, seperate local domains dev1.ddmail.internal and dev2.ddmail.internal. They will be able to send email to each other using the host only network using those domains. Both vms needs to install sshd and python3. Set up ssh key authentication for the user dev. Setup user dev to be able to use su.
