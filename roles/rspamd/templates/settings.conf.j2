@@ -1,0 +1,14 @@
+authenticated {
+  priority = high;
+  authenticated = yes;
+  id = "authenticated";
+
+  apply {
+    groups_disabled = ["rbl", "spf", "dmarc"];
+    actions {
+      reject = 15.0;
+      add_header = 6.0;
+      greylist = null;
+    }
+  }
+}
