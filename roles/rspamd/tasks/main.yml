@@ -206,6 +206,14 @@
     group: root
     mode: "u=rwx,g=r,o=r"
 
+- name: Create/edit rspamd configuration file for autenticated users /etc/rspamd/local.d/settings.conf.
+  ansible.builtin.template:
+    src: settings.conf.j2
+    dest: /etc/rspamd/local.d/settings.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=r,o=r"
+
 - name: Create/edit rspamd configuration file for apparmor profile /etc/apparmor.d/usr.bin.rspamd
   ansible.builtin.template:
     src: apparmor_profile.j2
