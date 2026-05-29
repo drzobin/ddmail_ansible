@@ -5,6 +5,13 @@
     state: present
     gid: 5000
 
+- name: Check if vmail user exists
+  ansible.builtin.getent:
+    database: passwd
+    key: vmail
+  ignore_errors: true
+  register: vmail_user_check
+
 - name: Add the user vmail
   ansible.builtin.user:
     name: vmail
@@ -14,6 +21,7 @@
     group: vmail
     home: /var/vmail
     create_home: false
+  when: vmail_user_check.failed
 
 - name: Create folder to /var/mail
   ansible.builtin.file:
@@ -38,7 +46,6 @@
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
-
 
 - name: Create folder /etc/dovecot
   ansible.builtin.file:
@@ -134,7 +141,7 @@
   ansible.builtin.file:
     path: /var/lib/tor
     state: directory
-    owner: debian-tor 
+    owner: debian-tor
     group: debian-tor
     mode: "u=rwx,g=s,o="
 
