@@ -10,6 +10,6 @@
       - htop
       - apparmor-utils
       - auditd
-      - dnsutils
+      - bind9-dnsutils
       - telnet
     state: latest
