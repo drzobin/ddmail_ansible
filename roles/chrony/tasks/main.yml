@@ -1,0 +1,33 @@
+---
+- name: Install chrony packages.
+  ansible.builtin.apt:
+    pkg:
+      - chrony
+    state: latest
+
+- name: Create/edit chrony configuration file /etc/chrony/chrony.conf.
+  ansible.builtin.template:
+    src: chrony.conf.j2
+    dest: /etc/chrony/chrony.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Create/edit chrony configuration file /etc/chrony/sources.d/nts-server.sources.
+  ansible.builtin.template:
+    src: nts-server.sources.j2
+    dest: /etc/chrony/sources.d/nts-server.sources
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Enable service
+  ansible.builtin.systemd:
+    name: chrony
+    enabled: true
+
+- name: Restart chrony service
+  ansible.builtin.service:
+    name: chrony
+    state: restarted
+    enabled: true
