@@ -1,0 +1,5 @@
+# Redact IP addresses from postfix submission logs
+if ($programname == 'postfix/tor_i2p_service/smtpd' or $programname == 'postfix/smtps/smtpd') then {
+    set $msg = replace($msg, re_match($msg, '\[([0-9]{1,3}\.){3}[0-9]{1,3}\]'), '[REDACTED]');
+    action(type="omfile" file="/var/log/mail.log")
+}
