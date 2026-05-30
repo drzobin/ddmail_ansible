@@ -4,3 +4,38 @@
     pkg:
       - rsyslog
     state: latest
+
+- name: Create/edit rsyslog configuration file /etc/rsyslog.d/postfix.conf
+  ansible.builtin.template:
+    src: postfix.conf.j2
+    dest: /etc/rsyslog.d/postfix.conf
+    backup: no
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: Restart rsyslog
+
+- name: Create/edit journald configuration file /etc/systemd/journald.conf
+  ansible.builtin.template:
+    src: journald.conf.j2
+    dest: /etc/systemd/journald.conf
+    backup: no
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: Restart journald
+
+- name: Restart journald
+  ansible.builtin.systemd:
+    name: systemd-journald
+    state: restarted
+
+- name: Remove /var/log/journal if it exists
+  ansible.builtin.file:
+    path: /var/log/journal
+    state: absent
+
+- name: Restart rsyslog
+  ansible.builtin.systemd:
+    name: rsyslog
+    state: restarted
