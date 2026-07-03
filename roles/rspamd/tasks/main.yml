@@ -230,18 +230,12 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
-- name: Set rspamd appormor profile to enforce.
-  ansible.builtin.command: /usr/sbin/aa-enforce /etc/apparmor.d/usr.bin.rspamd
+- name: Load rspamd apparmor profile in enforce mode.
+  ansible.builtin.command: /sbin/apparmor_parser -r /etc/apparmor.d/usr.bin.rspamd
 
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
-
-- name: Restart apparmor service
-  ansible.builtin.service:
-    name: apparmor
-    state: restarted
-    enabled: true
 
 - name: Restart rspamd service
   ansible.builtin.service:
