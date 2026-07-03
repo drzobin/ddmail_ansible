@@ -1,4 +1,4 @@
-#include <tunables/global>
+include <tunables/global>
 
 /usr/bin/rspamd {
   include <abstractions/base>
@@ -13,7 +13,7 @@
   /etc/resolv.conf r,
   /etc/rspamd/** r,
   /sys/kernel/mm/transparent_hugepage/enabled r,
-  /usr/bin/rspamd mr,
+  /usr/bin/rspamd mrix,
   /usr/share/rspamd/** r,
   /var/lib/rspamd/** r,
   /run/clamav/clamd.ctl rw,
@@ -24,4 +24,3 @@
   owner /var/log/rspamd/rspamd.log w,
 
 }
-
