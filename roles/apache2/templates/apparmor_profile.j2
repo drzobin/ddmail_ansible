@@ -1,0 +1,96 @@
+# AppArmor profile for Apache2 customized for ddmail
+
+include <tunables/global>
+
+/usr/sbin/apache2 {
+  include <abstractions/base>
+  include <abstractions/nameservice>
+  include <abstractions/openssl>
+  include <abstractions/ssl_certs>
+
+  # Capabilities required by Apache2
+  capability net_bind_service,
+  capability setuid,
+  capability setgid,
+  capability chown,
+  capability kill,
+  capability dac_override,
+
+  # Network access - TCP listen on configured ports and connect to backend
+  network inet stream,
+  network unix stream,
+
+  # Signal handling (parent <-> child worker communication)
+  signal send peer=/usr/sbin/apache2,
+  signal receive peer=/usr/sbin/apache2,
+
+  # Apache2 binaries
+  /usr/sbin/apache2 mrix,
+  /usr/sbin/apachectl r,
+  /usr/lib/apache2/modules/*.so mr,
+
+  # Apache2 configuration
+  /etc/apache2/** r,
+  /etc/modsecurity/ r,
+  /etc/modsecurity/** r,
+
+  # MIME types and magic
+  /etc/mime.types r,
+  /etc/magic r,
+
+  # SSL/TLS certificates
+  {{ apache2_ssl_certificate_file }} r,
+  {{ apache2_ssl_certificate_key_file }} r,
+{% if env == "dev" %}
+  /etc/self_signed_certs/** r,
+{% endif %}
+{% if env == "prod" %}
+  /etc/letsencrypt/** r,
+  /etc/letsencrypt/live/** r,
+  /etc/letsencrypt/archive/** r,
+{% endif %}
+  /usr/share/ca-certificates/** r,
+  /etc/ssl/** r,
+
+  # SSL passphrase dialog script
+  /usr/share/apache2/ask-for-passphrase rix,
+
+  # Random number generation
+  /dev/urandom r,
+
+  # Log files
+  /var/log/apache2/ r,
+  /var/log/apache2/** rw,
+
+  # mod_evasive log directory
+  /var/log/apache/mod_evasive/ r,
+  /var/log/apache/mod_evasive/** rw,
+
+  # ModSecurity temp and data directories
+  /tmp/ r,
+  /tmp/** rw,
+  /var/cache/modsecurity/ r,
+  /var/cache/modsecurity/** rw,
+
+  # Runtime directory (PID file, SSL session cache, lock files)
+  /run/apache2/ r,
+  /run/apache2/** rwk,
+
+  # Apache2 shared data and default content
+  /usr/share/apache2/** r,
+
+  # System libraries and locale data
+  /usr/lib/x86_64-linux-gnu/** mr,
+  /usr/lib/aarch64-linux-gnu/** mr,
+  /usr/share/zoneinfo/** r,
+  /etc/localtime r,
+  /etc/gai.conf r,
+
+  # /proc and /sys entries needed by Apache2
+  @{PROC}/@{pid}/status r,
+  @{PROC}/@{pid}/fd/ r,
+  @{PROC}/sys/kernel/ngroups_max r,
+  /sys/kernel/mm/transparent_hugepage/enabled r,
+
+
+}
