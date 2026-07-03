@@ -1,0 +1,9 @@
+- name: rebuild header_checks
+  ansible.builtin.command: postmap /etc/postfix/header_checks
+  changed_when: true
+  notify: reload postfix
+
+- name: reload postfix
+  ansible.builtin.service:
+    name: postfix
+    state: reloaded
