@@ -19,7 +19,9 @@
 [Journal]
 ForwardToSyslog=yes
 Storage=none
+#Storage=persistent
 #Storage=auto
+#Storage=volatile
 #Compress=yes
 #Seal=yes
 #SplitMode=uid
@@ -30,7 +32,7 @@ Storage=none
 #SystemKeepFree=
 #SystemMaxFileSize=
 #SystemMaxFiles=100
-#RuntimeMaxUse=
+RuntimeMaxUse=5M
 #RuntimeKeepFree=
 #RuntimeMaxFileSize=
 #RuntimeMaxFiles=100
