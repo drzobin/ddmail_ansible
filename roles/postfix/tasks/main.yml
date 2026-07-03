@@ -56,6 +56,15 @@
     group: root
     mode: "u=rw,g=r,o="
 
+- name: Install header_checks file
+  ansible.builtin.copy:
+    src: header_checks
+    dest: /etc/postfix/header_checks
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: rebuild header_checks
+
 - name: Restart postfix service
   ansible.builtin.service:
     name: postfix
