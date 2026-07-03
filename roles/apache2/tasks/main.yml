@@ -107,7 +107,7 @@
 - name: Create/edit apache2 config file /etc/apache2/modsecurity-crs/crs-setup.conf
   ansible.builtin.template:
     src: crs-setup.conf.j2
-    dest: /etc/apache2/modsecurity-crs/crs-setup.conf 
+    dest: /etc/apache2/modsecurity-crs/crs-setup.conf
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
@@ -158,8 +158,8 @@
   when: env == "prod"
 
 - name: Create/edit apache2 config file /etc/apache2/sites-available/002-darknet.conf
-  template: 
-    src: 002-darknet.conf.j2 
+  template:
+    src: 002-darknet.conf.j2
     dest: /etc/apache2/sites-available/002-darknet.conf
     owner: root
     group: root
@@ -169,6 +169,17 @@
 - name: Enable apache2 site 002-darknet.conf
   ansible.builtin.command: /usr/sbin/a2ensite 002-darknet.conf
   when: env == "prod"
+
+- name: Create/edit apache2 apparmor profile /etc/apparmor.d/usr.sbin.apache2
+  ansible.builtin.template:
+    src: apparmor_profile.j2
+    dest: /etc/apparmor.d/usr.sbin.apache2
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Load apache2 apparmor profile in enforce mode.
+  ansible.builtin.command: /sbin/apparmor_parser -r /etc/apparmor.d/usr.sbin.apache2
 
 - name: Reload systemd
   ansible.builtin.systemd:
