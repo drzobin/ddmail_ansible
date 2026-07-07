@@ -2,6 +2,7 @@
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_prod_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_prod_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_prod_sqlalchemy_database_uri }}'
+    MAX_CONTENT_LENGTH = 131072
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_prod_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
@@ -37,6 +38,8 @@
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_test_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_test_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_test_sqlalchemy_database_uri }}'
+    MAX_CONTENT_LENGTH = 131072
+    EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_test_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
@@ -72,6 +75,8 @@
     WTF_CSRF_SECRET_KEY = '{{ ddmail_webapp_dev_wtf_csrf_secret_key }}'
     SECRET_KEY = '{{ ddmail_webapp_dev_secret_key }}'
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_dev_sqlalchemy_database_uri }}'
+    MAX_CONTENT_LENGTH = 131072
+    EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_dev_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
