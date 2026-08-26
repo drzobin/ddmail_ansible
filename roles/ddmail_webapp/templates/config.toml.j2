@@ -18,6 +18,7 @@
     DKIM_CNAME_RECORD2 = '{{ ddmail_webapp_prod_dkim_record2 }}'
     DKIM_CNAME_RECORD3 = '{{ ddmail_webapp_prod_dkim_record3 }}'
     DMARC_RECORD = '{{ ddmail_webapp_prod_dmarc_record }}'
+    ACCOUNT_DOMAIN_VERIFICATION = 'ddmail-verification='
     SMTP_SERVER = 'smtp.ddmail.se'
     IMAP_SERVER = 'imap.ddmail.se'
     SECURITY_TXT_CONTACT = ['mailto:security@crew.ddmail.se']
@@ -40,7 +41,6 @@
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_test_sqlalchemy_database_uri }}'
     MAX_CONTENT_LENGTH = 131072
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
-    EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_test_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
     DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dmcp_keyhandler_test_password }}'
@@ -55,6 +55,7 @@
     DKIM_CNAME_RECORD2 = '{{ ddmail_webapp_test_dkim_record2 }}'
     DKIM_CNAME_RECORD3 = '{{ ddmail_webapp_test_dkim_record3 }}'
     DMARC_RECORD = '{{ ddmail_webapp_test_dmarc_record }}'
+    ACCOUNT_DOMAIN_VERIFICATION = 'ddmail-verification='
     SMTP_SERVER = 'smtp.ddmail.se'
     IMAP_SERVER = 'imap.ddmail.se'
     SECURITY_TXT_CONTACT = ['mailto:security@crew.ddmail.se']
@@ -77,7 +78,6 @@
     SQLALCHEMY_DATABASE_URI = '{{ ddmail_webapp_dev_sqlalchemy_database_uri }}'
     MAX_CONTENT_LENGTH = 131072
     EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
-    EMAIL_REMOVER_URL = 'http://127.0.0.1:8001'
     EMAIL_REMOVER_PASSWORD = '{{ ddmail_email_remover_dev_password }}'
     DMCP_KEYHANDLER_URL = 'http://127.0.0.1:8002'
     DMCP_KEYHANDLER_PASSWORD = '{{ ddmail_dmcp_keyhandler_dev_password }}'
@@ -92,6 +92,7 @@
     DKIM_CNAME_RECORD2 = '{{ ddmail_webapp_dev_dkim_record2 }}'
     DKIM_CNAME_RECORD3 = '{{ ddmail_webapp_dev_dkim_record3 }}'
     DMARC_RECORD = '{{ ddmail_webapp_dev_dmarc_record }}'
+    ACCOUNT_DOMAIN_VERIFICATION = 'ddmail-verification='
     SMTP_SERVER = 'smtp.ddmail.se'
     IMAP_SERVER = 'imap.ddmail.se'
     SECURITY_TXT_CONTACT = ['mailto:security@crew.ddmail.se']
