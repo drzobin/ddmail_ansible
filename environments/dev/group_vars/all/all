@@ -90,7 +90,7 @@ ddmail_webapp_prod_spf_record: "\"v=spf1 mx -all\""
 ddmail_webapp_prod_dkim_record1: dkim1._domainkey.ddmail.se.
 ddmail_webapp_prod_dkim_record2: dkim2._domainkey.ddmail.se.
 ddmail_webapp_prod_dkim_record3: dkim3._domainkey.ddmail.se.
-ddmail_webapp_prod_dmarc_record: "\"v=DMARC1; p=none\""
+ddmail_webapp_prod_dmarc_record: "\"v=DMARC1; p=quarantine\""
 ddmail_webapp_prod_payment_bankgiro: "{{ vault_ddmail_webapp_prod_payment_bankgiro }}"
 ddmail_webapp_prod_i2p_address: lqvvhl4e5rtz75khof6iku5vbf7cgaghfoi36dbcyc2nlvdqm6ca.b32.i2p
 ddmail_webapp_prod_tor_address: ty6nw3vuckv4cwjwwljr32v2vv4btawi7oemx3ayivdknhcziaspwtad.onion
@@ -103,7 +103,7 @@ ddmail_webapp_test_spf_record: "\"v=spf1 mx -all\""
 ddmail_webapp_test_dkim_record1: dkim1._domainkey.ddmail.se.
 ddmail_webapp_test_dkim_record2: dkim2._domainkey.ddmail.se.
 ddmail_webapp_test_dkim_record3: dkim3._domainkey.ddmail.se.
-ddmail_webapp_test_dmarc_record: "\"v=DMARC1; p=none\""
+ddmail_webapp_test_dmarc_record: "\"v=DMARC1; p=quarantine\""
 ddmail_webapp_test_payment_bankgiro: "{{ vault_ddmail_webapp_test_payment_bankgiro }}"
 ddmail_webapp_test_i2p_address: i2p.test.address
 ddmail_webapp_test_tor_address: tor.test.address
@@ -116,7 +116,7 @@ ddmail_webapp_dev_spf_record: "\"v=spf1 mx -all\""
 ddmail_webapp_dev_dkim_record1: dkim1._domainkey.ddmail.se.
 ddmail_webapp_dev_dkim_record2: dkim2._domainkey.ddmail.se.
 ddmail_webapp_dev_dkim_record3: dkim3._domainkey.ddmail.se.
-ddmail_webapp_dev_dmarc_record: "\"v=DMARC1; p=none\""
+ddmail_webapp_dev_dmarc_record: "\"v=DMARC1; p=quarantine\""
 ddmail_webapp_dev_payment_bankgiro: "{{ vault_ddmail_webapp_dev_payment_bankgiro }}"
 ddmail_webapp_dev_i2p_address: i2p.dev.address
 ddmail_webapp_dev_tor_address: tor.dev.address
