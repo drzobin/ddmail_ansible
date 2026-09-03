@@ -34,6 +34,10 @@
     # Enforce HttpOnly, Secure, and SameSite=Strict for all cookies.
     Header edit Set-Cookie ^(.*)$ "$1; HttpOnly; Secure; SameSite=Strict"
 
+    <Location /logout>
+        Header always set Clear-Site-Data "\"*\""
+    </Location>
+
     ProxyPass / http://127.0.0.1:8000/
     ProxyPassReverse / http://127.0.0.1:8000/
 
