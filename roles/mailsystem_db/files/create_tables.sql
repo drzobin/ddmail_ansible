@@ -46,8 +46,10 @@ CREATE TABLE IF NOT EXISTS account_domains (
 	account_id int NOT NULL,
 	domain varchar(191) NOT NULL UNIQUE,
 	is_enabled boolean NOT NULL DEFAULT 0,
-	verification char(40) NOT NULL UNIQUE,
-	last_time_verified DATETIME DEFAULT NULL,
+	verification_code varchar(50) NOT NULL UNIQUE,
+	last_time_enabled DATE DEFAULT NULL,
+	created DATE NOT NULL,
+	last_time_disabled DATE DEFAULT NULL,
 	FOREIGN KEY (account_id)
     REFERENCES accounts(id)
     ON DELETE RESTRICT
