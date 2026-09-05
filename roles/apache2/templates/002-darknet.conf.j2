@@ -6,9 +6,23 @@ Listen {{ apache2_darknet_listner }}
     Header always set Server "nginx"
     Header always set X-Frame-Options "DENY"
     Header always set X-Content-Type-Options "nosniff"
-    Header always set Content-Security-Policy "default-src 'self'"
+    #Header always set Content-Security-Policy "default-src 'self'"
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
     Header always set Referrer-Policy "no-referrer"
+    Header always set Cross-Origin-Embedder-Policy "require-corp"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Resource-Policy "same-origin"
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), autoplay=(), fullscreen=(self)"
+    Header always set X-Permitted-Cross-Domain-Policies "none"
+    Header always set X-DNS-Prefetch-Control "off"
+    Header always set Origin-Agent-Cluster "?1"
 
+    # Enforce HttpOnly and SameSite=Strict for all cookies.
+    Header edit Set-Cookie ^(.*)$ "$1; HttpOnly; SameSite=Strict"
+
+    <Location /logout>
+        Header always set Clear-Site-Data "\"*\""
+    </Location>
 
     ProxyPass / http://127.0.0.1:8000/
     ProxyPassReverse / http://127.0.0.1:8000/
