@@ -38,6 +38,16 @@
         Header always set Clear-Site-Data "\"*\""
     </Location>
 
+    # Never cache /register
+    <Location /register>
+        Header always set Cache-Control "no-store"
+    </Location>
+
+    # Never cache /settings*
+    <LocationMatch "^/settings">
+        Header always set Cache-Control "no-store"
+    </LocationMatch>
+
     ProxyPass / http://127.0.0.1:8000/
     ProxyPassReverse / http://127.0.0.1:8000/
 
