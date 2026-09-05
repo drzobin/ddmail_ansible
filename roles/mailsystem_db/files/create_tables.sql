@@ -116,6 +116,13 @@ CREATE TABLE IF NOT EXISTS aliases (
 		ON UPDATE CASCADE,
 	PRIMARY KEY (id) );
 
+CREATE TABLE IF NOT EXISTS vouchers (
+	id int NOT NULL UNIQUE AUTO_INCREMENT,
+	voucher_code_hash varchar(200) NOT NULL UNIQUE,
+	funds_in_sek int NOT NULL,
+	created DATE NOT NULL,
+	PRIMARY KEY (id) );
+
 CREATE TABLE IF NOT EXISTS transports (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	domain varchar(200) NOT NULL,
