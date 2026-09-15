@@ -8,7 +8,7 @@
 CREATE TABLE IF NOT EXISTS accounts (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account varchar(100) NOT NULL UNIQUE,
-	payment_token varchar(12) NOT NULL UNIQUE,
+	payment_token varchar(56) NOT NULL UNIQUE,
 	funds_in_sek int NOT NULL DEFAULT 0,
 	is_enabled boolean NOT NULL DEFAULT  0,
 	is_gratis boolean NOT NULL DEFAULT  0,
@@ -119,6 +119,13 @@ CREATE TABLE IF NOT EXISTS aliases (
 CREATE TABLE IF NOT EXISTS vouchers (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	voucher_code_hash varchar(200) NOT NULL UNIQUE,
+	funds_in_sek int NOT NULL,
+	created DATE NOT NULL,
+	PRIMARY KEY (id) );
+
+CREATE TABLE IF NOT EXISTS receipts (
+	id int NOT NULL UNIQUE AUTO_INCREMENT,
+	payment_token varchar(56) NOT NULL UNIQUE,
 	funds_in_sek int NOT NULL,
 	created DATE NOT NULL,
 	PRIMARY KEY (id) );
