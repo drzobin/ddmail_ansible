@@ -20,13 +20,16 @@ CREATE TABLE IF NOT EXISTS accounts (
 CREATE TABLE IF NOT EXISTS users (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	account_id int NOT NULL,
+	openpgp_public_key_id int NOT NULL,
 	user varchar(100) UNIQUE NOT NULL,
 	password_hash varchar(200) NOT NULL,
 	password_key_hash varchar(200) NOT NULL,
-	FOREIGN KEY (account_id)
-    REFERENCES accounts(id)
-    ON DELETE RESTRICT
-	ON UPDATE CASCADE,
+	FOREIGN KEY (openpgp_public_key_id) REFERENCES openpgp_public_keys(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	FOREIGN KEY (account_id) REFERENCES accounts(id)
+    		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
 	PRIMARY KEY (id) );
 
 
