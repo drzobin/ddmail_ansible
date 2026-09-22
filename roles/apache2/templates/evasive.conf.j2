@@ -1,9 +1,19 @@
 <IfModule mod_evasive20.c>
     DOSHashTableSize    3097
-    DOSPageCount        16
-    DOSSiteCount        16
-    DOSPageInterval     10
-    DOSSiteInterval     10
+
+    # This is the threshold for the number of requests for the same page (or URI) per page interval. Once the threshold for that interval has been exceeded, the IP address of the client is added to the blocking list.
+    DOSPageCount        10
+    
+    # This is the threshold for the total number of requests for any object by the same client on the same listener per site interval. Once the threshold for that interval has been exceeded, the IP address of the client is added to the blocking list.
+    DOSSiteCount        15
+
+    # Number of seconds for DOSPageCount. By default, this is set to 1 second. That means that if you don’t change it, requesting [DOSPageCount] pages in 1 second will temporarily blacklist an IP address.
+    DOSPageInterval     30
+
+    # Similar to DOSPageInterval, this option specifies the number of seconds that DOSSiteCount monitors. 
+    DOSSiteInterval     30
+
+    # The amount of time in seconds an IP address stays on the blacklist.
     DOSBlockingPeriod   300
 
     #DOSEmailNotify      you@yourdomain.com
