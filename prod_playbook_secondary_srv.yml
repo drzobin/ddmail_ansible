@@ -9,6 +9,7 @@
   roles:
     - general_packages
     - disable_ipv6
+    - chrony
     - nftables
     - nebula
     - sshd
@@ -17,5 +18,6 @@
     - unbound
     - set_nameserver
     - sysstat
+    - nebula_tls_certs
     - ddmail_backup_receiver
     - caddy
