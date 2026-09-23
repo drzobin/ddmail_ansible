@@ -1,25 +1,24 @@
 ---
-- name: Install dep package.
+- name: Install prerequisite packages.
   ansible.builtin.apt:
     pkg:
       - gpg
       - apt-transport-https
+      - curl
     state: latest
 
-- name: Add caddy apt signing key.
-  ansible.builtin.apt_key:
+- name: Download Caddy stable GPG key.
+  ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
-    state: present
+    dest: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    mode: '0644'
+    force: true
 
-- name: Add caddy apt repository.
+- name: Add caddy apt repository with signed-by configuration.
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://dl.cloudsmith.io/public/caddy/stable/deb/debian bookworm main"
+    repo: "deb [signed-by=/usr/share/keyrings/caddy-stable-archive-keyring.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian trixie main"
     state: present
     filename: caddy
-    update_cache: true
-
-- name: Run "apt-get update".
-  ansible.builtin.apt:
     update_cache: true
 
 - name: Install latest version of caddy ignoring "install-recommends".
@@ -27,7 +26,6 @@
     name: caddy
     state: latest
     install_recommends: false
-    update_cache: true
 
 - name: Create/edit caddy configuration file /etc/caddy/Caddyfile.
   ansible.builtin.template:
@@ -36,6 +34,30 @@
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
+
+- name: Ensure Caddy certs directory exists
+  ansible.builtin.file:
+    path: /etc/caddy/certs
+    state: directory
+    owner: caddy
+    group: caddy
+    mode: '0700'
+
+- name: Copy Server Certificate to Caddy directory
+  ansible.builtin.copy:
+    src: /etc/ssl/certs/{{ inventory_hostname }}.ddmail.nebula.crt
+    dest: /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.crt
+    owner: caddy
+    group: caddy
+    mode: '0644'
+
+- name: Copy Server Private Key to Caddy directory
+  ansible.builtin.copy:
+    src: /etc/ssl/certs/{{ inventory_hostname }}.ddmail.nebula.key
+    dest: /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.key
+    owner: caddy
+    group: caddy
+    mode: '0600'
 
 - name: Restart caddy service.
   ansible.builtin.service:
