@@ -5,7 +5,7 @@
     DOSPageCount        10
     
     # This is the threshold for the total number of requests for any object by the same client on the same listener per site interval. Once the threshold for that interval has been exceeded, the IP address of the client is added to the blocking list.
-    DOSSiteCount        15
+    DOSSiteCount        30
 
     # Number of seconds for DOSPageCount. By default, this is set to 1 second. That means that if you don’t change it, requesting [DOSPageCount] pages in 1 second will temporarily blacklist an IP address.
     DOSPageInterval     30
@@ -18,6 +18,6 @@
 
     #DOSEmailNotify      you@yourdomain.com
     #DOSSystemCommand    "su - someuser -c '/sbin/... %s ...'"
-    DOSLogDir           "/var/log/apache/mod_evasive"
+    DOSLogDir           "/var/log/apache2/mod_evasive"
 </IfModule>
 
