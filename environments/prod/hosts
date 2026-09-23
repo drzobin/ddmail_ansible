@@ -3,4 +3,5 @@
 srv02
 
 [secondary_srv]
-srv03
+#srv03
+srv04
