@@ -1,0 +1,90 @@
+---
+- name: Ensure local persistent directory for certs exists
+  delegate_to: localhost
+  run_once: true
+  become: false
+  file:
+    path: "{{ playbook_dir }}/nebula_certs"
+    state: directory
+    mode: '0700'
+
+- name: Generate CA private key (once)
+  delegate_to: localhost
+  run_once: true
+  become: false
+  command: openssl genrsa -out "{{ playbook_dir }}/nebula_certs/ca.key" 4096
+  args:
+    creates: "{{ playbook_dir }}/nebula_certs/ca.key"
+
+- name: Generate CA certificate (once)
+  delegate_to: localhost
+  run_once: true
+  become: false
+  command: >
+    openssl req -x509 -new -nodes -key "{{ playbook_dir }}/nebula_certs/ca.key"
+    -sha256 -days 3650 -out "{{ playbook_dir }}/nebula_certs/ca.crt"
+    -subj "/CN=ddmail.nebula"
+  args:
+    creates: "{{ playbook_dir }}/nebula_certs/ca.crt"
+
+- name: Generate Server private key for each host
+  delegate_to: localhost
+  become: false
+  command: openssl genrsa -out "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.key" 4096
+  args:
+    creates: "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.key"
+
+- name: Generate Server Certificate Signing Request (CSR) for each host
+  delegate_to: localhost
+  become: false
+  command: >
+    openssl req -new -key "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.key"
+    -out "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.csr"
+    -subj "/CN={{ inventory_hostname }}.ddmail.nebula"
+  args:
+    creates: "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.csr"
+
+- name: Sign Server certificate with local CA for each host
+  delegate_to: localhost
+  become: false
+  command: >
+    openssl x509 -req -in "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.csr"
+    -CA "{{ playbook_dir }}/nebula_certs/ca.crt" -CAkey "{{ playbook_dir }}/nebula_certs/ca.key"
+    -CAcreateserial -out "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.crt"
+    -days 3650 -sha256
+  args:
+    creates: "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.crt"
+
+- name: Ensure target SSL directories exist on remote server
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /etc/ssl/certs
+    - /etc/ssl/private
+
+- name: Copy local CA certificate to Debian trusted store
+  become: true
+  copy:
+    src: "{{ playbook_dir }}/nebula_certs/ca.crt"
+    dest: "/usr/local/share/ca-certificates/ddmail.nebula_ca.crt"
+    mode: '0644'
+  register: ca_copied
+
+- name: Update remote server certificate store
+  become: true
+  command: update-ca-certificates
+  when: ca_copied is changed
+
+- name: Copy host-specific Server Certificate to remote host
+  copy:
+    src: "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.crt"
+    dest: "/etc/ssl/certs/{{ inventory_hostname }}.ddmail.nebula.crt"
+    mode: '0644'
+
+- name: Copy host-specific Server Private Key to remote host
+  copy:
+    src: "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.key"
+    dest: "/etc/ssl/private/{{ inventory_hostname }}.ddmail.nebula.key"
+    mode: '0600'
