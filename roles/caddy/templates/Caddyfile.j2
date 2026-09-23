@@ -1,5 +1,11 @@
-{{ caddy_domain_name}}
+{{ inventory_hostname }}.ddmail.nebula {
+
+bind {{ nebula_ip }}
+
+tls {{ playbook_dir }}/certs/{{ inventory_hostname }}.ddmail.nebula.crt {{ playbook_dir }}/certs/{{ inventory_hostname }}.ddmail.nebula.key
 
 reverse_proxy :{{ caddy_reverse_proxy }}
 
 header / Strict-Transport-Security "max-age=31536000"
+
+}
