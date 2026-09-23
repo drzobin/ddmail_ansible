@@ -7,7 +7,8 @@ ansible_python_interpreter: /usr/bin/python3.13
 nebula_host_cert: "{{ vault_nebula_cert }}"
 nebula_host_key: "{{ vault_nebula_key }}"
 nebula_ip: 10.42.42.2
-# Location of TLS certificate for dovecot.
+
+  # Location of TLS certificate for dovecot.
 dovecot_ssl_server_cert_file: /etc/letsencrypt/live/imap.ddmail.se/fullchain.pem
 dovecot_ssl_server_key_file: /etc/letsencrypt/live/imap.ddmail.se/privkey.pem
 # Location of TLS certificate for postfix.
