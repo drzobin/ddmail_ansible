@@ -1,11 +1,27 @@
-{{ inventory_hostname }}.ddmail.nebula {
+{{ inventory_hostname }}.ddmail.nebula:443 {
 
 bind {{ nebula_ip }}
 
-tls {{ playbook_dir }}/certs/{{ inventory_hostname }}.ddmail.nebula.crt {{ playbook_dir }}/certs/{{ inventory_hostname }}.ddmail.nebula.key
+tls /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.crt /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.key
 
 reverse_proxy :{{ caddy_reverse_proxy }}
 
 header / Strict-Transport-Security "max-age=31536000"
 
+}
+
+{{ inventory_hostname }}.ddmail.nebula:4443 {
+
+    tls /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.crt /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.key
+
+    encode gzip
+
+    log {
+        output file /var/log/caddy/zabbix_access.log
+    }
+
+    root * /usr/share/zabbix/ui
+    file_server
+
+    php_fastcgi unix//run/php/php-fpm.sock
 }
