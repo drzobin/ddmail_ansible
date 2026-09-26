@@ -1,0 +1,99 @@
+---
+- name: Check if zabbix repo file exist.
+  ansible.builtin.stat:
+    path: /root/zabbix_repo.deb
+  register: zabbix_repo
+
+- name: Download zabbix repo
+  ansible.builtin.get_url:
+    url: https://repo.zabbix.com/zabbix/8.0/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_8.0+debian13_all.deb
+    dest: /root/zabbix_repo.deb
+    #checksum:
+    mode: '0644'
+    owner: root
+    group: root
+    #timeout: 60
+  when: not zabbix_repo.stat.exists
+
+- name: Install zabbix repo as .deb package
+  ansible.builtin.apt:
+    deb: /root/zabbix_repo.deb
+    state: present
+  when: not zabbix_repo.stat.exists
+
+- name: Install prerequisite packages.
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      - apt-transport-https
+      - python3-psycopg2
+      #- acl
+      - php-fpm
+      - zabbix-server-pgsql
+      - zabbix-frontend-php
+      - php8.4-pgsql
+      #- zabbix-nginx-conf
+      - zabbix-sql-scripts
+      - zabbix-agent2
+      - zabbix-agent2-plugin-postgresql
+    state: latest
+
+- name: Ensure PostgreSQL service is started and enabled.
+  systemd:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: Create Zabbix PostgreSQL database user.
+  community.postgresql.postgresql_user:
+    name: "{{ zabbix_db_user }}"
+    password: "{{ zabbix_db_user_password }}"
+    state: present
+  #become: yes
+  become_user: postgres
+
+- name: Create Zabbix PostgreSQL database.
+  community.postgresql.postgresql_db:
+    name: "{{ zabbix_db_name }}"
+    owner: "{{ zabbix_db_user }}"
+    state: present
+  #become: yes
+  become_user: postgres
+
+- name: Check if zabbix schema file exist.
+  ansible.builtin.stat:
+    path: /usr/share/zabbix/sql-scripts/postgresql/server.sql
+  register: zabbix_schema
+
+- name: Decompress zabbix schema sql file /usr/share/zabbix/sql-scripts/postgresql/server.sql.gz
+  ansible.builtin.command: gunzip -kf /usr/share/zabbix/sql-scripts/postgresql/server.sql.gz
+  args:
+    creates: /usr/share/zabbix/sql-scripts/postgresql/server.sql
+  when: not zabbix_schema.stat.exists
+
+- name: Run zabbix schema sql file.
+  community.postgresql.postgresql_script:
+    login_db: "{{ zabbix_db_name }}"
+    path: /usr/share/zabbix/sql-scripts/postgresql/server.sql
+    login_user: "{{ zabbix_db_user }}"
+    login_password: "{{ zabbix_db_user_password }}"
+    login_host: 127.0.0.1
+  when: not zabbix_schema.stat.exists
+
+- name: Create/edit zabbix config file /etc/zabbix/zabbix_server.conf
+  ansible.builtin.template:
+    src: zabbix_server.conf.j2
+    dest: /etc/zabbix/zabbix_server.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+  notify: Restart zabbix-server
+
+- name: Create/edit php.ini global config file /etc/php/8.4/fpm/php.ini
+  ansible.builtin.template:
+    src: php.ini.j2
+    dest: /etc/php/8.4/fpm/php.ini
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: Restart PHP 8.4 FPM
