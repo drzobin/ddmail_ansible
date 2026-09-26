@@ -153,21 +153,11 @@
 
 - name: Add backup dir
   ansible.builtin.file:
-    path: /opt/ddmail_backup_receiver_venv/ddmail_backup_receiver/backup_receiver/backups/
+    path: /opt/ddmail_backup_receiver/backups
     state: directory
     owner: '{{ ddmail_backup_receiver_runas_user }}'
     group: '{{ ddmail_backup_receiver_runas_user }}'
     mode: "u=rwx,g=rx,o="
-  when: env == "dev"
-
-- name: Add backup dir
-  ansible.builtin.file:
-    path: /opt/ddmail_backup_receiver_venv/backup_receiver/backups/
-    state: directory
-    owner: '{{ ddmail_backup_receiver_runas_user }}'
-    group: '{{ ddmail_backup_receiver_runas_user }}'
-    mode: "u=rwx,g=rx,o="
-  when: env == "prod"
 
 - name: Kill development server in screen.
   ansible.builtin.command: screen -X -S ddmail_backup_receiver quit
