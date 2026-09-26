@@ -367,6 +367,30 @@ firewall:
       groups:
         - adm_klient
 
+    # Allow tcp/4443 from any host in adm_klient group
+    - port: 4443
+      proto: tcp
+      groups:
+        - adm_klient
+
+    # Allow tcp/443 from any host in adm_klient group
+    - port: 443
+      proto: tcp
+      groups:
+        - servers
+
+    # Allow tcp/10051 from any host in server group
+    - port: 10051
+      proto: tcp
+      groups:
+        - servers
+
+    # Allow tcp/10050 from any host in server group
+    - port: 10050
+      proto: tcp
+      groups:
+        - servers
+
     # Expose a subnet (unsafe route) to hosts with the group remote_client
     # This example assume you have a subnet of 192.168.100.1/24 or larger encoded in the certificate
     #- port: 8080
