@@ -1,0 +1,82 @@
+---
+- name: Check if zabbix repo file exist.
+  ansible.builtin.stat:
+    path: /root/zabbix_repo.deb
+  register: zabbix_repo
+
+- name: Download zabbix repo
+  ansible.builtin.get_url:
+    url: https://repo.zabbix.com/zabbix/8.0/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_8.0+debian13_all.deb
+    dest: /root/zabbix_repo.deb
+    #checksum:
+    mode: '0644'
+    owner: root
+    group: root
+    #timeout: 60
+  when: not zabbix_repo.stat.exists
+
+- name: Install zabbix repo as .deb package
+  ansible.builtin.apt:
+    deb: /root/zabbix_repo.deb
+    state: present
+  when: not zabbix_repo.stat.exists
+
+- name: Install prerequisite packages.
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      - apt-transport-https
+      - zabbix-agent2
+    state: latest
+  when: not zabbix_repo.stat.exists
+
+- name: Ensure zabbix certs directory /etc/zabbix/certs exists
+  ansible.builtin.file:
+    path: /etc/zabbix/certs
+    state: directory
+    owner: zabbix
+    group: zabbix
+    mode: "0700"
+
+- name: Copy Server Certificate to zabbix directory
+  ansible.builtin.copy:
+    src: /etc/ssl/certs/{{ inventory_hostname }}.ddmail.nebula.crt
+    dest: /etc/zabbix/certs/{{ inventory_hostname }}.ddmail.nebula.crt
+    remote_src: True
+    owner: zabbix
+    group: zabbix
+    mode: "0644"
+
+- name: Copy Server Private Key to zabbix directory
+  ansible.builtin.copy:
+    src: /etc/ssl/private/{{ inventory_hostname }}.ddmail.nebula.key
+    dest: /etc/zabbix/certs/{{ inventory_hostname }}.ddmail.nebula.key
+    remote_src: True
+    owner: zabbix
+    group: zabbix
+    mode: "0600"
+
+- name: Create/edit zabbix-agent2 config file /etc/zabbix/zabbix_agent2.conf
+  ansible.builtin.template:
+    src: zabbix_agent2.conf.j2
+    dest: /etc/zabbix/zabbix_agent2.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: Restart zabbix-agent2
+
+- name: Check if zabbix psk key file /etc/zabbix/zabbix_agent2.psk exist.
+  ansible.builtin.stat:
+    path: /etc/zabbix/zabbix_agent2.psk
+  register: zabbix_psk
+
+- name: Generate zabbix psk in file /etc/zabbix/zabbix_agent2.psk
+  ansible.builtin.shell: "/usr/bin/openssl rand -hex 32 | sudo tee /etc/zabbix/zabbix_agent2.psk"
+  when: not zabbix_psk.stat.exists
+
+- name: Set file permission on zabbix psk file /etc/zabbix/zabbix_agent2.psk
+  ansible.builtin.file:
+    path: /etc/zabbix/zabbix_agent2.psk
+    owner: zabbix
+    group: zabbix
+    mode: "u=rw,g=,o="
