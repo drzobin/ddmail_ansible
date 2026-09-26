@@ -1,0 +1,11 @@
+- name: Restart PHP 8.4 FPM
+  ansible.builtin.systemd:
+    name: php8.4-fpm
+    state: restarted
+    enabled: true
+
+- name: Restart zabbix-server
+  ansible.builtin.systemd:
+    name: php8.4-fpm
+    state: restarted
+    enabled: true
