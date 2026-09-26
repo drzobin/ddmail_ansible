@@ -11,7 +11,7 @@
   ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
     dest: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-    mode: '0644'
+    mode: "0644"
     force: true
 
 - name: Add caddy apt repository with signed-by configuration.
@@ -41,23 +41,25 @@
     state: directory
     owner: caddy
     group: caddy
-    mode: '0700'
+    mode: "0700"
 
 - name: Copy Server Certificate to Caddy directory
   ansible.builtin.copy:
     src: /etc/ssl/certs/{{ inventory_hostname }}.ddmail.nebula.crt
     dest: /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.crt
+    remote_src: True
     owner: caddy
     group: caddy
-    mode: '0644'
+    mode: "0644"
 
 - name: Copy Server Private Key to Caddy directory
   ansible.builtin.copy:
-    src: /etc/ssl/certs/{{ inventory_hostname }}.ddmail.nebula.key
+    src: /etc/ssl/private/{{ inventory_hostname }}.ddmail.nebula.key
     dest: /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.key
+    remote_src: True
     owner: caddy
     group: caddy
-    mode: '0600'
+    mode: "0600"
 
 - name: Restart caddy service.
   ansible.builtin.service:
