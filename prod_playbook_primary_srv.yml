@@ -12,6 +12,7 @@
     - inaccessible_dirs
     - chrony
     - nebula
+    - nebula_tls_certs
     - nftables
     - sshd
     - rsyslog
@@ -19,6 +20,7 @@
     - unbound
     - set_nameserver
     - sysstat
+    - zabbix-agent2
     - certbot
     - mariadb
     - mailsystem_db
