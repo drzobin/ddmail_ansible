@@ -23,6 +23,16 @@ mail_test_db_user_r_password: "{{ vault_mail_test_db_user_r_password  }}"
 mail_test_db_user_rw: mail_test_rw
 mail_test_db_user_rw_password: "{{ vault_mail_test_db_user_rw_password }}"
 
+# zabbix-server
+zabbix_server_ip: 10.42.42.4
+zabbix_db_user: zabbix
+zabbix_db_user_password: "{{ vault_zabbix_db_user_password }}"
+zabbix_db_name: zabbix
+
+# zabbix-agent2
+zabbix_agent2_server: srv04.ddmail.nebula
+zabbix_agent2_server_active: srv04.ddmail.nebula:10051
+
 # postfix main.cf
 postfix_myhostname: mail.ddmail.se
 postfix_mydomain: ddmail.se
@@ -174,7 +184,7 @@ ddmail_openpgp_encryptor_mail_db_user_password: "{{ mail_db_user_r_password }}"
 
 # ddmail_backup_taker
 ddmail_backup_taker_data_to_backup: /var/mail /var/lib/rspamd/dkim /var/lib/i2pd /etc/i2pd /var/lib/tor /etc/tor /etc/letsencrypt
-ddmail_backup_taker_backup_receiver_url: https://secondary.ddmail.se/receive_backup
+ddmail_backup_taker_backup_receiver_url: https://srv04.ddmail.nebula/receive_backup
 ddmail_backup_taker_backup_receiver_password: "{{ ddmail_backup_receiver_prod_password }}"
 ddmail_backup_taker_pubkey_fingerprint: "{{ vault_ddmail_backup_taker_pubkey_fingerprint }}"
 ddmail_backup_taker_pubkey: "{{ vault_ddmail_backup_taker_pubkey }}"
