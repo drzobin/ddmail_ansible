@@ -3,8 +3,9 @@
   hosts: secondary_srv
   become: true
   become_user: root
-  become_method: ansible.builtin.su
-  become_flags: "-"
+  #become_method: ansible.builtin.su
+  #become_flags: "-"
+  become_method: sudo
 
   roles:
     - general_packages
@@ -18,6 +19,9 @@
     - unbound
     - set_nameserver
     - sysstat
+    - postgresql
+    - zabbix-server
+    - zabbix-agent2
     - nebula_tls_certs
     - ddmail_backup_receiver
     - caddy
