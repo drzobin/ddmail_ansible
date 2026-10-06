@@ -24,6 +24,8 @@
     openssl req -x509 -new -nodes -key "{{ playbook_dir }}/nebula_certs/ca.key"
     -sha256 -days 3650 -out "{{ playbook_dir }}/nebula_certs/ca.crt"
     -subj "/CN=ddmail.nebula"
+    -addext "basicConstraints=critical,CA:TRUE"
+    -addext "keyUsage=critical,keyCertSign,cRLSign"
   args:
     creates: "{{ playbook_dir }}/nebula_certs/ca.crt"
 
@@ -41,6 +43,7 @@
     openssl req -new -key "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.key"
     -out "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.csr"
     -subj "/CN={{ inventory_hostname }}.ddmail.nebula"
+    -addext "subjectAltName = DNS:{{ inventory_hostname }}.ddmail.nebula,DNS:{{ nebula_ip }}"
   args:
     creates: "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.csr"
 
@@ -52,6 +55,7 @@
     -CA "{{ playbook_dir }}/nebula_certs/ca.crt" -CAkey "{{ playbook_dir }}/nebula_certs/ca.key"
     -CAcreateserial -out "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.crt"
     -days 3650 -sha256
+    -copy_extensions copyall
   args:
     creates: "{{ playbook_dir }}/nebula_certs/{{ inventory_hostname }}.crt"
 
@@ -64,18 +68,23 @@
     - /etc/ssl/certs
     - /etc/ssl/private
 
+- name: Check if the local CA certificate exists at /usr/local/share/ca-certificates/ddmail.nebula_ca.crt
+  ansible.builtin.stat:
+    path: "/usr/local/share/ca-certificates/ddmail.nebula_ca.crt"
+  register: ca_exists
+
 - name: Copy local CA certificate to Debian trusted store
   become: true
   copy:
     src: "{{ playbook_dir }}/nebula_certs/ca.crt"
     dest: "/usr/local/share/ca-certificates/ddmail.nebula_ca.crt"
     mode: '0644'
-  register: ca_copied
+  when: not ca_exists.stat.exists
 
 - name: Update remote server certificate store
   become: true
   command: update-ca-certificates
-  when: ca_copied is changed
+  when: not ca_exists.stat.exists
 
 - name: Copy host-specific Server Certificate to remote host
   copy:
