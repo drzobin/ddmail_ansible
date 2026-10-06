@@ -13,6 +13,7 @@
     - chrony
     - nftables
     - nebula
+    - nebula_tls_certs
     - sshd
     - rsyslog
     - unattended-upgrades
@@ -22,6 +23,5 @@
     - postgresql
     - zabbix-server
     - zabbix-agent2
-    - nebula_tls_certs
     - ddmail_backup_receiver
     - caddy
