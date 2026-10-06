@@ -36,6 +36,9 @@ GPG_BIN = '/usr/bin/gpg'
 USE = true
 URL = '{{ ddmail_backup_taker_backup_receiver_url }}'
 PASSWORD = '{{ ddmail_backup_taker_backup_receiver_password }}'
+TIMEOUT = 600
+# Verify TLS/SSL cert, can be True, False or full path to ca bundle.
+TLS_VERIFY = '/usr/local/share/ca-certificates/ddmail.nebula_ca.crt'
 
 [LOGGING]
 LOGLEVEL = 'INFO'
@@ -44,3 +47,4 @@ LOG_TO_FILE = false
 LOGFILE = '/var/log/ddmail_backup_taker.log'
 LOG_TO_SYSLOG = true
 SYSLOG_SERVER = '/dev/log'
+SHOW_EXCEPT_MSG = true
