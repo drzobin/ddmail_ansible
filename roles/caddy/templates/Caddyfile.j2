@@ -12,6 +12,8 @@ header / Strict-Transport-Security "max-age=31536000"
 
 {{ inventory_hostname }}.ddmail.nebula:4443 {
 
+    bind {{ nebula_ip }}
+
     tls /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.crt /etc/caddy/certs/{{ inventory_hostname }}.ddmail.nebula.key
 
     encode gzip
