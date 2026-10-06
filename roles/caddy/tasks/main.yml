@@ -5,21 +5,28 @@
       - gpg
       - apt-transport-https
       - curl
+      - debian-keyring
     state: latest
 
-- name: Download Caddy stable GPG key.
-  ansible.builtin.get_url:
-    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
-    dest: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-    mode: "0644"
-    force: true
+- name: Download and dearmor Caddy GPG key
+  ansible.builtin.shell: >
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+  args:
+    creates: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 
-- name: Add caddy apt repository with signed-by configuration.
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/caddy-stable-archive-keyring.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian trixie main"
-    state: present
-    filename: caddy
-    update_cache: true
+- name: Download Caddy repository list configuration
+  ansible.builtin.shell: >
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
+  args:
+    creates: /etc/apt/sources.list.d/caddy-stable.list
+
+- name: Ensure correct read permissions for keyring and source list
+  ansible.builtin.file:
+    path: "{{ item }}"
+    mode: '0644'
+  loop:
+    - /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    - /etc/apt/sources.list.d/caddy-stable.list
 
 - name: Install latest version of caddy ignoring "install-recommends".
   ansible.builtin.apt:
