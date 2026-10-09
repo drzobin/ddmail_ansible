@@ -19,7 +19,7 @@
     dest: /lib/systemd/system/redis-server.service
     owner: root
     group: root
-    mode: "u=rwx,g=r,o=r"
+    mode: "u=rw,g=r,o=r"
 
 - name: Reload systemd
   ansible.builtin.systemd:
