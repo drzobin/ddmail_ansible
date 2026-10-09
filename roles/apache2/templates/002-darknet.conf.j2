@@ -20,6 +20,11 @@ Listen {{ apache2_darknet_listner }}
     # Enforce HttpOnly and SameSite=Strict for all cookies.
     Header edit Set-Cookie ^(.*)$ "$1; HttpOnly; SameSite=Strict"
 
+    # Default deny on HTTP method, only allow GET and POST.
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} !^(GET|POST)$
+    RewriteRule ^ - [R=405,L]
+
     <Location /logout>
         Header always set Clear-Site-Data "\"*\""
     </Location>
@@ -30,4 +35,3 @@ Listen {{ apache2_darknet_listner }}
     ErrorLog ${APACHE_LOG_DIR}/darknet_error.log
     CustomLog ${APACHE_LOG_DIR}/darknet_access.log combined
 </VirtualHost>
-
