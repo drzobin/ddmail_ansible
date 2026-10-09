@@ -29,6 +29,9 @@
 - name: Enable apache2 mod security2 (mod-security2)
   ansible.builtin.command: /usr/sbin/a2enmod security2
 
+- name: Enable apache2 mod rewrite
+  ansible.builtin.command: /usr/sbin/a2enmod rewrite
+
 - name: Add privacy friendly logging in /etc/apache2/conf-available/privacy_log.conf
   ansible.builtin.template:
     src: privacy_logging.conf.j2
