@@ -130,6 +130,7 @@ CREATE TABLE IF NOT EXISTS receipts (
 	id int NOT NULL UNIQUE AUTO_INCREMENT,
 	payment_token varchar(56) NOT NULL UNIQUE,
 	funds_in_sek int NOT NULL,
+	payment_received DATE NOT NULL,
 	created DATE NOT NULL,
 	PRIMARY KEY (id) );
 
